@@ -1,0 +1,19 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-mef-fd:fd",
+      "type": "list",
+      "module": "ciena-mef-fd",
+      "description": "The list of configured forwarding domains on the device.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-fd:vlan_stack",
+      "type": "list",
+      "module": "ciena-mef-fd",
+      "description": "For an L2-frame that is initiated/injected via this forwarding domain, this specifies the VLAN related l2-transform to be applied to the frame.",
+      "key": "tag"
+    }
+  ],
+  "edges": []
+}

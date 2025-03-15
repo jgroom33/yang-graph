@@ -1,0 +1,33 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-mef-classifier:classifier",
+      "type": "list",
+      "module": "ciena-mef-classifier",
+      "description": "List of classifier templates. Classifiers can be referenced by various entities (flow-point/access-flow/qos-flow etc.) to define their incoming classification.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-classifier:filter_entry",
+      "type": "list",
+      "module": "ciena-mef-classifier",
+      "description": "Add one filtering rule for this classifier.",
+      "key": "filter-parameter"
+    },
+    {
+      "id": "ciena-mef-classifier:vtags",
+      "type": "list",
+      "module": "ciena-mef-classifier",
+      "description": "List of VLAN tags.",
+      "key": "tag"
+    },
+    {
+      "id": "ciena-mef-classifier:mpls_labels",
+      "type": "list",
+      "module": "ciena-mef-classifier",
+      "description": "List of MPLS labels.",
+      "key": "label"
+    }
+  ],
+  "edges": []
+}

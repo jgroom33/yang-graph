@@ -1,0 +1,215 @@
+{
+  "graph": [
+    {
+      "data": {
+        "id": "ciena-mef-fp:fp",
+        "type": "list",
+        "module": "ciena-mef-fp",
+        "description": "The operational data for this Flow Point.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-fp:ingress_l2_transform",
+        "type": "list",
+        "module": "ciena-mef-fp",
+        "description": "Ingress L2-transform configured on this flow-point.",
+        "key": "ingress-name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-fp:vlan_stack",
+        "type": "list",
+        "module": "ciena-mef-fp",
+        "description": "This configures VLAN stack on the flow-point.",
+        "key": "tag"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-fp:egress_l2_transform",
+        "type": "list",
+        "module": "ciena-mef-fp",
+        "description": "Egress L2-transform configured on this flow-point.",
+        "key": "egress-name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-fp:normalized_vid",
+        "type": "list",
+        "module": "ciena-mef-fp",
+        "description": "Used to represent normalized-vid values for EVPN FXC, e.g. MPLS label + vid lookup. The tag number represents the position of the normalized-vid. tag '1' represents outer most tag, tag '2' next outer most, etc. Note that the normalized-vid is used in conjunction with an ingress-l2-transform of the same flow-point. That is, an ingress-l2-xform operation of push/stamp is generally used to ensure that the frame contains the normalized-vid in flow-point to EVPN service-tunnel direction. In the case of the ingress-l2-transform stamp operation; - ingress-l2-transform stamp tag 1 (outer) matches normalized-vid tag 1 (outer). - ingress-l2-transform stamp tag 2 (next outer) matches normalized-vid tag 2 (next outer (aka inner)). In the case of the ingress-l2-transform push operation; - ingress-l2-transform push tag 1 (outer most) matches normalized-vid tag 1 (outer), when 1 tag is being pushed via the ingress-l2-transform. - ingress-l2-transform push tag 2 (next outer most) matches normalized-vid tag 1 (outer), when 2 tags are being pushed via the ingress-l2-transform. - ingress-l2-transform push tag 1 (outer most) matches normalized-vid tag 2 (next outer (aka inner)), when 2 tags are being pushed via the ingress-l2-transform.",
+        "key": "tag"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-fp:flow_point_event",
+        "type": "list",
+        "module": "ciena-mef-fp",
+        "description": "No description available",
+        "key": null
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-fp:event_list",
+        "type": "list",
+        "module": "ciena-mef-fp",
+        "description": "No description available",
+        "key": null
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-fd:fd",
+        "type": "list",
+        "module": "ciena-mef-fd",
+        "description": "The list of configured forwarding domains on the device.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-fd:vlan_stack",
+        "type": "list",
+        "module": "ciena-mef-fd",
+        "description": "For an L2-frame that is initiated/injected via this forwarding domain, this specifies the VLAN related l2-transform to be applied to the frame.",
+        "key": "tag"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-classifier:classifier",
+        "type": "list",
+        "module": "ciena-mef-classifier",
+        "description": "List of classifier templates. Classifiers can be referenced by various entities (flow-point/access-flow/qos-flow etc.) to define their incoming classification.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-classifier:filter_entry",
+        "type": "list",
+        "module": "ciena-mef-classifier",
+        "description": "Add one filtering rule for this classifier.",
+        "key": "filter-parameter"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-classifier:vtags",
+        "type": "list",
+        "module": "ciena-mef-classifier",
+        "description": "List of VLAN tags.",
+        "key": "tag"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-classifier:mpls_labels",
+        "type": "list",
+        "module": "ciena-mef-classifier",
+        "description": "List of MPLS labels.",
+        "key": "label"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-logical-port:logical_port",
+        "type": "list",
+        "module": "ciena-mef-logical-port",
+        "description": "List of logical-ports. A Logical-Port can be mapped to an ETTP for a physical faceplate port, virtual-port etc. or it may map to multiple ETTPs in support of Agg Ports.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-logical-port:logical_port_status",
+        "type": "list",
+        "module": "ciena-mef-logical-port",
+        "description": "No description available",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-logical-port:logical_port_statistics",
+        "type": "list",
+        "module": "ciena-mef-logical-port",
+        "description": "No description available",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-logical-port:logical_port_event",
+        "type": "list",
+        "module": "ciena-mef-logical-port",
+        "description": "No description available",
+        "key": null
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-logical-port:event_list",
+        "type": "list",
+        "module": "ciena-mef-logical-port",
+        "description": "No description available",
+        "key": null
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-mef-fp:fp",
+        "target": "ciena-mef-fd:fd",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-mef-fp:flow_point_event",
+        "target": "ciena-mef-fp:fp",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-mef-fp:event_list",
+        "target": "ciena-mef-fp:fp",
+        "relationship": "references_key:flow_point_event_type"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-mef-fp:event_list",
+        "target": "ciena-mef-fp:fp",
+        "relationship": "references_key:oper_state"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-mef-logical-port:logical_port_event",
+        "target": "ciena-mef-logical-port:logical_port",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-mef-logical-port:logical_port_event",
+        "target": "ciena-mef-logical-port:logical_port_status",
+        "relationship": "references_key:oper_state"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-mef-logical-port:event_list",
+        "target": "ciena-mef-logical-port:logical_port",
+        "relationship": "references_key:logical_port_event_type"
+      }
+    }
+  ]
+}
