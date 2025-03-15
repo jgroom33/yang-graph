@@ -1,0 +1,106 @@
+module ciena-ietf-alarms-augment {
+  namespace "http://www.ciena.com/ns/yang/ciena-ietf-alarms-augment";
+  prefix "ciena-ietf-alarms-aug";
+
+  import ietf-alarms {
+    prefix al;
+  }
+
+  import ciena-ietf-alarms {
+    prefix ciena-al;
+  }
+
+  organization
+    "Ciena Corporation";
+
+  contact
+    "Web URL: http://www.ciena.com/
+     E-mail:  yang@ciena.com
+     Postal:  7035 Ridge Road
+              Hanover, Maryland 21076
+              U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+
+  description
+    "This YANG module defines Ciena's augmentations to the draft-ietf-ccamp-alarm-module-01 model.
+
+     Copyright (c) 2019-2024 Ciena Corporation.  All rights
+     reserved.
+
+     All information and intellectual property contained in this
+     YANG module (Specification) is, and remains the property
+     of Ciena Corporation. Ciena retains all title and ownership
+     in the Specification, including any revisions.
+
+     Ciena grants all interested parties that access the
+     Specification with the intent to use or distribute (\"you\") a
+     non-exclusive, no-cost license to use and distribute
+     unmodified copies of the Specification solely in connection
+     with the management of Ciena products sold by or on
+     behalf of Ciena, provided this copyright notice and license
+     appear on all copies. Ciena may rescind or modify this
+     license at any time.
+
+     This Specification is supplied 'as is', and Ciena makes no
+     warranty, either express or implied, as to the use, operation,
+     condition, or performance of the Specification. You agree
+     that Ciena has no liability for your use of the Specification.";
+
+
+  revision "2024-01-04" {
+    description
+      "First revision, to add notification augmentation to
+       alarm-inventory-changed notification";
+    reference
+      "RFC 6020: YANG - A Data Modeling Language for
+       the Network Configuration Protocol (NETCONF).
+       No specific reference; standard not available.";
+  }
+
+  typedef severity {
+    type al:severity;
+    description
+      "Configurable Alarm severity";
+  }
+
+  typedef alarm-types {
+    type ciena-al:alarm-types;
+    description
+      "Configurable Alarm severity";
+  }
+
+  augment "/al:alarm-inventory-changed" {
+    leaf alarm-type-id {
+      type alarm-types;
+      description
+        "The statically defined alarm type identifier for this
+         possible alarm.";
+    }
+    leaf alarm-type-qualifier {
+      type string;
+      description
+        "The optionally dynamically defined alarm type identifier
+         for this possible alarm.";
+    }
+    leaf-list severity-levels {
+      type severity;
+      description
+        "This leaf-list indicates the possible severity levels of
+         this alarm type. Note well that 'clear' is not part of
+         the severity type. In general, the severity level is
+         defined by the system based on dynamic state and not
+         defined statically by the alarm type in order to provide
+         relevant severity level based on dynamic state and
+         context. However most alarm types have a defined set
+         of possible severity level which are listed here.";
+    }
+    leaf description {
+      type string;
+      description
+        "A description of the possible alarm. It should include
+         information on possible underlying root causes and
+         corrective actions.";
+    }
+  }
+}

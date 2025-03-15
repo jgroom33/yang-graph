@@ -1,0 +1,57 @@
+module ciena-extensions {
+   namespace "http://www.ciena.com/ns/yang/ciena-extensions";
+   prefix "cn-pass-test";
+
+   organization
+      "Ciena Corporation";
+
+   contact
+      "Web URL: http://www.ciena.com/
+      E-mail:  yang@ciena.com
+      Postal:  7035 Ridge Road
+              Hanover, Maryland 21076
+              U.S.A.
+      Phone:   +1 800-921-1144
+      Fax:     +1 410-694-5750";
+
+   description
+      "This module contains the YANG definition for extension statements
+      that can be used by other yang modules.
+
+      Copyright (c) 2023 Ciena Corporation.  All rights reserved.
+
+      All information contained herein is, and remains the property of
+      Ciena Corporation. Dissemination of this information or
+      reproduction of this material is strictly forbidden unless prior
+      written permission is obtained from Ciena Corporation.";
+
+   revision 2023-11-05 {
+      description
+         "Initial revision";
+   }
+
+   typedef string-encrypted-pswd {
+      type string{
+         length 1..260;
+      }
+      description
+         "String with max length 260 to save encrypted password";
+   }
+
+   extension sensitive-config-data {
+      description
+         "This extension provides an annotation on schema nodes to
+         indicate that the corresponding string value should be stored and
+         reported in encrypted format.
+
+         Clients reading the configuration or applied configuration for
+         the node should expect to receive only the encrypted value.
+         Values written in cleartext will be encrypted and stored in encrypted format.
+         And backend application may be able to retrieve the clear text
+         password from the encrypted value and can use it for protocol based
+         authentication.
+
+         When using the extension, the input string must have maximum length upto
+         128 characters. After encryption the data node will hold the encrypted string.";
+   }
+}

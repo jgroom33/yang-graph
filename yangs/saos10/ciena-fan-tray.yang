@@ -1,0 +1,74 @@
+module ciena-fan-tray {
+  namespace "http://www.ciena.com/ns/yang/ciena-fan-tray";
+  prefix "ciena-ftray";
+
+  organization
+    "Ciena Corporation";
+
+  contact
+    "Web URL: http://www.ciena.com/
+    E-mail:  yang@ciena.com
+    Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+    Phone:   +1 800-921-1144
+    Fax:     +1 410-694-5750";
+
+  description
+    "This YANG module defines the node
+    for setting the fan tray serial number.
+
+    Copyright (c) 2021 Ciena Corporation.  All rights
+    reserved.
+
+    All information contained herein is, and remains
+    the property of Ciena Corporation. Dissemination of this
+    information or reproduction of this material is strictly
+    forbidden unless prior written permission is obtained from
+    Ciena Corporation.";
+
+  revision 2021-01-12 {
+    description
+      "Initial revision with setting fan tray serial number RPC";
+    reference
+      "";
+  }
+
+  rpc fan-tray-serial-number {
+    description
+      "Request to set the serial number of Fan Tray.";
+    input {
+      leaf fan-tray-number {
+        type uint8 {
+          range "1..6";
+        }
+        description
+          "Fan tray number, whose serial number to be set.";
+      }
+      leaf serial-number {
+        type string {
+          length "1..64";
+          pattern "[0-9a-zA-Z]*";
+        }
+        description
+          "Serial number of fan tray to be set.";
+      }
+    }
+    output {
+      leaf status {
+        type enumeration {
+          enum success {
+            description
+               "Fan tray serial number configuration succeeded";
+          }
+          enum failure {
+            description
+               "Fan tray serial number configuration failed";
+          }
+        }
+        description
+           "Status of fan-tray-serial-number configuration operation.";
+      }
+    }
+  }
+}

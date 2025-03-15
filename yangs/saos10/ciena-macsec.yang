@@ -1,0 +1,1134 @@
+module ciena-macsec {
+    yang-version 1.1;
+  namespace "http://www.ciena.com/ns/yang/ciena-macsec";
+  prefix "cn-macsec";
+
+  import ciena-itut-g8032-draft {
+    prefix "g8032";
+  }
+
+  import openconfig-interfaces {
+    prefix "oc-if";
+  }
+
+  import ciena-openconfig-interfaces { 
+    prefix "cn-oc-if"; 
+  }
+
+  import yuma-ncx {
+     prefix "ncx";
+  }
+
+  import openconfig-yang-types { 
+    prefix "oc-yang"; 
+  }
+
+  import ciena-mef-fp {
+    prefix "mef-fp";
+  }
+
+  import ciena-types {
+    prefix "cn-type";
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "Ciena Corporation";
+ 
+  contact
+    "Web URL: http://www.ciena.com/
+    E-mail:  yang@ciena.com
+    Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+    Phone:   +1 800-921-1144
+    Fax:     +1 410-694-5750";
+
+  description
+    "This YANG module contains the schema definition for 
+    MAC Security 802.1AE.
+
+    Copyright (c) 2020-2022 Ciena Corporation.  All rights
+    reserved.
+
+    All information and intellectual property contained in this
+    YANG module (Specification) is, and remains the property
+    of Ciena Corporation. Ciena retains all title and ownership
+    in the Specification, including any revisions.
+
+    Ciena grants all interested parties that access the
+    Specification with the intent to use or distribute ('you') a
+    non-exclusive, no-cost license to use and distribute
+    unmodified copies of the Specification solely in connection
+    with the management of Ciena products sold by or on
+    behalf of Ciena, provided this copyright notice and license
+    appear on all copies. Ciena may rescind or modify this
+    license at any time.
+
+    This Specification is supplied 'as is', and Ciena makes no
+    warranty, either express or implied, as to the use, operation,
+    condition, or performance of the Specification. You agree
+    that Ciena has no liability for your use of the Specification.";
+
+  revision "2023-05-19" {
+    description
+      "Show active CAK per CA";
+  }
+
+  revision "2023-05-05" {
+    description
+      "Added disable option for individual CAK";
+  }
+
+  revision "2023-03-06" {
+    description
+      "Added icv-validation-on to CA and pause frames to exclude-protocols";
+  }
+
+  revision "2022-09-27" {
+    description
+      "Limited delay-protection only for hop-by-hop";
+  }
+
+  revision "2022-08-24" {
+    description
+      "Added delay protection and SAK event logging throttle";
+  }
+
+  revision "2022-02-01" {
+    description
+      "Cosmetic changes.";
+  }
+
+  revision "2020-01-20" {
+    description
+      "Initial Version.";
+    reference
+      "IEEE Std 802.1AE.";
+  }
+  
+  typedef sci-port-id {
+    type string {
+      pattern '[0-9a-fA-F]{2}-[0-9a-fA-F]{2}';
+    }
+    description
+      "As defined by IEEE 802.1AE Port Identifier";
+  }
+
+  typedef ckn {
+    type string {
+      pattern '([0-9a-fA-F]{2})+';
+    }
+    description
+      "Connectivity Association Key Name as per IEEE 8021X 9.3.1";
+  }
+
+  typedef cak {
+    type string {
+      pattern '[0-9a-fA-F*]*';
+    }
+    description
+      "Connectivity Association Key Name as per IEEE 8021X 9.3.1";
+  }
+
+  typedef macsec-cipher-suite {
+    type enumeration {
+      enum GCM_AES_128 {
+        description 
+          "128 bit AES Cipher Suite.";
+      }
+      enum GCM_AES_256 {
+        description 
+          "256 bit AES Cipher Suite.";
+      }
+      enum GCM_AES_XPN_128 {
+        description 
+          "128 bit Extended Packet Numbering AES Cipher Suite.";
+      }
+      enum GCM_AES_XPN_256 {
+        description 
+          "256 bit Extended Packet Numbering AES Cipher Suite.";
+      }
+    }
+    default GCM_AES_128;
+    description
+      "Set Cipher suite(s) for SAK derivation";
+  }
+
+  typedef confidentiality-offset {
+    type enumeration {
+      enum "0_BYTES" { 
+        description 
+          "No octets are sent unencrypted"; 
+      }
+      enum "30_BYTES" { 
+        description 
+          "30 octects are sent unencrypted"; 
+      }
+      enum "50_BYTES" { 
+        description 
+          "50 octects are sent unencrypted"; 
+      }
+    }
+    description
+      "The confidentiality offset specifies a number of octets in an Ethernet
+       frame that are sent in unencrypted plain-text";
+  }
+
+  grouping local-secure-channel-identifier {
+    description
+      "As defined by 802.1AE Secure Channel Identifier.";
+    leaf local-mac-address {
+      type oc-yang:mac-address;
+      description
+        "Unique MAC address identifying the device.";
+    }
+    leaf local-port-identifier {
+      type sci-port-id;
+      description
+        "Port Identifier value.";
+    }
+  }
+
+  grouping peer-secure-channel-identifier {
+    description
+      "As defined by 802.1AE Secure Channel Identifier.";
+    leaf peer-mac-address {
+      type oc-yang:mac-address;
+      description
+        "Unique MAC address identifying the device.";
+    }
+    leaf peer-port-identifier {
+      type sci-port-id;
+      description
+        "Port Identifier value.";
+    }
+  }
+
+  grouping mka-statistics-group {
+    description
+      "MKA Statistics grouping.";
+    container mka-statistics {
+      description
+        "Enclosing container for MKA Statistics.";
+      leaf eapol-mka-invalid-ckn-len-rx {
+        type oc-yang:counter32;
+        description
+          "This counter represents  EAPoL frames received with invalid CKN length.";
+      }
+      leaf eapol-mka-invalid-frames-rx {
+        type oc-yang:counter32;
+        description
+          "This counter represents invalid MKA EAPoL frames received.";
+      }
+      leaf eapol-mka-frames-tx {
+        type oc-yang:counter64;
+        description
+          "This counter represents MKA EAPoL frames transmitted.";
+      }
+      leaf eapol-mka-frames-rx {
+        type oc-yang:counter64;
+        description
+          "This counter represents MKA EAPoL frames received.";
+      }
+      leaf version-mismatch-frames-rx {
+        type oc-yang:counter32;
+        description
+          "This counter represents version mismatch frames received.";
+      }
+      leaf ckn-mismatch-frames-rx {
+        type oc-yang:counter32;
+        description
+          "This counter represents ckn mistmatch frames received.";
+      }
+      leaf icv-mismatch-frames-rx {
+        type oc-yang:counter32;
+        description
+          "This counter represents icv mismatch frames received.";
+      }
+    }
+  }
+
+  grouping if-statistics-group {
+    description
+      "If Data Statistics grouping.";
+    container if-statistics {
+      description
+        "Enclosing container for Interface Statistics.";
+      leaf out_pkts_ctrl {
+        type oc-yang:counter64;
+        description
+          "This counter represents control packets transmitted.";
+      }
+      leaf out_pkts_data {
+        type oc-yang:counter64;
+        description
+          "This counter represents data packets transmitted.";
+      }
+      leaf out_pkts_dropped {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets dropped at egress.";
+      }
+      leaf out_pkts_err {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets received with errors at egress.";
+      }
+      leaf out_octets {
+        type oc-yang:counter64;
+        description
+          "This counter represents number of octets transmitted.";
+      }
+      leaf out_pkts_unicast {
+        type oc-yang:counter64;
+        description
+          "This counter represents unicast packets transmitted.";
+      }
+      leaf out_pkts_multicast {
+        type oc-yang:counter64;
+        description
+          "This counter represents multicast packets transmitted.";
+      }
+      leaf out_pkts_broadcast {
+        type oc-yang:counter64;
+        description
+          "This counter represents broadcast packets transmitted.";
+      }
+
+      leaf in_pkts_ctrl {
+        type oc-yang:counter64;
+        description
+          "This counter represents control packets received.";
+      }
+      leaf in_pkts_data {
+        type oc-yang:counter64;
+        description
+          "This counter represents data packets received.";
+      }
+      leaf in_pkts_dropped {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets dropped at ingress.";
+      }
+      leaf in_pkts_err {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets received with errors at ingress.";
+      }
+      leaf in_octets {
+        type oc-yang:counter64;
+        description
+          "This counter represents number of octets received.";
+      }
+      leaf in_pkts_unicast {
+        type oc-yang:counter64;
+        description
+          "This counter represents unicast packets received.";
+      }
+      leaf in_pkts_multicast {
+        type oc-yang:counter64;
+        description
+          "This counter represents multicast packets received.";
+      }
+      leaf in_pkts_broadcast {
+        type oc-yang:counter64;
+        description
+          "This counter represents broadcast packets received.";
+      }
+    }
+  }
+
+  grouping data-statistics-group {
+    description
+      "Data Statistics grouping.";
+    container data-statistics {
+      description
+        "Enclosing container for Data Statistics.";
+      leaf out_octets_encrypted {
+        type oc-yang:counter64;
+        description
+          "This counter represents octects encrypted at transmit.";
+      }
+      leaf out_octets_protected {
+        type oc-yang:counter64;
+        description
+          "This counter represents octets protected at transmit.";
+      }
+      leaf out_pkts_encrypted {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets encrypted at transmit.";
+      }
+      leaf out_pkts_protected {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets protected at transmit.";
+      }
+      leaf out_pkts_transform_err {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets transfrom error.";
+      }
+      leaf out_pkts_ctrl {
+        type oc-yang:counter64;
+        description
+          "This counter represents control packets transmitted.";
+      }
+      leaf out_pkts_untagged {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets transmitted untagged.";
+      }
+      leaf out_pkts_too_long {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets discarded with length greater 
+           than port MTU.";
+      }
+      leaf in_octets_decrypted {
+        type oc-yang:counter64;
+        description
+          "This counter represents octets decrypted in receive.";
+      }
+      leaf in_octets_validated {
+        type oc-yang:counter64;
+        description
+          "This counter represents octets validated in receive.";
+      }
+      leaf in_pkts_ok {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets received ok.";
+      }
+      leaf in_pkts_err {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets errored in receive.";
+      }
+      leaf in_pkts_transform_err {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets transform error in receive.";
+      }
+      leaf in_pkts_ctrl {
+        type oc-yang:counter64;
+        description
+          "This counter represents control packets received.";
+      }
+      leaf in_pkts_untagged {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets received untagged.";
+      }
+      leaf in_pkts_notag {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets received with out tag.";
+      }
+      leaf in_pkts_badtag {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets received with bad tag.";
+      }
+      leaf in_pkts_no_sci {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets received with no sci.";
+      }
+      leaf in_pkts_unknown_sci {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets received with unknown sci.";
+      }
+      leaf in_pkts_no_sa {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets received with unknown sci or 
+           unused SA.";
+      }
+      leaf in_pkts_no_sa_error {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets discarded with unknown SCI or 
+           unused SA.";
+      }
+      leaf in_pkts_overrun {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets discarded due to insufficient 
+           cryptographic resources.";
+      }
+      leaf in_pkts_unchecked {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets received while 
+           validate-frames=disabled and port-mode=lenient.";
+      }
+      leaf in_pkts_invalid {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets that failed 
+           validation, received with data unencrypted.";
+      }
+      leaf in_pkts_not_valid {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets that failed validation 
+           while validate-frames=strict or SecTag C-bit=1";
+      }
+      leaf in_pkts_delayed {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets recieved with PN lower 
+           than acceptable and replay protection disabled";
+      }
+      leaf in_pkts_late {
+        type oc-yang:counter64;
+        description
+          "This counter represents packets recieved with PN lower 
+           than acceptable and replay protection enabled";
+      }
+    }
+  }
+
+  grouping macsec-profile-config {
+    description
+      "MAC Security profile config grouping";
+    leaf name {
+      type string {
+        length "1..128";
+      }
+      description
+        "Name of the MAC Security profile.";
+    }
+    leaf macsec-cipher-suite {
+      type macsec-cipher-suite;
+      description
+        "Set Cipher suite(s) for SAK derivation";
+    }
+    leaf confidentiality-offset {
+      type confidentiality-offset;
+      default "0_BYTES";
+      description
+        "The confidentiality offset specifies a number of octets in an Ethernet
+         frame that are sent in unencrypted plain-text";
+    }
+    leaf replay-window-size {
+      type uint32;
+      default "0";
+      description
+        "Number of out of order packets accepted, else dropped.
+         range: 0..0xffffffff, default: 0";
+    }
+    leaf additional-bytes-in-clear {
+      type uint8 {
+        range "0..100";
+      }
+      default "0";
+      description
+        "User configured number of bytes to be in clear (without encryption)";
+    }
+    leaf encryption-on {
+      type boolean;
+      default "true";
+      description
+        "Encryption On/Off.";
+    }
+    leaf key-server-priority {
+      type uint8 {
+        range "0..255";
+      }
+      default "16";
+      description
+        "Specifies the key server priority used by the MACsec Key Agreement
+        (MKA) protocol to select the key server when MACsec is enabled using
+        static connectivity association key (CAK) security mode. The switch with
+        the lower priority-number is selected as the key server. If the
+        priority-number is identical on both sides of a point-to-point link, the
+        MKA protocol selects the device with the lower MAC address as the key
+        server";
+    }
+    leaf sak-rekey-interval {
+      type uint32 {
+        range "0|30..65535";
+      }
+      default "0";
+      description
+        "SAK Rekey interval in seconds. The default value is 0 where no rekey is
+        performed.";
+    }
+  }
+
+  grouping macsec-profile-group {
+    description
+      "MAC Security profile grouping.";
+    container macsec-profiles {
+      description
+        "Enclosing container for the list of MAC Security profiles.";
+      list profile {
+        key "name";
+        description
+          "List of profiles.";
+
+        uses macsec-profile-config;
+      } // profile
+    } // macsec-profile
+  } // group
+
+  grouping macsec-ca-config {
+    description
+      "MAC Security connection-association grouping.";
+    leaf name {
+      type string {
+        length "1..64";
+      }
+      description
+        "Name of the connection-association.";
+    }
+    leaf macsec-admin-state {
+      type cn-type:admin-state;
+      default "enabled";
+      description
+        "MAC Security admin state on the Connection Association. 
+        It can have values enable or disable. 
+        This admin state configuration is at the CA level. 
+        - If admin-state is disabled, macSec is disabled for this CA.
+        - If admin-state is enabled then, macsec is enabled if Interface 
+        Level AdminState is enabled, else macSec will be disabled.";
+    }
+    leaf destination-address {
+      type yang:mac-address;
+      ncx:user-write "create";
+      default "01:80:C2:00:00:03";
+      description
+        "User configured Destination Address for the EAPoL PDUs originating from the interface.";
+    }
+    leaf mka-ethertype {
+      default "0x888E";
+      ncx:user-write "create";
+      type uint16;
+      description
+        "User configured Ether-type for the EAPoL PDUs.
+        This configuration is at CA level and over-ride the configuration at 
+        interface level, i.e if CA level ether-type is not configured then 
+        interface ether-type config will be applied. If CA ether-type is 
+        configured then CA level ether-type will be applied for that CA";
+    }
+    leaf macsec-profile {
+      ncx:user-write "create";
+      type leafref {
+        path "/cn-macsec:macsec/cn-macsec:macsec-profiles/cn-macsec:profile/cn-macsec:name";
+      }
+      mandatory true;
+      description
+        "MAC Security profile attached to the connection-association.";
+    }
+    leaf key-chain {
+      ncx:user-write "create";
+      type leafref {
+        path "/cn-macsec:macsec/cn-macsec:key-chains/cn-macsec:key-chain/cn-macsec:name";
+      }
+      mandatory true;
+      description
+        "MKA Key-chain attached to the connection-association.";
+    }
+
+    choice connection-type {
+      mandatory true;
+      case g8032-service {
+        leaf ring-name {
+          ncx:user-write "create";
+          type leafref {
+            path "/g8032:g8032-rings/g8032:g8032-ring/" +
+                 "g8032:ring-name";
+          }
+          description
+            "G.8032 Ring name.";
+        }
+
+        leaf erp-instance-name {
+          ncx:user-write "create";
+          type leafref {
+            path "/g8032:g8032-rings/g8032:g8032-ring[g8032:ring-name=current()/../ring-name]/" +
+                 "g8032:erp-instances/g8032:erp-instance/g8032:instance-name";
+          }
+          description
+            "G.8032 Ring Erp Instance name.";
+        }
+
+        leaf data-member {
+          ncx:user-write "create";
+          type leafref {
+            path "/g8032:g8032-rings/g8032:g8032-ring/" +
+                 "g8032:erp-instances/g8032:erp-instance[g8032:instance-name=current()/../erp-instance-name]/g8032:data-members";
+          }
+          description
+            "G.8032 Ring Data Member name of the service.";
+        }
+
+        description
+          "G.8032 service on which MACsec configuration is applied.";
+      }
+
+      case flow-point {
+        ncx:user-write "create";
+        leaf flow-point {
+          type mef-fp:fp-ref;
+          description
+            "Flow Point name.";
+        }
+        description
+          "Flow Point on which MACsec configuration is applied.";
+      }
+
+      case ettp {
+        ncx:user-write "create";
+        leaf ettp-name {
+          type leafref {
+            path "/oc-if:interfaces/oc-if:interface/oc-if:name";
+          }
+          when "/oc-if:interfaces/oc-if:interface[name=current()]/oc-if:config/cn-oc-if:type = 'ettp'";
+          description
+            "ETTP name.";
+        }
+        description
+          "Interface on which MACsec configuration is applied.";
+      }
+    } // end choice - connection-type
+    leaf delay-protection-on {
+      type boolean;
+      default false;
+      when "../ettp-name";
+      description
+        "Enable or disable delay protection";
+    }
+    leaf sak-event-logging-on {
+      type boolean;
+      default false;
+      description
+        "Enable or disable event logging for SAK rekey";
+    }
+    leaf icv-validation-on {
+      type boolean;
+      default true;
+      description
+        "Enable or disable ICV validation";
+    }
+  } // grouping
+
+  grouping macsec-if-config {
+    description
+      "MAC Security Interface configuration grouping.";
+    leaf strict-mode-on {
+      type boolean;
+      default "false";
+      description
+        "Strict Mode On values can be true/false.
+        True - All packets should be encrypted.
+        False - Encrypted and Clear Text may co-exist.";
+    }
+    leaf-list exclude-protocols {
+      type enumeration {
+        enum lacp {
+          description 
+            "LACP protocol. Ethertype 0x8809/01. MAC DA 01-80-C2-00-00-02.";
+        }
+        enum lldp {
+          description 
+            "LLDP protocol. Ethertype 0x88CC. MAC DA 01-80-C2-00-00-0E.";
+        }
+        enum xstp {
+          description 
+            "STP/RSTP/MSTP protocols. MAC DA 01-80-C2-00-00-00.";
+        }
+        enum lamp {
+          description 
+            "LAMP protocol. Ethertype 0x8809/02. MAC DA 01-80-C2-00-00-02.";
+        }
+        enum link-oam {
+          description 
+            "LINK OAM protocol. Ethertype 0x8809/03. MAC DA 01-80-C2-00-00-02.";
+        }
+        enum port-auth {
+          description 
+            "Port Authentication protocol. Ethertype 0x888E. MAC DA 01-80-C2-00-00-03.";
+        }
+        enum e-lmi {
+          description 
+            "E-LMI protocol. Ethertype 0x88EE. MAC DA 01-80-C2-00-00-07.";
+        }
+        enum ptp-peer-delay {
+          description 
+            "PTP Peer-Delay protocol. Ethertype 0x88F7. MAC DA 01-80-C2-00-00-0E.";
+        }
+        enum ptp {
+          description 
+            "PTP protocol. Ethertype 0x88F7. MAC DA 01-80-C2-00-00-0E and 01-1B-19-00-00-00.";
+        }
+        enum esmc {
+          description 
+            "ESMC protocol. Ethertype 0x8809/0A. MAC DA 01-80-C2-00-00-02.";
+        }
+        enum garp-block {
+          description 
+            "GARP/MRP block range. MAC DA 01-80-C2-00-00-20 to 01-80-C2-00-00-2F.";
+        }
+        enum pause {
+          description
+            "802.3 MAC Control PAUSE frame. Ethertype 0x8808.";
+        }
+      }
+      description
+        "List of protocols running on the interface to be excluded from the encryption.";
+    }
+  } // group
+
+  grouping interfaces-group {
+    description
+      "MAC Security Interface grouping.";
+    container config {
+      description
+        "Configuration of the  MAC Security interface.";
+      leaf global-admin-state {
+        type cn-type:admin-state;
+        default "enabled";
+        description
+          "Macsec global administrative state
+           enabled - to enable the Macsec on the device.
+           disabled - to disable the Macsec on the device.";
+      }
+
+      list connection-association {
+        key "name";
+        description
+          "List of connections for the flow based encryption on an interface.";
+        uses macsec-ca-config;
+      }
+
+      container interfaces {
+        description
+          "Enclosing container for the MAC Security interfaces.";
+
+        list interface {
+          key "name";
+          description
+            "List of MAC Security interfaces.";
+          
+          leaf name {
+            type leafref {
+              path "/oc-if:interfaces/oc-if:interface/oc-if:name";
+            }
+            must "/oc-if:interfaces/oc-if:interface[name=current()]/oc-if:config/cn-oc-if:type = 'ettp'";
+            description
+              "Reference to MAC Security interface name.";
+          }
+          uses macsec-if-config;
+        }
+      }
+    }
+
+    container state {
+      config false;
+      description
+        "Contains MACsec specific state.";
+      leaf operational-status {
+         type cn-type:oper-state;
+         description
+            "MACsec global operational status.";
+      }
+      list connection-association {
+        key "name";
+        description
+          "List of connections for the flow based encryption on an interface.";
+        leaf name {
+          type leafref {
+             path "/macsec/config/connection-association/name";
+          }
+          description
+            "Reference to connection-association.";
+        }
+        leaf macsec-oper-state {
+          type cn-type:oper-state;
+          description
+            "MAC Security Operational state on the Connection Association. 
+             It can have values enable or disable. 
+             - disabled macSec is operationally Down.
+             - enabled macsec is operationally Up.";
+        }
+        leaf macsec-oper-state-reason {
+          type string;
+          description
+            "Reason string for Operational state.";
+        }
+        leaf macsec-key-server {
+          type boolean;
+          description
+            "-true, acting as key server.
+             -false, not acting as key server.";
+        }
+        uses local-secure-channel-identifier;
+        uses peer-secure-channel-identifier;
+        uses mka-statistics-group;
+        uses data-statistics-group;
+        leaf macsec-active-key {
+          type string;
+          description
+            "CKN of Active Key for the Connection Association";
+        }
+      }
+
+      list interface {
+        key "name";
+        description
+          "List of MAC Security interfaces.";
+        leaf name {
+          type leafref {
+            path "/cn-macsec:macsec/cn-macsec:config/cn-macsec:interfaces/cn-macsec:interface/cn-macsec:name";
+          }
+          description
+            "Reference to MAC Security interface name.";
+        }
+        uses if-statistics-group;
+      }
+
+    } // state
+  } // group
+
+  grouping macsec-mka-keychain-group {
+    description
+      "MKA key chain top level grouping";
+    container key-chains {
+      description
+        "Enclosing container for the MKA key chains";
+      list key-chain {
+        key "name";
+        description
+          "MKA Key chain name";
+        leaf name {
+          type string {
+            length "1..32";
+          }
+          description
+            "MKA Key-chain name";
+        }
+        container mka-keys {
+          description
+          "Enclosing container for the list of MKA keys";
+          list mka-key {
+            key "name";
+            description
+              "List of MKA keys";
+            leaf name {
+              type ckn {
+                length "2..64";
+              }
+              description
+              "Key identifier is used as the
+              Connectivity Association Key name (CKN).";
+            }
+            leaf key {
+              ncx:password;
+              type cak {
+                length "4|32|64";
+              }
+              description
+              "The CAK key, used for signing and encrypting. The key length should be 32 or 64";
+            }
+            leaf cryptographic-algorithm {
+              type enumeration {
+                enum AES_128_CMAC {
+                  description 
+                    "128-bit cipher based message authentication code algorithm.";
+                }
+                enum AES_256_CMAC {
+                  description 
+                    "256-bit cipher based message authentication code algorithm.";
+                }
+              }
+              default AES_128_CMAC;
+              description
+                "MKA Cryptographic authentication algorithm to use";
+            }
+            leaf valid-date-time {
+              type union {
+                type yang:date-and-time;
+                type enumeration {
+                  enum VALID_IMMEDIATELY {
+                    description  
+                      "Key is valid immediately";
+                  }
+                  enum DISABLED {
+                    description
+                      "Key is disabled";
+                  }
+                }
+              }
+              default VALID_IMMEDIATELY;
+              description
+                "Date and time the key starts being valid according to local date and
+                time configuration.";
+            }
+            leaf expiration-date-time {
+              type union {
+                type yang:date-and-time;
+                type enumeration {
+                  enum NO_EXPIRATION {
+                    description  
+                      "Key does not expire";
+                  }
+                }
+              }
+              default NO_EXPIRATION;
+              description
+                "Key date and time expiration according to local date and time
+                configuration.";
+            }
+          }
+        }
+      }
+    }
+  }
+
+  container macsec {
+    description
+      "Contains all 802.1AE MAC Security specific configuration and state.";
+      uses macsec-mka-keychain-group;
+      uses macsec-profile-group;
+      uses interfaces-group;
+  } // macsec
+
+  grouping clear-mka {
+    choice clear-scope {
+      mandatory true;
+      description
+        "Clear data statistics for all or for a specific connection associations.";
+      case ca {
+        leaf connection-association-name {
+          type leafref {
+            path "/macsec/config/connection-association/name";
+          }
+          description
+            "Clear statistics for this connection-association.";
+        }
+      }
+
+      case all {
+        leaf all {
+          type empty;
+          description
+            "Clear statistics for all connection associations.";
+        }
+      }
+    }
+  }
+
+  rpc clear-macsec-mka-statistics {
+    description
+      "RPC to clear the Macsec MKA statistics of a specific or all
+      connection associations.";
+
+    input {
+      uses clear-mka;
+    }
+    output {
+      leaf status {
+        type cn-type:status;
+        description
+          "Status of the clear statistics operation.";
+      }
+    }
+  } // end rpc clear-macsec-mka-statistics
+
+  rpc clear-macsec-data-statistics {
+    description
+       "RPC to clear the Macsec data statistics of a specific or all
+        connection associations.";
+
+    input {
+       uses clear-mka;
+    }
+    output {
+      leaf status {
+        type cn-type:status;
+        description
+          "Status of the clear statistics operation.";
+      }
+    }
+  } // end rpc clear-macsec-data-statistics
+
+  rpc clear-macsec-if-statistics {
+    description
+      "RPC to clear the Macsec interface statistics of a specific or all
+       Macsec interfaces.";
+
+    input {
+      choice if-clear-scope {
+        mandatory true;
+        description
+          "Clear statistics for all or for a specific Macsec interfaces.";
+        case interface {
+          leaf if-name {
+            type leafref {
+              path "/cn-macsec:macsec/cn-macsec:config/cn-macsec:interfaces/cn-macsec:interface/cn-macsec:name";
+            }
+            description
+              "Clear statistics for this Macsec interface.";
+          }
+        }
+
+        case all {
+          leaf all {
+            type empty;
+            description
+              "Clear statistics for all Macsec interfaces.";
+          }
+        }
+      }
+    }
+    output {
+      leaf status {
+        type cn-type:status;
+        description
+          "Status of the clear statistics operation.";
+      }
+    }
+  } // end rpc clear-macsec-if-statistics
+
+  notification macsec-connection-association-status {
+    description
+       "Notification for connection association status change.";
+    leaf connection-association-name {
+      type leafref {
+         path "/macsec/config/connection-association/name";
+      }
+      description
+        "Connection association name.";
+    }
+
+    uses local-secure-channel-identifier;
+    uses peer-secure-channel-identifier;
+
+    leaf peer-channel-status {
+      type enumeration {
+        enum discovered {
+          description
+            "New peer channel is discovered.";
+        }
+        enum established {
+          description
+            "The channel is established for Encryption / Decryption.";
+         }
+         enum removed {
+           description
+             "The peer channel is removed.";
+         }
+      }
+      description
+        "Secure channel status.";
+    }
+  }
+}

@@ -1,0 +1,197 @@
+module ciena-secure-boot {
+  namespace "http://www.ciena.com/ns/yang/ciena-secure-boot";
+  prefix ciena-secure-boot;
+
+  organization
+    "Ciena Corporation";
+
+  contact
+    "Web URL: http://www.ciena.com/
+     E-mail:  yang@ciena.com
+     Postal:  7035 Ridge Road
+              Hanover, Maryland 21076
+              U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+
+  description
+    "This YANG module defines the nodes for Secure Boot for the NETCONF protocol.
+
+     Copyright (c) 2023 Ciena Corporation.  All rights
+     reserved.
+
+     All information and intellectual property contained in this
+     YANG module (Specification) is, and remains the property
+     of Ciena Corporation. Ciena retains all title and ownership
+     in the Specification, including any revisions.
+
+     Ciena grants all interested parties that access the
+     Specification with the intent to use or distribute ('you') a
+     non-exclusive, no-cost license to use and distribute
+     unmodified copies of the Specification solely in connection
+     with the management of Ciena products sold by or on
+     behalf of Ciena, provided this copyright notice and license
+     appear on all copies. Ciena may rescind or modify this
+     license at any time.
+
+     This Specification is supplied 'as is', and Ciena makes no
+     warranty, either express or implied, as to the use, operation,
+     condition, or performance of the Specification. You agree
+     that Ciena has no liability for your use of the Specification.";
+
+  revision 2023-11-14 {
+     description
+       "Initial version";
+     reference
+      "RFC 6020: YANG - A Data Modeling Language for
+       the Network Configuration Protocol (NETCONF).
+       No specific reference; standard not available.";
+  }
+
+  grouping x509 {
+     description
+       "X.509 Certificate";
+    leaf type {
+      type string;
+      description
+        "Certificate type";
+    }
+    leaf signature {
+      type string;
+      description
+        "Signature algorithm code";
+    }
+    leaf size {
+      type string;
+      description
+        "Size of this certificate";
+    }
+    leaf owner {
+      type string;
+      description
+        "Owner of public key";
+    }
+    leaf subject {
+      type string;
+      description
+        "Subject name";
+    }
+    leaf issuer {
+      type string;
+      description
+        "Issuer name";
+    }
+  }
+
+  container secure-boot-state {
+    config false;
+    description
+      "Secure boot state";
+
+    leaf is-supported {
+      type boolean;
+      description
+        "Platform supports secure boot?";
+    }
+
+    leaf bmc-enabled {
+      type boolean;
+      description
+        "The BMC secure boot enabled?";
+    }
+
+    leaf ibg-enabled {
+      type boolean;
+      description
+        "The Intel Boot Guard secure boot enabled?";
+    }
+
+    leaf uefi-enabled {
+      type boolean;
+      description
+        "The UEFI secure boot enabled?";
+    }
+
+    leaf user-mode {
+      type boolean;
+      description
+        "The UEFI in user mode?";
+    }
+  }
+
+  container secure-boot-efi-variables {
+    config false;
+    description
+      "EFI secure boot variables";
+
+    container pk {
+      description
+        "EFI variable PK (Platform Key)";
+      uses x509;
+    }
+
+    container kek {
+      description
+        "EFI variable KEK (Key Exchange Key)";
+      list certs {
+        key "index";
+        leaf index {
+          type uint32;
+          description
+            "Certificate index";
+        }
+        uses x509;
+        description
+          "Certificates";
+      }
+    }
+
+    container db {
+      description
+        "EFI variable db (Authorized Signature Database)";
+      list certs {
+        key "index";
+        leaf index {
+          type uint32;
+          description
+            "Certificate index";
+        }
+        uses x509;
+        description
+          "Certificates";
+      }
+    }
+
+    container dbx {
+      description
+        "EFI variable dbx (Forbidden Signature Database)";
+      list certs {
+        key "index";
+        leaf index {
+          type uint32;
+          description
+            "Certificate index";
+        }
+        uses x509;
+        description
+          "Certificates";
+      }
+    }
+
+    container moklist {
+      description
+        "EFI variable MokList (Machine Owner Key)";
+      list certs {
+        key "index";
+        leaf index {
+          type uint32;
+          description
+            "Certificate index";
+        }
+        uses x509;
+        description
+          "Certificates";
+      }
+    }
+  }
+}

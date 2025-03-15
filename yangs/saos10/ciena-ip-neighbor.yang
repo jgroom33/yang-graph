@@ -1,0 +1,251 @@
+module ciena-ip-neighbor {
+
+   namespace "urn:ciena:params:xml:ns:yang:ciena-ip-neighbor";
+   prefix "cn-ip-nbrs";
+
+   import ietf-inet-types
+   {
+      prefix inet;
+   }
+
+   import ietf-yang-types
+   {
+      prefix yang;
+   }
+
+   organization
+      "Ciena Corporation";
+
+   contact
+      "Web URL: http://www.ciena.com/
+      E-mail:  yang@ciena.com
+      Postal:  7035 Ridge Road
+               Hanover, Maryland 21076
+               U.S.A.
+      Phone:   +1 800-921-1144
+      Fax:     +1 410-694-5750";
+
+   description
+      "yang model to show binding between neighbor ip address and mac address";
+
+   revision "2023-11-01" {
+      description
+         "Added last refresh time display support for both IPv4 and IPv6 neighbor.
+          Event notifications for neighbor discovery exceeded or recovered from 95 percent of the platform capacity.
+          Added support for neighbor state summary based on the given interface.";
+   }
+
+   revision "2018-02-01" {
+      description
+         "Initial revision of the yang model to support show ip neighbor";
+   }
+
+   typedef neighbor-state {
+      type enumeration {
+         enum PERMANENT {
+            description
+               "never expires; never verified";
+         }
+         enum NOARP {
+            description
+               "normal expiration; never verified; no-op to data path";
+         }
+         enum DELAY {
+            description
+               "schedule ARP request; needs verification; no-op to data path";
+         }
+         enum REACHABLE {
+            description
+               "normal expiration";
+         }
+         enum STALE {
+            description
+               "still usable; needs verification";
+         }
+         enum PROBE {
+            description
+               "sending ARP request; no-op to data path";
+         }
+         enum INCOMPLETE {
+            description
+               "first ARP request sent; no-op to data path";
+         }
+         enum FAILED {
+            description
+               "no response received";
+         }
+      }
+   }
+
+   container ip-neighbors-summary-state {
+      description
+         "Container for ARP/NDP summary";
+
+      config false;
+      list ipv4 {
+         description
+            "List for ARP summary";
+         key "interface-name";
+
+         leaf interface-name {
+            type string;
+               description
+                  "Interface over which the IPv4 neighbor entries are learnt";
+         }
+
+         leaf count {
+            type uint32;
+               description
+                  "Total count of all IPv4 neighbor entries in the system or the given interface.";
+         }
+
+         leaf reachable {
+            type uint32;
+               description
+                  "Total count of resolved IPv4 neighbors in the system or the given interface.";
+         }
+
+         leaf stale {
+            type uint32;
+               description
+                  "Total count of stale (invalidated/previously reachable) IPv4 neighbor entries in the system or the given interface.";
+         }
+
+         leaf failed {
+            type uint32;
+               description
+                  "Total count of failed (unreachable) IPv4 neighbors in the system or the given interface.";
+         }
+
+         leaf permanent {
+            type uint32;
+               description
+                  "Total count of permanent (static) IPv4 neighbor entries in the system or the given interface.";
+         }
+      }
+
+      list ipv6 {
+         description
+            "List for ARP/NDP summary";
+         key "interface-name";
+
+         leaf interface-name {
+            type string;
+               description
+                  "Interface over which the IPv6 neighbor entries are learnt";
+         }
+
+         leaf count {
+            type uint32;
+               description
+                  "Total count of all IPv6 neighbor entries in the system or the given interface.";
+         }
+
+         leaf reachable {
+            type uint32;
+               description
+                  "Total count of resolved IPv6 neighbors in the system or the given interface.";
+         }
+
+         leaf stale {
+            type uint32;
+               description
+                  "Total count of stale (invalidated/previously reachable) IPv6 neighbor entries in the system or the given interface.";
+         }
+
+         leaf failed {
+            type uint32;
+               description
+                  "Total count of failed (unreachable) IPv6 neighbors in the system or the given interface.";
+         }
+
+         leaf permanent {
+            type uint32;
+               description
+                  "Total count of permanent (static) IPv6 neighbor entries in the system or the given interface.";
+         }
+      }
+   }
+
+   container ip-neighbor-state {
+      config false;
+      list ipv4 {
+         key "interface-name ip-address";
+
+         leaf interface-name {
+            type string;
+            description
+               "Outgoing interface name.";
+         }
+
+         leaf ip-address {
+            type inet:ipv4-address ;
+            description
+               "Next-hop IPv4 Address.";
+         }
+
+         leaf mac-address {
+            type yang:mac-address;
+            description
+               "Mac address binding on the next hop ip address";
+         }
+
+         leaf state {
+            type neighbor-state;
+            description
+               "Indicate state of the ip neighbor entry";
+         }
+
+         leaf last-refresh-time {
+            type string;
+            description
+               "Time elapsed since the last refresh for the neighbor.";
+         }
+      }
+
+      list ipv6 {
+         key "interface-name ip-address";
+
+         leaf interface-name {
+            type string;
+            description
+               "Outgoing interface name.";
+         }
+
+         leaf ip-address {
+            type inet:ipv6-address ;
+            description
+               "Next-hop IPv6 Address.";
+         }
+
+         leaf mac-address {
+            type yang:mac-address;
+            description
+               "Mac address binding on the next hop ip address";
+         }
+
+         leaf state {
+            type neighbor-state;
+            description
+               "Indicate state of the ip neighbor entry";
+         }
+
+         leaf last-refresh-time {
+            type string;
+            description
+               "Time elapsed since the last refresh for the neighbor.";
+         }
+      }
+   }
+
+   notification nbr-platform-scale-threshold-event {
+     description
+        "Event notifications for neighbor discovery exceeded or recovered from 95 percent of the platform capacity";
+      leaf neighbor-platform-scale-threshold-state {
+         type string;
+         description
+             "Neighbor discovery scale state based on defined threshold values.";
+      }
+   }
+   
+}
