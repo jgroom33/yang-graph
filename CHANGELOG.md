@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0]
+### Added
+- Parent to child arrows
+
 ## [1.1.0]
 ### Added
 - many more modules

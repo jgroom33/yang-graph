@@ -10,9 +10,7 @@
       height: 800px;
       border: 1px solid #ccc;
       position: relative;
-      /* Ensure it stays in the normal flow */
       z-index: 1;
-      /* Lower than search and node-info */
     }
 
     #node-info {
@@ -24,7 +22,6 @@
       border: 1px solid #ccc;
       background-color: #f9f9f9;
       z-index: 10;
-      /* Above the graph */
     }
 
     #search-container {
@@ -33,9 +30,7 @@
       left: 10px;
       padding: 10px;
       z-index: 10;
-      /* Above the graph */
       background-color: #fff;
-      /* Optional: ensure visibility */
     }
 
     #search-input {
@@ -149,14 +144,39 @@
                 },
               },
               {
-                selector: "edge",
+                selector: 'edge[relationship ^= "references_key"]',
                 style: {
                   width: 2,
-                  "line-color": "#0074D9",
-                  "target-arrow-color": "#0074D9",
+                  "line-color": "#2ECC40", // Green for key references (target as parent)
+                  "target-arrow-color": "#2ECC40",
                   "target-arrow-shape": "triangle",
                   label: "data(relationship)",
                   "font-size": "10px",
+                  "curve-style": "bezier",
+                },
+              },
+              {
+                selector: 'edge[relationship = "references_type"]',
+                style: {
+                  width: 2,
+                  "line-color": "#FF851B", // Orange for type references
+                  "target-arrow-color": "#FF851B",
+                  "target-arrow-shape": "triangle",
+                  label: "data(relationship)",
+                  "font-size": "10px",
+                  "curve-style": "bezier",
+                },
+              },
+              {
+                selector: 'edge[relationship = "references_list"]',
+                style: {
+                  width: 2,
+                  "line-color": "#7FDBFF", // Light blue for list references
+                  "target-arrow-color": "#7FDBFF",
+                  "target-arrow-shape": "triangle",
+                  label: "data(relationship)",
+                  "font-size": "10px",
+                  "curve-style": "bezier",
                 },
               },
             ],
