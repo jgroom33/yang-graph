@@ -6,13 +6,13 @@ saos10_yangs=(
   ciena-cfm
   ciena-dhcpv6-client
   ciena-evpn
-  ciena-flexe            # multiple lists
+  ciena-flexe
   ciena-igmp-snooping
   ciena-isis
-  ciena-itut-g8032-draft # 1 list + props
+  ciena-itut-g8032-draft
   ciena-l2vpn
   ciena-ldp
-  ciena-mef-access-flow  # multiple
+  ciena-mef-access-flow
   ciena-mef-classifier
   ciena-mef-fd
   ciena-mef-fp
@@ -32,10 +32,10 @@ saos10_yangs=(
   ciena-sr-policy
   ciena-sync
   # ciena-system          # Empty
-  ciena-vrf             # Not Handled yet. Top level list
+  ciena-vrf
   ietf-snmp
   ietf-twamp
-  mef-cfm               # Not Handled yet. Top level list
+  mef-cfm
   openconfig-system
 )
 
