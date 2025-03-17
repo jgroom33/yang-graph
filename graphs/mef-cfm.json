@@ -1,0 +1,40 @@
+{
+  "nodes": [
+    {
+      "id": "mef-cfm:default_md_level",
+      "type": "list",
+      "module": "mef-cfm",
+      "description": "Data definitions related to the default MD level associated with specific VIDs",
+      "key": "primary-vid component-id"
+    },
+    {
+      "id": "mef-cfm:maintenance_domain",
+      "type": "list",
+      "module": "mef-cfm",
+      "description": "A Maintenance Domain managed object is required in order to create an MA with a MAID that includes that Maintenance Domain's Name. From this Maintenance Domain managed object, all Maintenance Association managed objects associated with that Maintenance Domain managed object can be accessed, and thus controlled.",
+      "key": "id"
+    },
+    {
+      "id": "mef-cfm:maintenance_association",
+      "type": "list",
+      "module": "mef-cfm",
+      "description": "This list represents Maintenance Entity Groups (Y.1731) or Maintenance Associations (802.1ag). MEGs/MAs are sets of MEPs, each configured to the same service inside a common OAM domain.",
+      "key": "id"
+    },
+    {
+      "id": "mef-cfm:component_list",
+      "type": "list",
+      "module": "mef-cfm",
+      "description": "A list of components each of which can be managed in a manner essentially equivalent to an 802.1Q bridge.",
+      "key": "component-id"
+    },
+    {
+      "id": "mef-cfm:maintenance_association_end_point",
+      "type": "list",
+      "module": "mef-cfm",
+      "description": "The list of Maintenance association End Points in a specific Maintance Association.",
+      "key": "mep-identifier"
+    }
+  ],
+  "edges": []
+}

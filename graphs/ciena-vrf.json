@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-vrf:vrf",
+      "type": "list",
+      "module": "ciena-vrf",
+      "description": "Virtual Routing Forwarding (VRF) Instance",
+      "key": "vrfName"
+    }
+  ],
+  "edges": []
+}

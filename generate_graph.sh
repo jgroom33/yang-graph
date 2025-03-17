@@ -32,10 +32,10 @@ saos10_yangs=(
   ciena-sr-policy
   ciena-sync
   # ciena-system          # Empty
-  # ciena-vrf             # Not Handled yet. Top level list
+  ciena-vrf             # Not Handled yet. Top level list
   ietf-snmp
   ietf-twamp
-  # mef-cfm               # Not Handled yet. Top level list
+  mef-cfm               # Not Handled yet. Top level list
   openconfig-system
 )
 

@@ -9,10 +9,26 @@
             height: 800px;
             border: 1px solid #ccc;
         }
+        #node-info {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
     </style>
 </head>
 <body>
     <div id="cy"></div>
+    <div id="node-info">
+        <h3>Node Information</h3>
+        <p id="node-id">ID: N/A</p>
+        <p id="node-module">Module: N/A</p>
+        <p id="node-description">Description: N/A</p>
+        <p id="node-key">Key: N/A</p>
+    </div>
     <script>
 document.addEventListener("DOMContentLoaded", function () {
   fetch("graph.json")
@@ -62,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
           {
             selector: "node",
             style: {
-              shape: "ellipse",
+              shape: "roundrectangle", // Changed from ellipse to roundrectangle
               label: "data(id)",
               "background-color": "#0074D9",
               color: "#fff",
@@ -108,15 +124,14 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       });
 
-      // Click handler to show node info only
+      // Click handler to show node info in the shared component
       cy.on("tap", "node", function (evt) {
         const node = evt.target;
         const data = node.data();
-        alert(
-          `Node: ${data.id}\nModule: ${data.module}\nDescription: ${
-            data.description
-          }\nKey: ${data.key || "N/A"}`
-        );
+        document.getElementById("node-id").textContent = `ID: ${data.id}`;
+        document.getElementById("node-module").textContent = `Module: ${data.module}`;
+        document.getElementById("node-description").textContent = `Description: ${data.description}`;
+        document.getElementById("node-key").textContent = `Key: ${data.key || "N/A"}`;
       });
     })
     .catch((error) => {
