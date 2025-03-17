@@ -36,9 +36,12 @@ saos10_yangs=(
   ciena-sync
   # ciena-system          # Empty
   ciena-vrf
+  ietf-interfaces
+  ietf-pseudowires
   ietf-snmp
   ietf-twamp
   mef-cfm
+  openconfig-interfaces
   openconfig-system
 )
 

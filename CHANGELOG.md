@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2]
+### Added
+- ietf-pseudowired
+- ietf-interfaces
+### Changed
+- Don't show singluar nodes on the graph
+
 ## [1.0.1]
 ### Added
 - Readme mermaid diagram to show the stages of the project.

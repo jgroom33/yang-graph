@@ -1,144 +1,158 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>YANG Graph Renderer</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
-    <style>
-        #cy {
-            width: 100%;
-            height: 800px;
-            border: 1px solid #ccc;
-        }
-        #node-info {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 300px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background-color: #f9f9f9;
-        }
-    </style>
+  <title>YANG Graph Renderer</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
+  <style>
+    #cy {
+      width: 100%;
+      height: 800px;
+      border: 1px solid #ccc;
+    }
+
+    #node-info {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 300px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #f9f9f9;
+    }
+  </style>
 </head>
+
 <body>
-    <div id="cy"></div>
-    <div id="node-info">
-        <h3>Node Information</h3>
-        <p id="node-id">ID: N/A</p>
-        <p id="node-module">Module: N/A</p>
-        <p id="node-description">Description: N/A</p>
-        <p id="node-key">Key: N/A</p>
-    </div>
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-  fetch("graph.json")
-    .then((response) => response.json())
-    .then((data) => {
-      // Extract nodes and edges from Cytoscape.js format
-      const elements = data.graph || {
-        nodes: data.nodes || [],
-        edges: data.edges || [],
-      };
-      const nodes = (
-        data.graph ? elements.filter((e) => e.data.id) : elements.nodes
-      ).map((n) => n.data);
-      const edges = (
-        data.graph ? elements.filter((e) => !e.data.id) : elements.edges
-      ).map((e) => e.data);
+  <div id="cy"></div>
+  <div id="node-info">
+    <h3>Node Information</h3>
+    <p id="node-id">ID: N/A</p>
+    <p id="node-module">Module: N/A</p>
+    <p id="node-description">Description: N/A</p>
+    <p id="node-key">Key: N/A</p>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      fetch("graph.json")
+        .then((response) => response.json())
+        .then((data) => {
+          // Extract nodes and edges from Cytoscape.js format
+          const elements = data.graph || {
+            nodes: data.nodes || [],
+            edges: data.edges || [],
+          };
+          const nodes = (
+            data.graph ? elements.filter((e) => e.data.id) : elements.nodes
+          ).map((n) => n.data);
+          const edges = (
+            data.graph ? elements.filter((e) => !e.data.id) : elements.edges
+          ).map((e) => e.data);
 
-      // Create a set of node IDs
-      const nodeIds = new Set(nodes.map((n) => n.id));
-
-      // Add placeholder nodes for missing targets
-      const placeholderNodes = [];
-      edges.forEach((edge) => {
-        if (!nodeIds.has(edge.target)) {
-          placeholderNodes.push({
-            id: edge.target,
-            type: "unknown",
-            module: edge.target.split(":")[0] || "unknown",
-            description: "Referenced but not defined in processed YANG modules",
-            key: null,
-            isPlaceholder: true,
+          // Create a set of node IDs that appear in edges
+          const connectedNodeIds = new Set();
+          edges.forEach((edge) => {
+            connectedNodeIds.add(edge.source);
+            connectedNodeIds.add(edge.target);
           });
-          nodeIds.add(edge.target);
-        }
-      });
 
-      // Combine original and placeholder nodes
-      const allNodes = nodes.concat(placeholderNodes);
-      const allElements = allNodes
-        .map((n) => ({ data: n }))
-        .concat(edges.map((e) => ({ data: e })));
+          // Filter nodes to only include those with relationships
+          const filteredNodes = nodes.filter((node) => connectedNodeIds.has(node.id));
 
-      const cy = cytoscape({
-        container: document.getElementById("cy"),
-        elements: allElements,
-        style: [
-          {
-            selector: "node",
-            style: {
-              shape: "roundrectangle", // Changed from ellipse to roundrectangle
-              label: "data(id)",
-              "background-color": "#0074D9",
-              color: "#fff",
-              "text-valign": "center",
-              "text-halign": "center",
-              width: "150px",
-              height: "80px",
-              "font-size": "10px",
-              "text-wrap": "wrap",
-              "text-max-width": "140px",
-              padding: "5px",
-            },
-          },
-          {
-            selector: "node[isPlaceholder]",
-            style: {
-              "background-color": "#999999",
-              opacity: 0.6,
-              label: 'data(id) + " (missing)"',
-            },
-          },
-          {
-            selector: "edge",
-            style: {
-              width: 2,
-              "line-color": "#0074D9",
-              "target-arrow-color": "#0074D9",
-              "target-arrow-shape": "triangle",
-              label: "data(relationship)",
-              "font-size": "10px",
-            },
-          },
-        ],
-        layout: {
-          name: "cose", // Changed to force-directed layout
-          animate: true, // Smooth animation during layout
-          nodeRepulsion: 400000, // Increase repulsion for spread
-          idealEdgeLength: 100, // Target edge length
-          gravity: 80, // Pull nodes toward center
-          numIter: 1000, // More iterations for stability
-          fit: true, // Fit graph to viewport
-          padding: 30, // Padding around graph
-        },
-      });
+          // Create a set of node IDs from filtered nodes
+          const nodeIds = new Set(filteredNodes.map((n) => n.id));
 
-      // Click handler to show node info in the shared component
-      cy.on("tap", "node", function (evt) {
-        const node = evt.target;
-        const data = node.data();
-        document.getElementById("node-id").textContent = `ID: ${data.id}`;
-        document.getElementById("node-module").textContent = `Module: ${data.module}`;
-        document.getElementById("node-description").textContent = `Description: ${data.description}`;
-        document.getElementById("node-key").textContent = `Key: ${data.key || "N/A"}`;
-      });
-    })
-    .catch((error) => {
-      console.error("Error loading or rendering graph:", error);
-      alert("Failed to load graph.json. Check the console for details.");
+          // Add placeholder nodes for missing targets
+          const placeholderNodes = [];
+          edges.forEach((edge) => {
+            if (!nodeIds.has(edge.target)) {
+              placeholderNodes.push({
+                id: edge.target,
+                type: "unknown",
+                module: edge.target.split(":")[0] || "unknown",
+                description: "Referenced but not defined in processed YANG modules",
+                key: null,
+                isPlaceholder: true,
+              });
+              nodeIds.add(edge.target);
+            }
+          });
+
+          // Combine filtered and placeholder nodes
+          const allNodes = filteredNodes.concat(placeholderNodes);
+          const allElements = allNodes
+            .map((n) => ({ data: n }))
+            .concat(edges.map((e) => ({ data: e })));
+
+          const cy = cytoscape({
+            container: document.getElementById("cy"),
+            elements: allElements,
+            style: [
+              {
+                selector: "node",
+                style: {
+                  shape: "roundrectangle",
+                  label: "data(id)",
+                  "background-color": "#0074D9",
+                  color: "#fff",
+                  "text-valign": "center",
+                  "text-halign": "center",
+                  width: "150px",
+                  height: "80px",
+                  "font-size": "10px",
+                  "text-wrap": "wrap",
+                  "text-max-width": "140px",
+                  padding: "5px",
+                },
+              },
+              {
+                selector: "node[isPlaceholder]",
+                style: {
+                  "background-color": "#999999",
+                  opacity: 0.6,
+                  label: 'data(id) + " (missing)"',
+                },
+              },
+              {
+                selector: "edge",
+                style: {
+                  width: 2,
+                  "line-color": "#0074D9",
+                  "target-arrow-color": "#0074D9",
+                  "target-arrow-shape": "triangle",
+                  label: "data(relationship)",
+                  "font-size": "10px",
+                },
+              },
+            ],
+            layout: {
+              name: "cose",
+              animate: true,
+              nodeRepulsion: 400000,
+              idealEdgeLength: 100,
+              gravity: 80,
+              numIter: 1000,
+              fit: true,
+              padding: 30,
+            },
+          });
+
+          // Click handler to show node info in the shared component
+          cy.on("tap", "node", function (evt) {
+            const node = evt.target;
+            const data = node.data();
+            document.getElementById("node-id").textContent = `ID: ${data.id}`;
+            document.getElementById("node-module").textContent = `Module: ${data.module}`;
+            document.getElementById("node-description").textContent = `Description: ${data.description}`;
+            document.getElementById("node-key").textContent = `Key: ${data.key || "N/A"}`;
+          });
+        })
+        .catch((error) => {
+          console.error("Error loading or rendering graph:", error);
+          alert("Failed to load graph.json. Check the console for details.");
+        });
     });
-});
-    </script>
+  </script>
 </body>
+
 </html>

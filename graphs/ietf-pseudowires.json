@@ -1,0 +1,19 @@
+{
+  "nodes": [
+    {
+      "id": "ietf-pseudowires:pseudowire",
+      "type": "list",
+      "module": "ietf-pseudowires",
+      "description": "A pseudowire",
+      "key": "name"
+    },
+    {
+      "id": "ietf-pseudowires:pw_template",
+      "type": "list",
+      "module": "ietf-pseudowires",
+      "description": "pw-template",
+      "key": "name"
+    }
+  ],
+  "edges": []
+}
