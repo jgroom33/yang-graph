@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-dhcpv6-client:client",
+      "type": "list",
+      "module": "ciena-dhcpv6-client",
+      "description": "A client may have several interfaces. This list defines specific client interfaces and their configuration data. Different interfaces are distinguished by the key which is a string whose value is the name of an existing interface.",
+      "key": "interface-name"
+    }
+  ],
+  "edges": []
+}

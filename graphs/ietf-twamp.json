@@ -1,0 +1,47 @@
+{
+  "nodes": [
+    {
+      "id": "ietf-twamp:mode_preference_chain",
+      "type": "list",
+      "module": "ietf-twamp",
+      "description": "Indicates the Control-Client preferred order of use of the supported TWAMP Modes. Depending on the Modes available in the TWAMP Server Greeting message (see Fig. 2 of RFC 7717), the this Control-Client MUST choose the highest priority Mode from the configured mode-preference-chain list.",
+      "key": "priority"
+    },
+    {
+      "id": "ietf-twamp:key_chain",
+      "type": "list",
+      "module": "ietf-twamp",
+      "description": "Relates KeyIDs with their respective secret keys in a TWAMP-Control connection.",
+      "key": "key-id"
+    },
+    {
+      "id": "ietf-twamp:ctrl_connection",
+      "type": "list",
+      "module": "ietf-twamp",
+      "description": "List of TWAMP Control-Client control connections. Each item in the list describes a control connection that will be initiated by this Control-Client",
+      "key": "name"
+    },
+    {
+      "id": "ietf-twamp:test_session_request",
+      "type": "list",
+      "module": "ietf-twamp",
+      "description": "Information associated with the Control-Client for this test session",
+      "key": "name"
+    },
+    {
+      "id": "ietf-twamp:pm_reg_list",
+      "type": "list",
+      "module": "ietf-twamp",
+      "description": "A list of one or more Performance Metric Registry Index values, which communicate packet stream characteristics along with one or more metrics to be measured. All members of the pm-reg-list MUST have the same stream characteristics, such that they combine to specify all metrics that shall be measured on a single stream.",
+      "key": "pm-index"
+    },
+    {
+      "id": "ietf-twamp:test_session",
+      "type": "list",
+      "module": "ietf-twamp",
+      "description": "List of TWAMP Session-Sender test sessions.",
+      "key": "name"
+    }
+  ],
+  "edges": []
+}

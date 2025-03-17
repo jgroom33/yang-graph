@@ -1,0 +1,91 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-flexe:flexe_port",
+      "type": "list",
+      "module": "ciena-flexe",
+      "description": "List of FlexE ports.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-flexe:flexe_group",
+      "type": "list",
+      "module": "ciena-flexe",
+      "description": "List of FlexE groups.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-flexe:flexe_phys",
+      "type": "list",
+      "module": "ciena-flexe",
+      "description": "List of the participating PHYs in a FlexE group",
+      "key": "phy-number-in-group"
+    },
+    {
+      "id": "ciena-flexe:flexe_channel",
+      "type": "list",
+      "module": "ciena-flexe",
+      "description": "List of FlexE channels.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-flexe:calendar_A_slots_list",
+      "type": "list",
+      "module": "ciena-flexe",
+      "description": "List of slots allocated on Calendar A for a FlexE channel. Number of slots allocated for a FlexE channel is based on the bandwidth allocated for it. Ex; For a system with calendar slot granularity of 5G, a 10G FlexE channel would be allocated 2 slots (10G/5G)",
+      "key": "phy-number-in-group slot-id"
+    },
+    {
+      "id": "ciena-flexe:calendar_B_slots_list",
+      "type": "list",
+      "module": "ciena-flexe",
+      "description": "List of slots allocated on Calendar B for a FlexE channel. Number of slots allocated for a FlexE channel is based on the bandwidth allocated for it. Ex; For a system with calendar slot granularity of 5G, a 10G FlexE-channel would be allocated 2 slots (10G/5G)",
+      "key": "phy-number-in-group slot-id"
+    },
+    {
+      "id": "ciena-flexe:flexe_cross_connect",
+      "type": "list",
+      "module": "ciena-flexe",
+      "description": "List of FlexE cross-connects. FlexE cross-connect can be between Faceplate standard ethernet ETTP and FlexE MAC ETTP or two FlexE channels",
+      "key": "name"
+    },
+    {
+      "id": "ciena-flexe:flexe_protection_profile",
+      "type": "list",
+      "module": "ciena-flexe",
+      "description": "List of FlexE Protection Profiles.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-flexe:flexe_bas_oam",
+      "type": "list",
+      "module": "ciena-flexe",
+      "description": "List of FlexE BAS (basic code block) OAMs.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-flexe:flexe_protection_group",
+      "type": "list",
+      "module": "ciena-flexe",
+      "description": "List of FlexE protection groups.",
+      "key": "name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-flexe:flexe_port",
+      "target": "ciena-flexe:ptp_id",
+      "relationship": "references_list"
+    },
+    {
+      "source": "ciena-flexe:calendar_A_slots_list",
+      "target": "ciena-flexe:flexe_phys",
+      "relationship": "references_key:phy-number-in-group"
+    },
+    {
+      "source": "ciena-flexe:calendar_B_slots_list",
+      "target": "ciena-flexe:flexe_phys",
+      "relationship": "references_key:phy-number-in-group"
+    }
+  ]
+}

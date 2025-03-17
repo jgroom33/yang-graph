@@ -1,0 +1,107 @@
+{
+  "nodes": [
+    {
+      "id": "openconfig-system:server",
+      "type": "list",
+      "module": "openconfig-system",
+      "description": "List of the DNS servers that the resolver should query. When the resolver is invoked by a calling application, it sends the query to the first name server in this list. If no response has been received within 'timeout' seconds, the resolver continues with the next server in the list. If no response is received from any server, the resolver continues with the first server again. When the resolver has traversed the list 'attempts' times without receiving any response, it gives up and returns an error to the calling application. Implementations MAY limit the number of entries in this list.",
+      "key": "address"
+    },
+    {
+      "id": "openconfig-system:host_entry",
+      "type": "list",
+      "module": "openconfig-system",
+      "description": "List of static host entries",
+      "key": "hostname"
+    },
+    {
+      "id": "openconfig-system:ntp_key",
+      "type": "list",
+      "module": "openconfig-system",
+      "description": "List of NTP authentication keys",
+      "key": "key-id"
+    },
+    {
+      "id": "openconfig-system:selector",
+      "type": "list",
+      "module": "openconfig-system",
+      "description": "List of selectors for log messages",
+      "key": "facility severity"
+    },
+    {
+      "id": "openconfig-system:remote_server",
+      "type": "list",
+      "module": "openconfig-system",
+      "description": "List of remote log servers",
+      "key": "host"
+    },
+    {
+      "id": "openconfig-system:user",
+      "type": "list",
+      "module": "openconfig-system",
+      "description": "List of local users on the system",
+      "key": "username"
+    },
+    {
+      "id": "openconfig-system:event",
+      "type": "list",
+      "module": "openconfig-system",
+      "description": "List of events subject to AAA authorization",
+      "key": "event-type"
+    },
+    {
+      "id": "openconfig-system:server_group",
+      "type": "list",
+      "module": "openconfig-system",
+      "description": "List of AAA server groups. All servers in a group must have the same type as indicated by the server type.",
+      "key": "name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "openconfig-system:server",
+      "target": "openconfig-system:address",
+      "relationship": "references_list"
+    },
+    {
+      "source": "openconfig-system:host_entry",
+      "target": "openconfig-system:hostname",
+      "relationship": "references_list"
+    },
+    {
+      "source": "openconfig-system:ntp_key",
+      "target": "openconfig-system:key_id",
+      "relationship": "references_list"
+    },
+    {
+      "source": "openconfig-system:selector",
+      "target": "openconfig-system:facility",
+      "relationship": "references_list"
+    },
+    {
+      "source": "openconfig-system:selector",
+      "target": "openconfig-system:severity",
+      "relationship": "references_list"
+    },
+    {
+      "source": "openconfig-system:remote_server",
+      "target": "openconfig-system:host",
+      "relationship": "references_list"
+    },
+    {
+      "source": "openconfig-system:user",
+      "target": "openconfig-system:username",
+      "relationship": "references_list"
+    },
+    {
+      "source": "openconfig-system:event",
+      "target": "openconfig-system:event_type",
+      "relationship": "references_list"
+    },
+    {
+      "source": "openconfig-system:server_group",
+      "target": "openconfig-system:name",
+      "relationship": "references_list"
+    }
+  ]
+}

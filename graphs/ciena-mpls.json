@@ -1,0 +1,58 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-mpls:interface",
+      "type": "list",
+      "module": "ciena-mpls",
+      "description": "MPLS interface list.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mpls:address_family",
+      "type": "list",
+      "module": "ciena-mpls",
+      "description": "MPLS Label allocation for address families",
+      "key": "af-type"
+    },
+    {
+      "id": "ciena-mpls:vrf",
+      "type": "list",
+      "module": "ciena-mpls",
+      "description": "MPLS Label allocation mode for selected VRF",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mpls:label_block",
+      "type": "list",
+      "module": "ciena-mpls",
+      "description": "List of MPLS protocol label range.",
+      "key": "index"
+    },
+    {
+      "id": "ciena-mpls:protocol",
+      "type": "list",
+      "module": "ciena-mpls",
+      "description": "List of MPLS protocols.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mpls:entry",
+      "type": "list",
+      "module": "ciena-mpls",
+      "description": "MPLS stats entry list.",
+      "key": "fec-address role owner"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-mpls:interface",
+      "target": "openconfig-interfaces:interface",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-mpls:vrf",
+      "target": "ciena-vrf:vrf",
+      "relationship": "references_key:vrfName"
+    }
+  ]
+}

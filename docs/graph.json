@@ -2,6 +2,492 @@
   "graph": [
     {
       "data": {
+        "id": "ciena-sat:entity",
+        "type": "list",
+        "module": "ciena-sat",
+        "description": "Service activation testing entity configuration.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sat:emix_sequence",
+        "type": "list",
+        "module": "ciena-sat",
+        "description": "EMIX sequence entry.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sat:kpi_profile",
+        "type": "list",
+        "module": "ciena-sat",
+        "description": "Key performance indicator pass/fail criteria.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sat:pcp",
+        "type": "list",
+        "module": "ciena-sat",
+        "description": "Each PCP within the KPI profile has its own configuration.",
+        "key": "pcp-value"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sat:bw_alloc_profile",
+        "type": "list",
+        "module": "ciena-sat",
+        "description": "BW allocation profile entry",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sat:test_profile",
+        "type": "list",
+        "module": "ciena-sat",
+        "description": "Service activation test profile configuation information.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sat:test_instance",
+        "type": "list",
+        "module": "ciena-sat",
+        "description": "Service activation test instance configuration data.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-platform:component",
+        "type": "list",
+        "module": "ciena-platform",
+        "description": "List of POST components",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-rib:vrf",
+        "type": "list",
+        "module": "ciena-rib",
+        "description": "VRF routing instance",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-rib:ipv4",
+        "type": "list",
+        "module": "ciena-rib",
+        "description": "Ipv4 routes",
+        "key": "destination-prefix"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-rib:outgoing_interface",
+        "type": "list",
+        "module": "ciena-rib",
+        "description": "Name of the outgoing interface",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-rib:next_hop",
+        "type": "list",
+        "module": "ciena-rib",
+        "description": "IPv4 address of the next hop",
+        "key": "address"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-rib:ipv6",
+        "type": "list",
+        "module": "ciena-rib",
+        "description": "Ipv6 routes",
+        "key": "destination-prefix"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-rib:address_family",
+        "type": "list",
+        "module": "ciena-rib",
+        "description": "List of route limit attributes per IP address-family",
+        "key": "type"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-access-flow:acl_custom_destination",
+        "type": "list",
+        "module": "ciena-mef-access-flow",
+        "description": "A list of ACL-customized-destinations that the classified flows may be directed to.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-access-flow:acl_action",
+        "type": "list",
+        "module": "ciena-mef-access-flow",
+        "description": "A list of ACL-actions, where each ACL-action specifies the action of the classified flow.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-access-flow:access_flow",
+        "type": "list",
+        "module": "ciena-mef-access-flow",
+        "description": "List of access-flow configuration entries. Each entry defines an ACL rule specific to an interface.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-access-flow:access_profile",
+        "type": "list",
+        "module": "ciena-mef-access-flow",
+        "description": "A list of all access-profile configuration entries.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-packet-xcvr:xcvr",
+        "type": "list",
+        "module": "ciena-packet-xcvr",
+        "description": "Transceiver (XCVR) list.",
+        "key": "xcvr-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sr-policy:segment_list",
+        "type": "list",
+        "module": "ciena-sr-policy",
+        "description": "Segment-list properties",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sr-policy:segment",
+        "type": "list",
+        "module": "ciena-sr-policy",
+        "description": "Configure segment/hop at the index",
+        "key": "index"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sr-policy:policy",
+        "type": "list",
+        "module": "ciena-sr-policy",
+        "description": "SR policy properties",
+        "key": "color endpoint"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sr-policy:candidate_path",
+        "type": "list",
+        "module": "ciena-sr-policy",
+        "description": "SR policy Candidate path(s) list entry",
+        "key": "protocol-origin originator discriminator"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sr-policy:intent_template",
+        "type": "list",
+        "module": "ciena-sr-policy",
+        "description": "Intent templates for dynamic path calculation",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:server",
+        "type": "list",
+        "module": "openconfig-system",
+        "description": "List of the DNS servers that the resolver should query. When the resolver is invoked by a calling application, it sends the query to the first name server in this list. If no response has been received within 'timeout' seconds, the resolver continues with the next server in the list. If no response is received from any server, the resolver continues with the first server again. When the resolver has traversed the list 'attempts' times without receiving any response, it gives up and returns an error to the calling application. Implementations MAY limit the number of entries in this list.",
+        "key": "address"
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:host_entry",
+        "type": "list",
+        "module": "openconfig-system",
+        "description": "List of static host entries",
+        "key": "hostname"
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:ntp_key",
+        "type": "list",
+        "module": "openconfig-system",
+        "description": "List of NTP authentication keys",
+        "key": "key-id"
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:selector",
+        "type": "list",
+        "module": "openconfig-system",
+        "description": "List of selectors for log messages",
+        "key": "facility severity"
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:remote_server",
+        "type": "list",
+        "module": "openconfig-system",
+        "description": "List of remote log servers",
+        "key": "host"
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:user",
+        "type": "list",
+        "module": "openconfig-system",
+        "description": "List of local users on the system",
+        "key": "username"
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:event",
+        "type": "list",
+        "module": "openconfig-system",
+        "description": "List of events subject to AAA authorization",
+        "key": "event-type"
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:server_group",
+        "type": "list",
+        "module": "openconfig-system",
+        "description": "List of AAA server groups. All servers in a group must have the same type as indicated by the server type.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:prefix_list",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Prefix list rules that are used in match conditions under a policy",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:sequence",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "List of unique prefixes identified with sequence number.",
+        "key": "number"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:community_list",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Communities that are used in match conditions under policy.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:standard",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Permit or deny a standard commmunity type.",
+        "key": "value action"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:well_known",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Permit or deny a well-known commmunity type.",
+        "key": "value action"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:regex",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Permit or deny a commmunity with matching regular expression.",
+        "key": "value action"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:ext_community_list",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Extended communities that are used in match conditions under policy.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:route_target",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Permit or deny a route target extended community.",
+        "key": "value action"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:site_of_origin",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Permit or deny a site of origin extended community.",
+        "key": "value action"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:color",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Permit or deny a color extended community.",
+        "key": "value action"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:as_path_list",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "AS paths that are used in match conditions under policy.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:member",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "AS paths member list to permit/deny a regular-expression.",
+        "key": "value action"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:large_community_list",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Large communities that are used in match conditions under policy.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:policy",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Policies with match conditions/set actions.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:statement",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Policy statements group conditions and actions within a policy. They are evaluated in the order specified.",
+        "key": "sequence"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:community",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Set actions for community",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:ext_community",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Set actions for EXT community",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:large_community",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Set actions for large community",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:aggregator",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Set BGP aggregator AS and IP address attribute.",
+        "key": "as ip-address"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:ext_community_rt",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Extended community RT list attribute.",
+        "key": "append"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-routing-policy:aigp_metric",
+        "type": "list",
+        "module": "ciena-routing-policy",
+        "description": "Replace or Increment AIGP metric value.",
+        "key": "replace"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-l2vpn:l2vpn",
+        "type": "list",
+        "module": "ciena-l2vpn",
+        "description": "L2VPN services instance",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
         "id": "ciena-mef-fp:fp",
         "type": "list",
         "module": "ciena-mef-fp",
@@ -47,6 +533,123 @@
     },
     {
       "data": {
+        "id": "ciena-packet-ptp:ptp",
+        "type": "list",
+        "module": "ciena-packet-ptp",
+        "description": "List of PTP objects.",
+        "key": "ptp-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:instance",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "OSPF structure",
+        "key": "tag"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:redistribute",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "Redistribute routes to external process",
+        "key": "protocol"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:interface",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "List of OSPF interfaces.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:authentication",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "OSPF message-digest-key (MD5) related operations",
+        "key": "id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:area",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "List of OSPF areas",
+        "key": "id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:network",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "OSPF network",
+        "key": "prefix"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:prefix_list",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "Name of the prefix list",
+        "key": "prefix-name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:range",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "Summarize routes matching address/mask (Area Border Routers (ABRs) only)",
+        "key": "prefix"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:virtual_link",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "Virtual link ID(IP addr) associated with neighbor",
+        "key": "peer-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:protection",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "Protection provided to the repair tunnel",
+        "key": "protection-type"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:srgb",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "List of global blocks to be advertised.",
+        "key": "lower-bound upper-bound"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospf:summary_address",
+        "type": "list",
+        "module": "ciena-ospf",
+        "description": "Summary address for external routes. address/mask",
+        "key": "prefix"
+      }
+    },
+    {
+      "data": {
         "id": "ciena-mef-fd:fd",
         "type": "list",
         "module": "ciena-mef-fd",
@@ -61,6 +664,177 @@
         "module": "ciena-mef-fd",
         "description": "For an L2-frame that is initiated/injected via this forwarding domain, this specifies the VLAN related l2-transform to be applied to the frame.",
         "key": "tag"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mpls:interface",
+        "type": "list",
+        "module": "ciena-mpls",
+        "description": "MPLS interface list.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mpls:address_family",
+        "type": "list",
+        "module": "ciena-mpls",
+        "description": "MPLS Label allocation for address families",
+        "key": "af-type"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mpls:vrf",
+        "type": "list",
+        "module": "ciena-mpls",
+        "description": "MPLS Label allocation mode for selected VRF",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mpls:label_block",
+        "type": "list",
+        "module": "ciena-mpls",
+        "description": "List of MPLS protocol label range.",
+        "key": "index"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mpls:protocol",
+        "type": "list",
+        "module": "ciena-mpls",
+        "description": "List of MPLS protocols.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mpls:entry",
+        "type": "list",
+        "module": "ciena-mpls",
+        "description": "MPLS stats entry list.",
+        "key": "fec-address role owner"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sync:frequency_protection_group",
+        "type": "list",
+        "module": "ciena-sync",
+        "description": "A list of all frequency protection-group configuration entries.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sync:phase_protection_group",
+        "type": "list",
+        "module": "ciena-sync",
+        "description": "A list of all phase protection-group configuration entries.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sync:tod_protection_group",
+        "type": "list",
+        "module": "ciena-sync",
+        "description": "A list of all ToD (time-of-day) protection-group configuration entries.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-twamp:mode_preference_chain",
+        "type": "list",
+        "module": "ietf-twamp",
+        "description": "Indicates the Control-Client preferred order of use of the supported TWAMP Modes. Depending on the Modes available in the TWAMP Server Greeting message (see Fig. 2 of RFC 7717), the this Control-Client MUST choose the highest priority Mode from the configured mode-preference-chain list.",
+        "key": "priority"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-twamp:key_chain",
+        "type": "list",
+        "module": "ietf-twamp",
+        "description": "Relates KeyIDs with their respective secret keys in a TWAMP-Control connection.",
+        "key": "key-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-twamp:ctrl_connection",
+        "type": "list",
+        "module": "ietf-twamp",
+        "description": "List of TWAMP Control-Client control connections. Each item in the list describes a control connection that will be initiated by this Control-Client",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-twamp:test_session_request",
+        "type": "list",
+        "module": "ietf-twamp",
+        "description": "Information associated with the Control-Client for this test session",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-twamp:pm_reg_list",
+        "type": "list",
+        "module": "ietf-twamp",
+        "description": "A list of one or more Performance Metric Registry Index values, which communicate packet stream characteristics along with one or more metrics to be measured. All members of the pm-reg-list MUST have the same stream characteristics, such that they combine to specify all metrics that shall be measured on a single stream.",
+        "key": "pm-index"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-twamp:test_session",
+        "type": "list",
+        "module": "ietf-twamp",
+        "description": "List of TWAMP Session-Sender test sessions.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ldp:instance",
+        "type": "list",
+        "module": "ciena-ldp",
+        "description": "Tag is default ldp instance.",
+        "key": "tag"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ldp:interface",
+        "type": "list",
+        "module": "ciena-ldp",
+        "description": "Ldp interface config list.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ldp:peers",
+        "type": "list",
+        "module": "ciena-ldp",
+        "description": "A targeted session is an LDP session between non-directly connected LSRs.",
+        "key": "address"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ldp:peer",
+        "type": "list",
+        "module": "ciena-ldp",
+        "description": "List of peers.",
+        "key": "lsr-id"
       }
     },
     {
@@ -101,11 +875,865 @@
     },
     {
       "data": {
+        "id": "ciena-igmp-snooping:instance",
+        "type": "list",
+        "module": "ciena-igmp-snooping",
+        "description": "Specifies a list of IGMP snooping instances.",
+        "key": "fd-name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:listen",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "Configuration of the transport endpoints on which the engine listens.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:target",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "List of targets.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:target_params",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "List of target parameters.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:notify",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "Targets that will receive notifications. Entries in this list are mapped 1-1 to entries in snmpNotifyTable, except that if an entry in snmpNotifyTable has an snmpNotifyTag for which no snmpTargetAddrEntry exists, then the snmpNotifyTable entry is not mapped to an entry in this list.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:notify_filter_profile",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "Notification filter profiles. The leaf /snmp/target/notify-filter-profile is used to associate a filter profile with a target. If an entry in this list is referred to by one or more /snmp/target/notify-filter-profile items, each such notify-filter-profile is represented by one snmpNotifyFilterProfileEntry. If an entry in this list is not referred to by any /snmp/target/notify-filter-profile, the entry is not mapped to snmpNotifyFilterProfileTable.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:proxy",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "List of proxy parameters.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:community",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "List of communities.",
+        "key": "index"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:user",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "No description available",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:remote",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "No description available",
+        "key": "engine-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:group",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "VACM groups. This data model has a different structure than the MIB. Groups are explicitly defined in this list, and group members are defined in the 'member' list (mapped to vacmSecurityToGroupTable), and access for the group is defined in the 'access' list (mapped to vacmAccessTable).",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:member",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "A member of this VACM group. A specific combination of security-name and security-model MUST NOT be present in more than one group.",
+        "key": "security-name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:access",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "Definition of access right for groups.",
+        "key": "context security-model security-level"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:view",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "Definition of MIB views.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:cert_to_name",
+        "type": "list",
+        "module": "ietf-snmp-common",
+        "description": "This list defines how certificates are mapped to names. The name is derived by considering each cert-to-name list entry in order. The cert-to-name entry's fingerprint determines whether the list entry is a match; 1) If the cert-to-name list entry's fingerprint value matches that of the presented certificate, then consider the list entry a successful match. 2) If the cert-to-name list entry's fingerprint value matches that of a locally held copy of a trusted CA certificate, and that CA certificate was part of the CA certificate chain to the presented certificate, then consider the list entry a successful match. Once a matching cert-to-name list entry has been found, the map-type is used to determine how the name associated with the certificate should be determined. See the map-type leaf's description for details on determining the name value. If it is impossible to determine a name from the cert-to-name list entry's data combined with the data presented in the certificate, then additional cert-to-name list entries MUST be searched to look for another potential match. Security administrators are encouraged to make use of certificates with subjectAltName fields that can be mapped to names so that a single root CA certificate can allow all child certificates' subjectAltName fields to map directly to a name via a 1;1 transformation.",
+        "key": "id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-packet-otn-port:ports",
+        "type": "list",
+        "module": "ciena-packet-otn-port",
+        "description": "Configuration and operational data for the port.",
+        "key": "port-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-packet-otn-port:channels",
+        "type": "list",
+        "module": "ciena-packet-otn-port",
+        "description": "List of ODU4 channels within the parent OTU port object.",
+        "key": "channel-id"
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-interfaces:interface",
+        "type": "list",
+        "module": "openconfig-interfaces",
+        "description": "The list of named interfaces on the device.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-interfaces:subinterface",
+        "type": "list",
+        "module": "openconfig-interfaces",
+        "description": "The list of subinterfaces (logical interfaces) associated with a physical interface",
+        "key": "index"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-itut-g8032-draft:g8032_ring",
+        "type": "list",
+        "module": "ciena-itut-g8032-draft",
+        "description": "Provides configuration nodes in support of ERP instances on the device.",
+        "key": "ring-name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-itut-g8032-draft:ring_port",
+        "type": "list",
+        "module": "ciena-itut-g8032-draft",
+        "description": "List of the ring ports. If all of the ERP instances for this ring are sub-rings that terminate at this node, this list may have only 1 entry.",
+        "key": "port-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-itut-g8032-draft:erp_instance",
+        "type": "list",
+        "module": "ciena-itut-g8032-draft",
+        "description": "There can be multiple ERP instances associated with a given G.8032 ring. Each ERP instance must have a separate set of data member VLAN identifiers.",
+        "key": "instance-name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-itut-g8032-draft:port",
+        "type": "list",
+        "module": "ciena-itut-g8032-draft",
+        "description": "List of the ring ports. If this is a major ring, or this node is in a sub-ring but is not the interconnection node where the sub-ring terminates, then this list must have 2 entries. If this is a sub-ring (with or without a virtual channel), and this is an interconnection node where the sub-ring terminates, then this list must have only 1 entry.",
+        "key": "port-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-isis:instance",
+        "type": "list",
+        "module": "ciena-isis",
+        "description": "IS-IS structure",
+        "key": "tag"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-isis:passive",
+        "type": "list",
+        "module": "ciena-isis",
+        "description": "Indicates whetherthe interface is in passive mode (IS-IS not running but network is advertised).",
+        "key": "passive-if-name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-isis:level",
+        "type": "list",
+        "module": "ciena-isis",
+        "description": "IS-IS protocol redistribute configuration",
+        "key": "type"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-isis:protocol",
+        "type": "list",
+        "module": "ciena-isis",
+        "description": "Redistribute routes from static, bgp, ospf, connected into IS-IS levels",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-isis:summary_address",
+        "type": "list",
+        "module": "ciena-isis",
+        "description": "List of summary address used for route summarization",
+        "key": "address"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-isis:multi_topology",
+        "type": "list",
+        "module": "ciena-isis",
+        "description": "Support for Multiple-Topology Routing (MTR), RFC5120 - M-IS-IS; Multi Topology Routing in IS-IS",
+        "key": "level"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-isis:interface",
+        "type": "list",
+        "module": "ciena-isis",
+        "description": "ISIS interface related operations",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-isis:address_family",
+        "type": "list",
+        "module": "ciena-isis",
+        "description": "List IS-IS Address Family that takes Afi and Safi related configuration",
+        "key": "afi safi"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-isis:ldp_igp_sync",
+        "type": "list",
+        "module": "ciena-isis",
+        "description": "Enables IGP/LDP synchronization",
+        "key": "level-type"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-isis:srgb",
+        "type": "list",
+        "module": "ciena-isis",
+        "description": "List of global blocks to be advertised.",
+        "key": "lower-bound upper-bound"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-evpn:ethernet_segment",
+        "type": "list",
+        "module": "ciena-evpn",
+        "description": "Top level ES configuration list",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-evpn:evpn_instance",
+        "type": "list",
+        "module": "ciena-evpn",
+        "description": "Top level EVPN instance configuration list",
+        "key": "id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-evpn:flexible_cross_connect_vlan_aware_fd",
+        "type": "list",
+        "module": "ciena-evpn",
+        "description": "Vlan-aware EVPN-FXC service",
+        "key": "forwarding-domain"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-evpn:vpws_cross_connect_fd",
+        "type": "list",
+        "module": "ciena-evpn",
+        "description": "EVPN-VPWS service",
+        "key": "forwarding-domain"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-evpn:flexible_cross_connect_vlan_unaware_fd",
+        "type": "list",
+        "module": "ciena-evpn",
+        "description": "Vlan-unaware EVPN-FXC service",
+        "key": "forwarding-domain"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-evpn:vpls_fd",
+        "type": "list",
+        "module": "ciena-evpn",
+        "description": "EVPN-VPLS service",
+        "key": "forwarding-domain"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-evpn:vpn_target",
+        "type": "list",
+        "module": "ciena-evpn",
+        "description": "List of Route Targets.",
+        "key": "route-target"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sr:policy",
+        "type": "list",
+        "module": "ciena-sr",
+        "description": "List mapping-server policies",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sr:mapping_entry",
+        "type": "list",
+        "module": "ciena-sr",
+        "description": "Mapping entries",
+        "key": "prefix algorithm"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sr:connected_prefix_sid_map",
+        "type": "list",
+        "module": "ciena-sr",
+        "description": "List of prefix SID mapped to IPv4 local prefixes",
+        "key": "prefix"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sr:srgb",
+        "type": "list",
+        "module": "ciena-sr",
+        "description": "List of global blocks to be advertised",
+        "key": "lower-bound upper-bound"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sr:locator",
+        "type": "list",
+        "module": "ciena-sr",
+        "description": "Configure a SRv6 locator",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-sr:flex_algorithm",
+        "type": "list",
+        "module": "ciena-sr",
+        "description": "Top level Flexible-Algorithm configuration list",
+        "key": "algorithm"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:instance",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "Top level bgp list with maximum number of instances 1",
+        "key": "as"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:address_family",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "List BGP address family that takes AFI and SAFI related configuration",
+        "key": "afi safi"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:aggregate_address",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "Configure BGP aggregate entries to to minimize the size of routing tables",
+        "key": "address"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:redistribute",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "Inject routes from one routing process into another. Redistribution is used by routing protocols to advertise routes that are learned by some other means, such as by another routing protocol or by static routes",
+        "key": "protocol"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:network",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "Specify the network to be advertised by the BGP routing process",
+        "key": "address"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:vrf",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "Vrf list containing vrf related configuration such as rd, rt and peer",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:route_target",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "Route Target list that takes route target id and direction",
+        "key": "id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:vrf_address_family",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "List of vrf address families such as ipv4 unicast",
+        "key": "afi safi"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:peer",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "List of vrf peer related configuration information",
+        "key": "address"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:policy",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "Routing policy to be attached to this peer.",
+        "key": "name direction"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:prefix_list",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "Container to attach prefix list to the neighbor",
+        "key": "name direction"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:l2vpn_vpls",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "L2VPN VPLS list containing L2VPN instance related configuration such as RD, RT and VPLS ID",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:peer_group",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "List of peer groups and its related configuration",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-bgp:srgb",
+        "type": "list",
+        "module": "ciena-bgp",
+        "description": "List of global blocks to be advertised.",
+        "key": "lower-bound upper-bound"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospfv3:instance",
+        "type": "list",
+        "module": "ciena-ospfv3",
+        "description": "OSPFV3 structure",
+        "key": "tag instance-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospfv3:redistribute",
+        "type": "list",
+        "module": "ciena-ospfv3",
+        "description": "Redistribute routes to external process",
+        "key": "protocol"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospfv3:area",
+        "type": "list",
+        "module": "ciena-ospfv3",
+        "description": "List of OSPFV3 areas",
+        "key": "id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospfv3:range",
+        "type": "list",
+        "module": "ciena-ospfv3",
+        "description": "Summarize routes matching address/mask (Area Border Routers (ABRs) only)",
+        "key": "prefix"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospfv3:virtual_link",
+        "type": "list",
+        "module": "ciena-ospfv3",
+        "description": "Virtual link ID(IP addr) associated with neighbor",
+        "key": "peer-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ospfv3:interface",
+        "type": "list",
+        "module": "ciena-ospfv3",
+        "description": "List of OSPFV3 interfaces.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
         "id": "ciena-mef-logical-port:logical_port",
         "type": "list",
         "module": "ciena-mef-logical-port",
         "description": "List of logical-ports. A Logical-Port can be mapped to an ETTP for a physical faceplate port, virtual-port etc. or it may map to multiple ETTPs in support of Agg Ports.",
         "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-dhcpv6-client:client",
+        "type": "list",
+        "module": "ciena-dhcpv6-client",
+        "description": "A client may have several interfaces. This list defines specific client interfaces and their configuration data. Different interfaces are distinguished by the key which is a string whose value is the name of an existing interface.",
+        "key": "interface-name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-flexe:flexe_port",
+        "type": "list",
+        "module": "ciena-flexe",
+        "description": "List of FlexE ports.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-flexe:flexe_group",
+        "type": "list",
+        "module": "ciena-flexe",
+        "description": "List of FlexE groups.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-flexe:flexe_phys",
+        "type": "list",
+        "module": "ciena-flexe",
+        "description": "List of the participating PHYs in a FlexE group",
+        "key": "phy-number-in-group"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-flexe:flexe_channel",
+        "type": "list",
+        "module": "ciena-flexe",
+        "description": "List of FlexE channels.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-flexe:calendar_A_slots_list",
+        "type": "list",
+        "module": "ciena-flexe",
+        "description": "List of slots allocated on Calendar A for a FlexE channel. Number of slots allocated for a FlexE channel is based on the bandwidth allocated for it. Ex; For a system with calendar slot granularity of 5G, a 10G FlexE channel would be allocated 2 slots (10G/5G)",
+        "key": "phy-number-in-group slot-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-flexe:calendar_B_slots_list",
+        "type": "list",
+        "module": "ciena-flexe",
+        "description": "List of slots allocated on Calendar B for a FlexE channel. Number of slots allocated for a FlexE channel is based on the bandwidth allocated for it. Ex; For a system with calendar slot granularity of 5G, a 10G FlexE-channel would be allocated 2 slots (10G/5G)",
+        "key": "phy-number-in-group slot-id"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-flexe:flexe_cross_connect",
+        "type": "list",
+        "module": "ciena-flexe",
+        "description": "List of FlexE cross-connects. FlexE cross-connect can be between Faceplate standard ethernet ETTP and FlexE MAC ETTP or two FlexE channels",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-flexe:flexe_protection_profile",
+        "type": "list",
+        "module": "ciena-flexe",
+        "description": "List of FlexE Protection Profiles.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-flexe:flexe_bas_oam",
+        "type": "list",
+        "module": "ciena-flexe",
+        "description": "List of FlexE BAS (basic code block) OAMs.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-flexe:flexe_protection_group",
+        "type": "list",
+        "module": "ciena-flexe",
+        "description": "List of FlexE protection groups.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-sat:test_profile",
+        "target": "ciena-sat:kpi_profile",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-sat:test_profile",
+        "target": "ciena-sat:bw_alloc_profile",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-sat:test_profile",
+        "target": "ciena-sat:emix_sequence",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-sat:test_instance",
+        "target": "ciena-mef-fp:fp",
+        "relationship": "references_type"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-sat:test_instance",
+        "target": "ciena-sat:test_profile",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-rib:vrf",
+        "target": "ciena-vrf:vrf",
+        "relationship": "references_key:vrfName"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-rib:next_hop",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-mef-access-flow:access_flow",
+        "target": "ciena-mef-classifier:classifier",
+        "relationship": "references_type"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-sr-policy:intent_template",
+        "target": "ciena-ietf-te:intent_template",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "openconfig-system:server",
+        "target": "openconfig-system:address",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "openconfig-system:host_entry",
+        "target": "openconfig-system:hostname",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "openconfig-system:ntp_key",
+        "target": "openconfig-system:key_id",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "openconfig-system:selector",
+        "target": "openconfig-system:facility",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "openconfig-system:selector",
+        "target": "openconfig-system:severity",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "openconfig-system:remote_server",
+        "target": "openconfig-system:host",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "openconfig-system:user",
+        "target": "openconfig-system:username",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "openconfig-system:event",
+        "target": "openconfig-system:event_type",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "openconfig-system:server_group",
+        "target": "openconfig-system:name",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-routing-policy:community",
+        "target": "ciena-routing-policy:community_list",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-routing-policy:ext_community",
+        "target": "ciena-routing-policy:ext_community_list",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-routing-policy:large_community",
+        "target": "ciena-routing-policy:large_community_list",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-l2vpn:l2vpn",
+        "target": "ciena-mef-fd:fd",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-l2vpn:l2vpn",
+        "target": "ietf-pseudowires:pseudowire",
+        "relationship": "references_type"
       }
     },
     {
@@ -124,9 +1752,261 @@
     },
     {
       "data": {
+        "source": "ciena-ospf:redistribute",
+        "target": "ciena-routing-policy:policy",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-ospf:interface",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-ospf:prefix_list",
+        "target": "ciena-routing-policy:prefix_list",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-mpls:interface",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-mpls:vrf",
+        "target": "ciena-vrf:vrf",
+        "relationship": "references_key:vrfName"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-ldp:instance",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-ldp:interface",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-igmp-snooping:instance",
+        "target": "ciena-mef-fd:fd",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ietf-snmp-common:target_params",
+        "target": "ietf-snmp-common:name",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "openconfig-interfaces:interface",
+        "target": "openconfig-interfaces:name",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "openconfig-interfaces:subinterface",
+        "target": "openconfig-interfaces:index",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-itut-g8032-draft:ring_port",
+        "target": "ietf-interfaces:interface",
+        "relationship": "references_type"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-itut-g8032-draft:erp_instance",
+        "target": "ciena-itut-g8032-draft:name",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-itut-g8032-draft:port",
+        "target": "ciena-itut-g8032-draft:ring_port",
+        "relationship": "references_key:port-id"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-isis:passive",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-isis:level",
+        "target": "ciena-routing-policy:prefix_list",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-isis:protocol",
+        "target": "ciena-routing-policy:policy",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-isis:interface",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-evpn:flexible_cross_connect_vlan_aware_fd",
+        "target": "ciena-mef-fd:fd",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-evpn:vpws_cross_connect_fd",
+        "target": "ciena-mef-fd:fd",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-evpn:flexible_cross_connect_vlan_unaware_fd",
+        "target": "ciena-mef-fd:fd",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-evpn:vpls_fd",
+        "target": "ciena-mef-fd:fd",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-sr:connected_prefix_sid_map",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-bgp:redistribute",
+        "target": "ciena-routing-policy:policy",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-bgp:network",
+        "target": "ciena-routing-policy:policy",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-bgp:vrf",
+        "target": "ciena-vrf:vrf",
+        "relationship": "references_key:vrfName"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-bgp:peer",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-bgp:policy",
+        "target": "ciena-routing-policy:policy",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-bgp:prefix_list",
+        "target": "ciena-routing-policy:prefix_list",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-bgp:l2vpn_vpls",
+        "target": "ciena-l2vpn:l2vpn",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-bgp:peer_group",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-ospfv3:redistribute",
+        "target": "ciena-routing-policy:policy",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-ospfv3:interface",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
         "source": "ciena-mef-logical-port:logical_port",
         "target": "openconfig-interfaces:interface",
         "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-flexe:flexe_port",
+        "target": "ciena-flexe:ptp_id",
+        "relationship": "references_list"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-flexe:calendar_A_slots_list",
+        "target": "ciena-flexe:flexe_phys",
+        "relationship": "references_key:phy-number-in-group"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-flexe:calendar_B_slots_list",
+        "target": "ciena-flexe:flexe_phys",
+        "relationship": "references_key:phy-number-in-group"
       }
     }
   ]

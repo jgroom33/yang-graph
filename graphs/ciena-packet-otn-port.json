@@ -1,0 +1,19 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-packet-otn-port:ports",
+      "type": "list",
+      "module": "ciena-packet-otn-port",
+      "description": "Configuration and operational data for the port.",
+      "key": "port-id"
+    },
+    {
+      "id": "ciena-packet-otn-port:channels",
+      "type": "list",
+      "module": "ciena-packet-otn-port",
+      "description": "List of ODU4 channels within the parent OTU port object.",
+      "key": "channel-id"
+    }
+  ],
+  "edges": []
+}

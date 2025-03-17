@@ -83,39 +83,15 @@ document.addEventListener("DOMContentLoaded", function () {
         },
       });
 
-      // Mark nodes with outgoing edges as collapsible, but don’t hide edges initially
-      cy.nodes().forEach((node) => {
-        const outgoing = cy.edges(`[source="${node.id()}"]`);
-        if (outgoing.length > 0) {
-          node.data("hasRelationships", true);
-          node.data("collapsed", false); // Start expanded
-          // Remove outgoing.hide() so edges are visible by default
-        }
-      });
-
-      // Click handler to expand/collapse relationships or show node info
+      // Click handler to show node info only
       cy.on("tap", "node", function (evt) {
         const node = evt.target;
         const data = node.data();
-
-        if (data.hasRelationships) {
-          const outgoingEdges = cy.edges(`[source="${node.id()}"]`);
-          if (data.collapsed) {
-            outgoingEdges.show();
-            node.data("collapsed", false);
-            cy.layout({ name: "breadthfirst", roots: [node] }).run();
-          } else {
-            outgoingEdges.hide();
-            node.data("collapsed", true);
-            cy.layout({ name: "breadthfirst" }).run();
-          }
-        } else {
-          alert(
-            `Node: ${data.id}\nModule: ${data.module}\nDescription: ${
-              data.description
-            }\nKey: ${data.key || "N/A"}`
-          );
-        }
+        alert(
+          `Node: ${data.id}\nModule: ${data.module}\nDescription: ${
+            data.description
+          }\nKey: ${data.key || "N/A"}`
+        );
       });
     })
     .catch((error) => {

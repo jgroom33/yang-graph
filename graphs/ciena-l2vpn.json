@@ -1,0 +1,23 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-l2vpn:l2vpn",
+      "type": "list",
+      "module": "ciena-l2vpn",
+      "description": "L2VPN services instance",
+      "key": "name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-l2vpn:l2vpn",
+      "target": "ciena-mef-fd:fd",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-l2vpn:l2vpn",
+      "target": "ietf-pseudowires:pseudowire",
+      "relationship": "references_type"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-packet-xcvr:xcvr",
+      "type": "list",
+      "module": "ciena-packet-xcvr",
+      "description": "Transceiver (XCVR) list.",
+      "key": "xcvr-id"
+    }
+  ],
+  "edges": []
+}

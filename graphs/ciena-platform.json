@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-platform:component",
+      "type": "list",
+      "module": "ciena-platform",
+      "description": "List of POST components",
+      "key": "name"
+    }
+  ],
+  "edges": []
+}

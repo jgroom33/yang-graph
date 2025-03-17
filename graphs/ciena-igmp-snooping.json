@@ -1,0 +1,18 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-igmp-snooping:instance",
+      "type": "list",
+      "module": "ciena-igmp-snooping",
+      "description": "Specifies a list of IGMP snooping instances.",
+      "key": "fd-name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-igmp-snooping:instance",
+      "target": "ciena-mef-fd:fd",
+      "relationship": "references_key:name"
+    }
+  ]
+}

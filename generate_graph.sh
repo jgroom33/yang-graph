@@ -2,10 +2,41 @@
 export PYANG_PLUGINPATH=/home/jgroom/src/yang-graph/pyang-plugin
 
 saos10_yangs=(
-  ciena-mef-fp
+  ciena-bgp
+  ciena-cfm
+  ciena-dhcpv6-client
+  ciena-evpn
+  ciena-flexe            # multiple lists
+  ciena-igmp-snooping
+  ciena-isis
+  ciena-itut-g8032-draft # 1 list + props
+  ciena-l2vpn
+  ciena-ldp
+  ciena-mef-access-flow  # multiple
   ciena-mef-classifier
   ciena-mef-fd
+  ciena-mef-fp
   ciena-mef-logical-port
+  ciena-mpls
+  # ciena-openconfig-interfaces  # Empty
+  ciena-ospf
+  ciena-ospfv3
+  ciena-packet-otn-port
+  ciena-packet-ptp
+  ciena-packet-xcvr
+  ciena-platform
+  ciena-rib
+  ciena-routing-policy
+  ciena-sat
+  ciena-sr
+  ciena-sr-policy
+  ciena-sync
+  # ciena-system          # Empty
+  # ciena-vrf             # Not Handled yet. Top level list
+  ietf-snmp
+  ietf-twamp
+  # mef-cfm               # Not Handled yet. Top level list
+  openconfig-system
 )
 
 network_os=saos10

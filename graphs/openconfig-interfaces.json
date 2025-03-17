@@ -1,0 +1,30 @@
+{
+  "nodes": [
+    {
+      "id": "openconfig-interfaces:interface",
+      "type": "list",
+      "module": "openconfig-interfaces",
+      "description": "The list of named interfaces on the device.",
+      "key": "name"
+    },
+    {
+      "id": "openconfig-interfaces:subinterface",
+      "type": "list",
+      "module": "openconfig-interfaces",
+      "description": "The list of subinterfaces (logical interfaces) associated with a physical interface",
+      "key": "index"
+    }
+  ],
+  "edges": [
+    {
+      "source": "openconfig-interfaces:interface",
+      "target": "openconfig-interfaces:name",
+      "relationship": "references_list"
+    },
+    {
+      "source": "openconfig-interfaces:subinterface",
+      "target": "openconfig-interfaces:index",
+      "relationship": "references_list"
+    }
+  ]
+}

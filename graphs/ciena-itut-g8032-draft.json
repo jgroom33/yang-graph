@@ -1,0 +1,49 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-itut-g8032-draft:g8032_ring",
+      "type": "list",
+      "module": "ciena-itut-g8032-draft",
+      "description": "Provides configuration nodes in support of ERP instances on the device.",
+      "key": "ring-name"
+    },
+    {
+      "id": "ciena-itut-g8032-draft:ring_port",
+      "type": "list",
+      "module": "ciena-itut-g8032-draft",
+      "description": "List of the ring ports. If all of the ERP instances for this ring are sub-rings that terminate at this node, this list may have only 1 entry.",
+      "key": "port-id"
+    },
+    {
+      "id": "ciena-itut-g8032-draft:erp_instance",
+      "type": "list",
+      "module": "ciena-itut-g8032-draft",
+      "description": "There can be multiple ERP instances associated with a given G.8032 ring. Each ERP instance must have a separate set of data member VLAN identifiers.",
+      "key": "instance-name"
+    },
+    {
+      "id": "ciena-itut-g8032-draft:port",
+      "type": "list",
+      "module": "ciena-itut-g8032-draft",
+      "description": "List of the ring ports. If this is a major ring, or this node is in a sub-ring but is not the interconnection node where the sub-ring terminates, then this list must have 2 entries. If this is a sub-ring (with or without a virtual channel), and this is an interconnection node where the sub-ring terminates, then this list must have only 1 entry.",
+      "key": "port-id"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-itut-g8032-draft:ring_port",
+      "target": "ietf-interfaces:interface",
+      "relationship": "references_type"
+    },
+    {
+      "source": "ciena-itut-g8032-draft:erp_instance",
+      "target": "ciena-itut-g8032-draft:name",
+      "relationship": "references_list"
+    },
+    {
+      "source": "ciena-itut-g8032-draft:port",
+      "target": "ciena-itut-g8032-draft:ring_port",
+      "relationship": "references_key:port-id"
+    }
+  ]
+}

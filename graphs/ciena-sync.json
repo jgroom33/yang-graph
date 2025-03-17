@@ -1,0 +1,26 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-sync:frequency_protection_group",
+      "type": "list",
+      "module": "ciena-sync",
+      "description": "A list of all frequency protection-group configuration entries.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-sync:phase_protection_group",
+      "type": "list",
+      "module": "ciena-sync",
+      "description": "A list of all phase protection-group configuration entries.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-sync:tod_protection_group",
+      "type": "list",
+      "module": "ciena-sync",
+      "description": "A list of all ToD (time-of-day) protection-group configuration entries.",
+      "key": "name"
+    }
+  ],
+  "edges": []
+}

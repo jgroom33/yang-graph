@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-packet-ptp:ptp",
+      "type": "list",
+      "module": "ciena-packet-ptp",
+      "description": "List of PTP objects.",
+      "key": "ptp-id"
+    }
+  ],
+  "edges": []
+}

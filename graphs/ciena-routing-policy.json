@@ -1,0 +1,168 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-routing-policy:prefix_list",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Prefix list rules that are used in match conditions under a policy",
+      "key": "name"
+    },
+    {
+      "id": "ciena-routing-policy:sequence",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "List of unique prefixes identified with sequence number.",
+      "key": "number"
+    },
+    {
+      "id": "ciena-routing-policy:community_list",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Communities that are used in match conditions under policy.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-routing-policy:standard",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Permit or deny a standard commmunity type.",
+      "key": "value action"
+    },
+    {
+      "id": "ciena-routing-policy:well_known",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Permit or deny a well-known commmunity type.",
+      "key": "value action"
+    },
+    {
+      "id": "ciena-routing-policy:regex",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Permit or deny a commmunity with matching regular expression.",
+      "key": "value action"
+    },
+    {
+      "id": "ciena-routing-policy:ext_community_list",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Extended communities that are used in match conditions under policy.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-routing-policy:route_target",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Permit or deny a route target extended community.",
+      "key": "value action"
+    },
+    {
+      "id": "ciena-routing-policy:site_of_origin",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Permit or deny a site of origin extended community.",
+      "key": "value action"
+    },
+    {
+      "id": "ciena-routing-policy:color",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Permit or deny a color extended community.",
+      "key": "value action"
+    },
+    {
+      "id": "ciena-routing-policy:as_path_list",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "AS paths that are used in match conditions under policy.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-routing-policy:member",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "AS paths member list to permit/deny a regular-expression.",
+      "key": "value action"
+    },
+    {
+      "id": "ciena-routing-policy:large_community_list",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Large communities that are used in match conditions under policy.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-routing-policy:policy",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Policies with match conditions/set actions.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-routing-policy:statement",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Policy statements group conditions and actions within a policy. They are evaluated in the order specified.",
+      "key": "sequence"
+    },
+    {
+      "id": "ciena-routing-policy:community",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Set actions for community",
+      "key": "name"
+    },
+    {
+      "id": "ciena-routing-policy:ext_community",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Set actions for EXT community",
+      "key": "name"
+    },
+    {
+      "id": "ciena-routing-policy:large_community",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Set actions for large community",
+      "key": "name"
+    },
+    {
+      "id": "ciena-routing-policy:aggregator",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Set BGP aggregator AS and IP address attribute.",
+      "key": "as ip-address"
+    },
+    {
+      "id": "ciena-routing-policy:ext_community_rt",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Extended community RT list attribute.",
+      "key": "append"
+    },
+    {
+      "id": "ciena-routing-policy:aigp_metric",
+      "type": "list",
+      "module": "ciena-routing-policy",
+      "description": "Replace or Increment AIGP metric value.",
+      "key": "replace"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-routing-policy:community",
+      "target": "ciena-routing-policy:community_list",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-routing-policy:ext_community",
+      "target": "ciena-routing-policy:ext_community_list",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-routing-policy:large_community",
+      "target": "ciena-routing-policy:large_community_list",
+      "relationship": "references_key:name"
+    }
+  ]
+}
