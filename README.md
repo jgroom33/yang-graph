@@ -18,8 +18,12 @@ There are already tools that capture within a single yang file, but not across m
 
 There are 2 stages to the final generation. Stage 1 converts the yang files into a format that can be used by the graphing tool. Stage 2 generates the graph from the converted files. The graph file for each yang contains the list of nodes and edges that can be connected to other yangs.
 
+The final stage is rendering the graph. This is done with cytograph.js. The graph is rendered in a web browser.
 
-This is a prototype of a pyang to handle the first stage. Improve it to capture refs also.
 ```bash
+## Perform stage 1 and 2
 ./generate_graph.sh
+## Start the web server
+npm install  # run once
+npm start
 ```
