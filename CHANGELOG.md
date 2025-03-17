@@ -2,8 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.0]
+## [1.0.1]
+### Added
+- Readme mermaid diagram to show the stages of the project.
 
+## [1.0.0]
 ### Added
 - Initial release
 - Initial creation of the changelog file

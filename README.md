@@ -1,12 +1,19 @@
 # yang-graph
 
-Generate a graph of YANG modules and their dependencies.
+Generate a graph of relationships between YANG module objects and lists. A schema type view of the YANG modules.
 
 ## Overview
 
 The `yang-graph` project processes YANG files to generate a graph that defines possible nodes and edges that can be connected from other YANG modules. This tool is designed to capture relationships across multiple YANG files, focusing on configuration properties and their interdependencies.
 
 Existing tools like Yangster can generate graphs for single YANG files, but `yang-graph` extends this capability to multiple YANG files, focusing on the relationships between them rather than the actual data types.
+
+```mermaid
+graph TD
+  A[YANG Input Files] --> B[Per Yang nodes/edges]
+  B --> C[Combined Graph]
+  C --> D[Web Browser Graph View]
+```
 
 ## Goals
 
