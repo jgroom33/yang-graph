@@ -29,13 +29,6 @@
       "key": "egress-name"
     },
     {
-      "id": "ciena-mef-fp:vlan_stack",
-      "type": "list",
-      "module": "ciena-mef-fp",
-      "description": "This configures VLAN stack on the flow-point.",
-      "key": "tag"
-    },
-    {
       "id": "ciena-mef-fp:normalized_vid",
       "type": "list",
       "module": "ciena-mef-fp",
@@ -51,7 +44,7 @@
     },
     {
       "source": "ciena-mef-fp:fp",
-      "target": "ciena-mef-classifier:classifier-ref",
+      "target": "ciena-mef-classifier:classifier",
       "relationship": "references_type"
     }
   ]

@@ -114,6 +114,20 @@
         "target": "ciena-mef-fd:fd",
         "relationship": "references_key:name"
       }
+    },
+    {
+      "data": {
+        "source": "ciena-mef-fp:fp",
+        "target": "ciena-mef-classifier:classifier",
+        "relationship": "references_type"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-mef-logical-port:logical_port",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
     }
   ]
 }

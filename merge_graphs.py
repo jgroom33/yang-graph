@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 
-def merge_graphs(input_dir, output_file):
+def merge_graphs(input_dir, output_file, cytoscape_format=True):
     all_nodes = {}
     all_edges = []
 
@@ -20,27 +20,37 @@ def merge_graphs(input_dir, output_file):
             try:
                 with open(filepath, "r") as f:
                     data = json.load(f)
-                    for node in data["nodes"]:
+                    for node in data.get("nodes", []):
                         all_nodes[node["id"]] = node
-                    all_edges.extend(data["edges"])
+                    all_edges.extend(data.get("edges", []))
             except Exception as e:
                 logging.error(f"Error loading {filepath}: {e}")
 
-    # Filter edges to only those with valid source and target nodes
-    valid_edges = [
-        edge
-        for edge in all_edges
-        if edge["source"] in all_nodes and edge["target"] in all_nodes
-    ]
+    # Filter edges: require source to be a node, but allow target to be any reference
+    valid_edges = []
+    dropped_edges = []
+    for edge in all_edges:
+        if edge["source"] in all_nodes:
+            valid_edges.append(edge)
+        else:
+            dropped_edges.append(edge)
+
     logging.info(
         f"Found {len(all_nodes)} nodes and {len(valid_edges)} valid edges (out of {len(all_edges)} potential)"
     )
+    if dropped_edges:
+        logging.warning(
+            f"Dropped {len(dropped_edges)} edges with invalid sources: {[e['source'] for e in dropped_edges[:5]]}"
+        )
 
-    # Format output for Cytoscape.js
-    result = {
-        "graph": [{"data": node} for node in all_nodes.values()]
-        + [{"data": edge} for edge in valid_edges]
-    }
+    # Format output
+    if cytoscape_format:
+        result = {
+            "graph": [{"data": node} for node in all_nodes.values()]
+            + [{"data": edge} for edge in valid_edges]
+        }
+    else:
+        result = {"nodes": list(all_nodes.values()), "edges": valid_edges}
 
     try:
         with open(output_file, "w") as f:
@@ -56,6 +66,14 @@ if __name__ == "__main__":
     )
     parser.add_argument("input_dir", help="Directory containing per-module JSON files")
     parser.add_argument("output_file", help="Output file for the combined graph")
+    parser.add_argument(
+        "--no-cytoscape",
+        action="store_false",
+        dest="cytoscape_format",
+        help="Output in simple nodes/edges format instead of Cytoscape.js format",
+    )
     args = parser.parse_args()
 
-    merge_graphs(args.input_dir, args.output_file)
+    merge_graphs(
+        args.input_dir, args.output_file, cytoscape_format=args.cytoscape_format
+    )
