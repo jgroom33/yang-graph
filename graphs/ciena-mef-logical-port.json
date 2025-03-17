@@ -6,34 +6,6 @@
       "module": "ciena-mef-logical-port",
       "description": "List of logical-ports. A Logical-Port can be mapped to an ETTP for a physical faceplate port, virtual-port etc. or it may map to multiple ETTPs in support of Agg Ports.",
       "key": "name"
-    },
-    {
-      "id": "ciena-mef-logical-port:logical_port_status",
-      "type": "list",
-      "module": "ciena-mef-logical-port",
-      "description": "No description available",
-      "key": "name"
-    },
-    {
-      "id": "ciena-mef-logical-port:logical_port_statistics",
-      "type": "list",
-      "module": "ciena-mef-logical-port",
-      "description": "No description available",
-      "key": "name"
-    },
-    {
-      "id": "ciena-mef-logical-port:logical_port_event",
-      "type": "list",
-      "module": "ciena-mef-logical-port",
-      "description": "No description available",
-      "key": null
-    },
-    {
-      "id": "ciena-mef-logical-port:event_list",
-      "type": "list",
-      "module": "ciena-mef-logical-port",
-      "description": "No description available",
-      "key": null
     }
   ],
   "edges": [
@@ -41,21 +13,6 @@
       "source": "ciena-mef-logical-port:logical_port",
       "target": "openconfig-interfaces:interface",
       "relationship": "references_key:name"
-    },
-    {
-      "source": "ciena-mef-logical-port:logical_port_event",
-      "target": "ciena-mef-logical-port:logical_port",
-      "relationship": "references_key:name"
-    },
-    {
-      "source": "ciena-mef-logical-port:logical_port_event",
-      "target": "ciena-mef-logical-port:logical_port_status",
-      "relationship": "references_key:oper_state"
-    },
-    {
-      "source": "ciena-mef-logical-port:event_list",
-      "target": "ciena-mef-logical-port:logical_port",
-      "relationship": "references_key:logical_port_event_type"
     }
   ]
 }

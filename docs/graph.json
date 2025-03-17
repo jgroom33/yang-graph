@@ -5,7 +5,7 @@
         "id": "ciena-mef-fp:fp",
         "type": "list",
         "module": "ciena-mef-fp",
-        "description": "The operational data for this Flow Point.",
+        "description": "A list of all mef-fp configuration entries.",
         "key": "name"
       }
     },
@@ -43,24 +43,6 @@
         "module": "ciena-mef-fp",
         "description": "Used to represent normalized-vid values for EVPN FXC, e.g. MPLS label + vid lookup. The tag number represents the position of the normalized-vid. tag '1' represents outer most tag, tag '2' next outer most, etc. Note that the normalized-vid is used in conjunction with an ingress-l2-transform of the same flow-point. That is, an ingress-l2-xform operation of push/stamp is generally used to ensure that the frame contains the normalized-vid in flow-point to EVPN service-tunnel direction. In the case of the ingress-l2-transform stamp operation; - ingress-l2-transform stamp tag 1 (outer) matches normalized-vid tag 1 (outer). - ingress-l2-transform stamp tag 2 (next outer) matches normalized-vid tag 2 (next outer (aka inner)). In the case of the ingress-l2-transform push operation; - ingress-l2-transform push tag 1 (outer most) matches normalized-vid tag 1 (outer), when 1 tag is being pushed via the ingress-l2-transform. - ingress-l2-transform push tag 2 (next outer most) matches normalized-vid tag 1 (outer), when 2 tags are being pushed via the ingress-l2-transform. - ingress-l2-transform push tag 1 (outer most) matches normalized-vid tag 2 (next outer (aka inner)), when 2 tags are being pushed via the ingress-l2-transform.",
         "key": "tag"
-      }
-    },
-    {
-      "data": {
-        "id": "ciena-mef-fp:flow_point_event",
-        "type": "list",
-        "module": "ciena-mef-fp",
-        "description": "No description available",
-        "key": null
-      }
-    },
-    {
-      "data": {
-        "id": "ciena-mef-fp:event_list",
-        "type": "list",
-        "module": "ciena-mef-fp",
-        "description": "No description available",
-        "key": null
       }
     },
     {
@@ -128,87 +110,9 @@
     },
     {
       "data": {
-        "id": "ciena-mef-logical-port:logical_port_status",
-        "type": "list",
-        "module": "ciena-mef-logical-port",
-        "description": "No description available",
-        "key": "name"
-      }
-    },
-    {
-      "data": {
-        "id": "ciena-mef-logical-port:logical_port_statistics",
-        "type": "list",
-        "module": "ciena-mef-logical-port",
-        "description": "No description available",
-        "key": "name"
-      }
-    },
-    {
-      "data": {
-        "id": "ciena-mef-logical-port:logical_port_event",
-        "type": "list",
-        "module": "ciena-mef-logical-port",
-        "description": "No description available",
-        "key": null
-      }
-    },
-    {
-      "data": {
-        "id": "ciena-mef-logical-port:event_list",
-        "type": "list",
-        "module": "ciena-mef-logical-port",
-        "description": "No description available",
-        "key": null
-      }
-    },
-    {
-      "data": {
         "source": "ciena-mef-fp:fp",
         "target": "ciena-mef-fd:fd",
         "relationship": "references_key:name"
-      }
-    },
-    {
-      "data": {
-        "source": "ciena-mef-fp:flow_point_event",
-        "target": "ciena-mef-fp:fp",
-        "relationship": "references_key:name"
-      }
-    },
-    {
-      "data": {
-        "source": "ciena-mef-fp:event_list",
-        "target": "ciena-mef-fp:fp",
-        "relationship": "references_key:flow_point_event_type"
-      }
-    },
-    {
-      "data": {
-        "source": "ciena-mef-fp:event_list",
-        "target": "ciena-mef-fp:fp",
-        "relationship": "references_key:oper_state"
-      }
-    },
-    {
-      "data": {
-        "source": "ciena-mef-logical-port:logical_port_event",
-        "target": "ciena-mef-logical-port:logical_port",
-        "relationship": "references_key:name"
-      }
-    },
-    {
-      "data": {
-        "source": "ciena-mef-logical-port:logical_port_event",
-        "target": "ciena-mef-logical-port:logical_port_status",
-        "relationship": "references_key:oper_state"
-      }
-    },
-    {
-      "data": {
-        "source": "ciena-mef-logical-port:event_list",
-        "target": "ciena-mef-logical-port:logical_port",
-        "relationship": "references_key:logical_port_event_type"
       }
     }
   ]
