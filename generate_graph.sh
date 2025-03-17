@@ -1,5 +1,8 @@
 #!/bin/bash
-export PYANG_PLUGINPATH=/home/jgroom/src/yang-graph/pyang-plugin
+
+# Set the PYANG_PLUGINPATH, defaulting to the current script directory if not provided
+PYANG_PLUGINPATH=${PYANG_PLUGINPATH:-$(dirname "$0")/pyang-plugin}
+export PYANG_PLUGINPATH
 
 saos10_yangs=(
   ciena-bgp
