@@ -138,6 +138,30 @@ class YangGraphSingle(plugin.PyangPlugin):
                                 logging.warning(
                                     f"Failed to resolve leafref {path_stmt.arg}: {e}"
                                 )
+                elif child.keyword == "leaf-list":
+                    type_stmt = child.search_one("type")
+                    if type_stmt and ":" in type_stmt.arg:
+                        prefix, type_name = type_stmt.arg.split(":", 1)
+                        target_module = next(
+                            (
+                                m
+                                for m in module.i_ctx.modules.values()
+                                if m.search_one("prefix")
+                                and m.search_one("prefix").arg == prefix
+                            ),
+                            None,
+                        )
+                        if target_module:
+                            target_full_name = f"{target_module.arg}:{type_name}"
+                            edge = {
+                                "source": list_name,
+                                "target": target_full_name,
+                                "relationship": "references_type",
+                            }
+                            result["edges"].append(edge)
+                            logging.debug(
+                                f"Added edge for leaf-list: {list_name} -> {target_full_name}"
+                            )
 
         for child in getattr(stmt, "i_children", []):
             self._build_graph(child, result, config_only, module)

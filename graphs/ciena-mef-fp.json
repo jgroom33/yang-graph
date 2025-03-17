@@ -48,6 +48,11 @@
       "source": "ciena-mef-fp:fp",
       "target": "ciena-mef-fd:fd",
       "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-mef-fp:fp",
+      "target": "ciena-mef-classifier:classifier-ref",
+      "relationship": "references_type"
     }
   ]
 }
