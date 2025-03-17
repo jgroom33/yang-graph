@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-mef-meter-profile:meter_profile",
+      "type": "list",
+      "module": "ciena-mef-meter-profile",
+      "description": "Meter Profile template containing meter instance parameters",
+      "key": "name"
+    }
+  ],
+  "edges": []
+}

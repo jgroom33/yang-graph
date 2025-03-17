@@ -1,0 +1,105 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-mef-egress-qos:cos_queue_map",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "List of cos-to-queue-map templates. COS to queue maps can be referenced by various entities (queue-groups/logical ports) to determine mapping to a given queue of a queue group.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-egress-qos:map_entry",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "List of map-entries.Each map-entry for a given cos-to-queue map gives the mapping of internal-cos to a queue, and optionally a green-wred-curve and yellow-wred curve.",
+      "key": "cos"
+    },
+    {
+      "id": "ciena-mef-egress-qos:congestion_avoidance_profile",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "List of congestion-avoidance-profile templates. Congestion Avoidance Profile can be referenced by Queues to instantiate WRED curves for the Queue.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-egress-qos:curve",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "List of curves for congestion avoidance.",
+      "key": "curve-number"
+    },
+    {
+      "id": "ciena-mef-egress-qos:queue_group_profile",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "List of queue-group-profile templates. Queue Group Profiles contain the config parameters for queue-groups of queue-group-instances which would reference the given queue-group-profile.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-egress-qos:queue",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "List of queues for queue-group-profile.",
+      "key": "queue-number"
+    },
+    {
+      "id": "ciena-mef-egress-qos:scheduler_profile",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "List of scheduler-profile templates. Scheduler Profiles contain the config parameters for schedulers of scheduler-instances which would reference the given scheduler-profile.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-egress-qos:tap_point",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "Defines priority and weight for each tap-point of the associated scheduler instances. Either Queues or Schedulers map to the tap points and their priority and weight is obtained from this tap-point configuration.",
+      "key": "number"
+    },
+    {
+      "id": "ciena-mef-egress-qos:queue_group",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "The queue-group is an instance of a group of queues as described by the associated queue-group-profile. The queue-group instance has a parent scheduler instance which is part of a scheduling hierarchy rooted to a port. Additionally, the queue-group instance may be mapped to both directly (e.g. from flow-points) and indirectly via the queue-group-indirection (e.g. via MPLS PWs/MPLS Tunnels)",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-egress-qos:scheduler",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "List of scheduler-instance entries. Scheduler Instances define an instance of a Scheduler on a logical port or as part of a hierarchical EQoS scheduler tree.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-egress-qos:queue_group_indirection",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "This is an indirected identification of a queue group that would be used by entities which do not resolve directly to the root of the egress-qos hierarchy (a port). An example of this is an MPLS PW which maps to a queue-group-indirection for service-based queuing and scheduling. Dependent on the state of the underlying transport (e.g. MPLS Tunnels to next-hops to port), the actual queue-group instance being used may change dynamically, however the queue-group-indirection allows",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-egress-qos:cos_to_queue_map_association",
+      "type": "list",
+      "module": "ciena-mef-egress-qos",
+      "description": "A mapping from a logical-port to a cos-to-queue-map.",
+      "key": "name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-mef-egress-qos:scheduler",
+      "target": "ciena-mef-logical-port:logical_port",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-mef-egress-qos:cos_to_queue_map_association",
+      "target": "ciena-mef-egress-qos:cos_queue_map",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-mef-egress-qos:cos_to_queue_map_association",
+      "target": "ciena-mef-logical-port:logical_port",
+      "relationship": "references_key:name"
+    }
+  ]
+}

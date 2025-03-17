@@ -13,6 +13,26 @@
       "source": "ciena-mef-logical-port:logical_port",
       "target": "openconfig-interfaces:interface",
       "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-mef-logical-port:logical_port",
+      "target": "ciena-mef-meter-profile:meter_profile",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-mef-logical-port:logical_port",
+      "target": "ciena-mef-cos-to-frame-map:cos_to_frame_map",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-mef-logical-port:logical_port",
+      "target": "ciena-mef-flood-containment-profile:flood_containment_profile",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-mef-logical-port:logical_port",
+      "target": "ciena-mef-pfg-profile:pfg_profile",
+      "relationship": "references_key:name"
     }
   ]
 }

@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-mef-pfg-profile:pfg_profile",
+      "type": "list",
+      "module": "ciena-mef-pfg-profile",
+      "description": "Private Forwarding Group profile template containing Private Forwarding Group instance parameters",
+      "key": "name"
+    }
+  ],
+  "edges": []
+}

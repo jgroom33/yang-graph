@@ -1,0 +1,19 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-mef-flood-containment-profile:flood_containment_profile",
+      "type": "list",
+      "module": "ciena-mef-flood-containment-profile",
+      "description": "A list of flood-containment-profile templates. Flood containment profiles can be referenced by various entities(flow-point/logical-port, etc.) to instantiate flood containment meters based on traffic type.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-flood-containment-profile:containment",
+      "type": "list",
+      "module": "ciena-mef-flood-containment-profile",
+      "description": "Configurations of a flood-containment-profile to define the rate parameters for a set of flood-containment-instances.",
+      "key": "frame-type"
+    }
+  ],
+  "edges": []
+}

@@ -33,7 +33,7 @@
     {
       "source": "ciena-itut-g8032-draft:ring_port",
       "target": "ietf-interfaces:interface",
-      "relationship": "references_type"
+      "relationship": "references_key:name"
     },
     {
       "source": "ciena-itut-g8032-draft:erp_instance",

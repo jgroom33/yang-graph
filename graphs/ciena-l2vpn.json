@@ -17,7 +17,7 @@
     {
       "source": "ciena-l2vpn:l2vpn",
       "target": "ietf-pseudowires:pseudowire",
-      "relationship": "references_type"
+      "relationship": "references_key:name"
     }
   ]
 }

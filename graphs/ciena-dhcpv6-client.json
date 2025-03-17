@@ -8,5 +8,11 @@
       "key": "interface-name"
     }
   ],
-  "edges": []
+  "edges": [
+    {
+      "source": "ciena-dhcpv6-client:client",
+      "target": "openconfig-interfaces:interface",
+      "relationship": "references_key:name"
+    }
+  ]
 }

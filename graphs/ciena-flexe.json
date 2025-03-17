@@ -78,6 +78,21 @@
       "relationship": "references_list"
     },
     {
+      "source": "ciena-flexe:flexe_phys",
+      "target": "ciena-flexe:flexe_port",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-flexe:flexe_channel",
+      "target": "ciena-flexe:flexe_group",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-flexe:flexe_channel",
+      "target": "ciena-flexe:flexe_bas_oam",
+      "relationship": "references_key:name"
+    },
+    {
       "source": "ciena-flexe:calendar_A_slots_list",
       "target": "ciena-flexe:flexe_phys",
       "relationship": "references_key:phy-number-in-group"
@@ -86,6 +101,16 @@
       "source": "ciena-flexe:calendar_B_slots_list",
       "target": "ciena-flexe:flexe_phys",
       "relationship": "references_key:phy-number-in-group"
+    },
+    {
+      "source": "ciena-flexe:flexe_protection_group",
+      "target": "ciena-flexe:flexe_channel",
+      "relationship": "references_key:name"
+    },
+    {
+      "source": "ciena-flexe:flexe_protection_group",
+      "target": "ciena-flexe:flexe_protection_profile",
+      "relationship": "references_key:name"
     }
   ]
 }

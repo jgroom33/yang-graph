@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0]
+### Added
+- many more modules
+- Search box
+### Fixed
+- typeref lookups. This creates more edges
+
 ## [1.0.2]
 ### Added
 - ietf-pseudowired

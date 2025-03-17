@@ -1,0 +1,19 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-mef-cos-to-frame-map:cos_to_frame_map",
+      "type": "list",
+      "module": "ciena-mef-cos-to-frame-map",
+      "description": "A list of profiles that can contain several map entries.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-cos-to-frame-map:map_entry",
+      "type": "list",
+      "module": "ciena-mef-cos-to-frame-map",
+      "description": "An entry which maps internal-cos and internal-color to a frame CoS value.",
+      "key": "cos color"
+    }
+  ],
+  "edges": []
+}

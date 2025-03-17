@@ -17,9 +17,15 @@ saos10_yangs=(
   ciena-ldp
   ciena-mef-access-flow
   ciena-mef-classifier
+  ciena-mef-cos-to-frame-map
+  ciena-mef-egress-qos
   ciena-mef-fd
+  ciena-mef-flood-containment-profile
   ciena-mef-fp
+  ciena-mef-l2cp-profile
   ciena-mef-logical-port
+  ciena-mef-meter-profile
+  ciena-mef-pfg-profile
   ciena-mpls
   # ciena-openconfig-interfaces  # Empty
   ciena-ospf
