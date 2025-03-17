@@ -43,7 +43,7 @@ done
 
 # Merge all JSON files into a single graph
 echo "Merging graphs into $full_graph..."
-python3 merge_graphs.py "$output_dir" "$full_graph"
+python3 merge_graphs.py "$output_dir" "docs/$full_graph"
 if [ $? -ne 0 ]; then
   echo "Error merging graphs."
   exit 1
