@@ -50,7 +50,10 @@
       margin-top: 5px;
     }
 
-    #simplify-button {
+    #simplify-button,
+    #refresh-button,
+    #zoom-in-button,
+    #zoom-out-button {
       padding: 5px;
       margin-top: 5px;
     }
@@ -74,7 +77,10 @@
       <option value="random">Random</option>
     </select>
     <button id="refresh-button" onclick="relayout()">Relayout</button>
-    <br/>
+    <br />
+    <button id="zoom-in-button" onclick="zoomIn()">Zoom In</button>
+    <button id="zoom-out-button" onclick="zoomOut()">Zoom Out</button>
+    <br />
     <button id="simplify-button" onclick="toggleSimplify()">Simplify</button>
   </div>
   <div id="cy"></div>
@@ -84,7 +90,7 @@
     <p id="node-module">Module: N/A</p>
     <p id="node-description">Description: N/A</p>
     <p id="node-key">Key: N/A</p>
-    <p>Shift + Left-Click to prune a node</p> <!-- Instruction for user -->
+    <p>Shift + Left-Click to prune a node</p>
   </div>
   <script>
     let cy;
@@ -405,9 +411,29 @@
           alert("Failed to load graph.json. Check the console for details.");
         });
     });
+
     function relayout() {
       const selectedLayout = document.getElementById("layout-select").value;
       cy.layout(layoutConfigs[selectedLayout]).run();
+    }
+
+    // Zoom functions
+    function zoomIn() {
+      const currentZoom = cy.zoom();
+      cy.zoom({
+        level: currentZoom + 0.1, // Increment by 0.1
+        renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } // Center of the viewport
+      });
+    }
+
+    function zoomOut() {
+      const currentZoom = cy.zoom();
+      if (currentZoom > 0.1) { // Prevent zooming out too far
+        cy.zoom({
+          level: currentZoom - 0.1, // Decrement by 0.1
+          renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } // Center of the viewport
+        });
+      }
     }
 
     function toggleSimplify() {
