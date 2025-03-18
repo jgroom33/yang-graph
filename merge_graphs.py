@@ -29,11 +29,29 @@ def merge_graphs(input_dir, output_file, cytoscape_format=True):
     # Filter edges: require source to be a node, but allow target to be any reference
     valid_edges = []
     dropped_edges = []
+    placeholder_nodes = {}
     for edge in all_edges:
         if edge["source"] in all_nodes:
-            valid_edges.append(edge)
+            if edge["target"] in all_nodes:
+                valid_edges.append(edge)
+            else:
+                logging.warning(f"Target node {edge['target']} not found for edge {edge}")
+                # Add placeholder node for missing target
+                if edge["target"] not in placeholder_nodes:
+                    placeholder_nodes[edge["target"]] = {
+                        "id": edge["target"],
+                        "type": "unknown",
+                        "module": edge["target"].split(":")[0] if ":" in edge["target"] else "unknown",
+                        "description": "Referenced but not defined in processed YANG modules",
+                        "key": None,
+                        "isPlaceholder": True,
+                    }
+                valid_edges.append(edge)
         else:
             dropped_edges.append(edge)
+
+    # Add placeholder nodes to all_nodes
+    all_nodes.update(placeholder_nodes)
 
     logging.info(
         f"Found {len(all_nodes)} nodes and {len(valid_edges)} valid edges (out of {len(all_edges)} potential)"

@@ -10,6 +10,7 @@ saos10_yangs=(
   ciena-dhcpv6-client
   ciena-evpn
   ciena-flexe
+  ciena-ietf-te
   ciena-igmp-snooping
   ciena-isis
   ciena-itut-g8032-draft
@@ -63,6 +64,10 @@ if [ ! -d "$yang_dir" ]; then
 fi
 mkdir -p "$output_dir" || {
   echo "Error: Cannot create $output_dir"
+  exit 1
+}
+mkdir -p "logs" || {
+  echo "Error: Cannot create logs directory"
   exit 1
 }
 

@@ -929,6 +929,78 @@
     },
     {
       "data": {
+        "id": "ciena-ietf-te:named_admin_group",
+        "type": "list",
+        "module": "ciena-ietf-te",
+        "description": "List of named TE admin-groups.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ietf-te:performance_advertisement_profile",
+        "type": "list",
+        "module": "ciena-ietf-te",
+        "description": "Performance advertisement profile.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ietf-te:interface",
+        "type": "list",
+        "module": "ciena-ietf-te",
+        "description": "TE interfaces.",
+        "key": "interface"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ietf-te:named_admin_groups",
+        "type": "list",
+        "module": "ciena-ietf-te",
+        "description": "A list of named admin-group entries.",
+        "key": "named-admin-group"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ietf-te:srlg_values",
+        "type": "list",
+        "module": "ciena-ietf-te",
+        "description": "List of SRLG values that this link is part of.",
+        "key": "value"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ietf-te:intent_template",
+        "type": "list",
+        "module": "ciena-ietf-te",
+        "description": "List of intent templates.",
+        "key": "name"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ietf-te:color_template",
+        "type": "list",
+        "module": "ciena-ietf-te",
+        "description": "List of color templates.",
+        "key": "color"
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-ietf-te:candidate_path",
+        "type": "list",
+        "module": "ciena-ietf-te",
+        "description": "SR policy Candidate path(s) list entry.",
+        "key": "preference"
+      }
+    },
+    {
+      "data": {
         "id": "ciena-mef-egress-qos:cos_queue_map",
         "type": "list",
         "module": "ciena-mef-egress-qos",
@@ -1847,6 +1919,156 @@
     },
     {
       "data": {
+        "id": "openconfig-system:address",
+        "type": "unknown",
+        "module": "openconfig-system",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:hostname",
+        "type": "unknown",
+        "module": "openconfig-system",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:key_id",
+        "type": "unknown",
+        "module": "openconfig-system",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:facility",
+        "type": "unknown",
+        "module": "openconfig-system",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:severity",
+        "type": "unknown",
+        "module": "openconfig-system",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:host",
+        "type": "unknown",
+        "module": "openconfig-system",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:username",
+        "type": "unknown",
+        "module": "openconfig-system",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:event_type",
+        "type": "unknown",
+        "module": "openconfig-system",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-system:name",
+        "type": "unknown",
+        "module": "openconfig-system",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-mef-egress-qos:name",
+        "type": "unknown",
+        "module": "ciena-mef-egress-qos",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "ietf-snmp-common:name",
+        "type": "unknown",
+        "module": "ietf-snmp-common",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-interfaces:name",
+        "type": "unknown",
+        "module": "openconfig-interfaces",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "openconfig-interfaces:index",
+        "type": "unknown",
+        "module": "openconfig-interfaces",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-itut-g8032-draft:name",
+        "type": "unknown",
+        "module": "ciena-itut-g8032-draft",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
+        "id": "ciena-flexe:ptp_id",
+        "type": "unknown",
+        "module": "ciena-flexe",
+        "description": "Referenced but not defined in processed YANG modules",
+        "key": null,
+        "isPlaceholder": true
+      }
+    },
+    {
+      "data": {
         "source": "ciena-sat:entity",
         "target": "ciena-mef-logical-port:logical_port",
         "relationship": "references_key:name"
@@ -2151,6 +2373,27 @@
         "source": "ciena-mpls:vrf",
         "target": "ciena-vrf:vrf",
         "relationship": "references_key:vrfName"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-ietf-te:interface",
+        "target": "openconfig-interfaces:interface",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-ietf-te:interface",
+        "target": "ciena-ietf-te:performance_advertisement_profile",
+        "relationship": "references_key:name"
+      }
+    },
+    {
+      "data": {
+        "source": "ciena-ietf-te:named_admin_groups",
+        "target": "ciena-ietf-te:named_admin_group",
+        "relationship": "references_key:name"
       }
     },
     {
