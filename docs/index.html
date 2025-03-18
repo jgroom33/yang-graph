@@ -3,7 +3,13 @@
 
 <head>
   <title>YANG Graph Renderer</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.21.1/cytoscape.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.1/cytoscape.min.js"></script>
+  <!-- fcose dependencies -->
+  <script src="https://unpkg.com/layout-base@2.0.0/layout-base.js"></script>
+  <script src="https://unpkg.com/cose-base@2.0.0/cose-base.js"></script>
+  <script src="https://unpkg.com/cytoscape-fcose@2.2.0/cytoscape-fcose.js"></script>
+  <!-- cose-bilkent extension -->
+  <script src="https://unpkg.com/cytoscape-cose-bilkent@4.1.0/cytoscape-cose-bilkent.js"></script>
   <style>
     #cy {
       width: 100%;
@@ -24,7 +30,7 @@
       z-index: 10;
     }
 
-    #search-container {
+    #controls-container {
       position: absolute;
       top: 10px;
       left: 10px;
@@ -36,20 +42,32 @@
     #search-input {
       padding: 5px;
       width: 200px;
+      margin-right: 5px;
     }
 
-    .highlighted {
-      background-color: #FF4136;
-      border-width: 2px;
-      border-color: #000;
+    #layout-select {
+      padding: 5px;
+      margin-top: 5px;
     }
   </style>
 </head>
 
 <body>
-  <div id="search-container">
-    <input type="text" id="search-input" placeholder="Search nodes by ID...">
-    <button onclick="searchNodes()">Search</button>
+  <div id="controls-container">
+    <div>
+      <input type="text" id="search-input" placeholder="Search nodes by ID...">
+      <button onclick="searchNodes()">Search</button>
+    </div>
+    <select id="layout-select">
+      <option value="fcose">fcose (Force-Directed, Clustered)</option>
+      <option value="cose-bilkent">cose-bilkent (Enhanced Force-Directed)</option>
+      <option value="cose">cose (Force-Directed)</option>
+      <option value="grid">Grid</option>
+      <option value="circle">Circle</option>
+      <option value="concentric">Concentric</option>
+      <option value="breadthfirst">Breadth-First</option>
+      <option value="random">Random</option>
+    </select>
   </div>
   <div id="cy"></div>
   <div id="node-info">
@@ -61,6 +79,111 @@
   </div>
   <script>
     let cy;
+
+    // Register extensions
+    if (typeof cytoscape !== 'undefined') {
+      if (typeof cytoscapeFcose !== 'undefined') {
+        cytoscape.use(cytoscapeFcose);
+      } else {
+        console.warn("fcose extension not loaded.");
+      }
+      if (typeof coseBilkent !== 'undefined') {
+        cytoscape.use(coseBilkent);
+      } else {
+        console.warn("cose-bilkent extension not loaded.");
+      }
+    } else {
+      console.error("Cytoscape core not loaded.");
+      alert("Cytoscape failed to load; check console for details.");
+    }
+
+    // Layout configurations
+    const layoutConfigs = {
+      fcose: {
+        name: "fcose",
+        animate: true,
+        quality: "default",
+        randomize: true,
+        nodeRepulsion: 8000,
+        idealEdgeLength: 150,
+        edgeElasticity: 0.45,
+        nestingFactor: 0.1,
+        gravity: 0.25,
+        numIter: 2500,
+        fit: true,
+        padding: 50,
+        nodeDimensionsIncludeLabels: true,
+        packComponents: true,
+      },
+      "cose-bilkent": {
+        name: "cose-bilkent",
+        animate: true,
+        nodeRepulsion: 6000, // Strong repulsion for overlap avoidance
+        idealEdgeLength: 150, // Balanced edge length
+        edgeElasticity: 0.45, // Flexible edges
+        nestingFactor: 0.1, // Reduce nesting
+        gravity: 0.25, // Light gravity
+        numIter: 2500, // More iterations for refinement
+        fit: true,
+        padding: 50, // Border spacing
+        randomize: true, // Random initial positions
+        nodeDimensionsIncludeLabels: true, // Respect dynamic sizes
+        packComponents: true, // Cluster disconnected components
+      },
+      cose: {
+        name: "cose",
+        animate: true,
+        nodeRepulsion: 2000000,
+        idealEdgeLength: 200,
+        edgeElasticity: 0.3,
+        gravity: 20,
+        numIter: 2000,
+        fit: true,
+        padding: 60,
+        nodeDimensionsIncludeLabels: true,
+        randomize: true,
+        componentSpacing: 100,
+      },
+      grid: {
+        name: "grid",
+        animate: true,
+        fit: true,
+        padding: 50,
+        rows: undefined,
+        columns: undefined,
+      },
+      circle: {
+        name: "circle",
+        animate: true,
+        fit: true,
+        padding: 50,
+        radius: undefined,
+        sort: (a, b) => a.data("id").localeCompare(b.data("id")),
+      },
+      concentric: {
+        name: "concentric",
+        animate: true,
+        fit: true,
+        padding: 50,
+        levelWidth: () => 1,
+        concentric: (node) => node.degree(),
+      },
+      breadthfirst: {
+        name: "breadthfirst",
+        animate: true,
+        fit: true,
+        padding: 50,
+        directed: true,
+        roots: undefined,
+        maximal: false,
+      },
+      random: {
+        name: "random",
+        animate: true,
+        fit: true,
+        padding: 50,
+      },
+    };
 
     document.addEventListener("DOMContentLoaded", function () {
       fetch("graph.json")
@@ -116,7 +239,7 @@
                   shape: "roundrectangle",
                   label: function (ele) {
                     const id = ele.data("id");
-                    return id.split(":").join("\n"); // Simply split and join with newlines
+                    return id.split(":").join("\n");
                   },
                   "background-color": "#0074D9",
                   color: "#fff",
@@ -126,17 +249,17 @@
                     const id = ele.data("id");
                     const parts = id.split(":");
                     const longestPart = parts.reduce((a, b) => a.length > b.length ? a : b);
-                    return Math.max(100, longestPart.length * 10) + "px"; // Dynamic width based on longest part
+                    return Math.max(100, longestPart.length * 10) + "px";
                   },
-                  height: "40px", // Increased slightly to fit more lines
-                  "font-size": "10px", // Base font size
+                  height: "40px",
+                  "font-size": "10px",
                   "font-weight": "bold",
                   "text-wrap": "wrap",
                   "text-max-width": function (ele) {
                     const id = ele.data("id");
                     const parts = id.split(":");
                     const longestPart = parts.reduce((a, b) => a.length > b.length ? a : b);
-                    return (Math.max(90, longestPart.length * 10) - 10) + "px"; // Slightly less than width
+                    return (Math.max(90, longestPart.length * 10) - 10) + "px";
                   },
                   padding: "5px",
                 },
@@ -154,7 +277,7 @@
                     const id = ele.data("id");
                     const parts = id.split(":");
                     const longestPart = parts.reduce((a, b) => a.length > b.length ? a : b);
-                    return Math.max(100, longestPart.length * 10) + "px"; // Same dynamic width
+                    return Math.max(100, longestPart.length * 10) + "px";
                   },
                   height: "100px",
                   "font-size": "10px",
@@ -169,14 +292,13 @@
                   padding: "5px",
                 },
               },
-              // Add a new selector for the second line (we'll assign a class dynamically)
               {
                 selector: "node.second-line-larger",
                 style: {
                   "font-size": function (ele) {
                     const id = ele.data("id");
                     const parts = id.split(":");
-                    return parts.length > 1 ? "14px" : "10px"; // Larger font for nodes with multiple parts
+                    return parts.length > 1 ? "14px" : "10px";
                   },
                 },
               },
@@ -188,7 +310,6 @@
                   "border-color": "#000",
                 },
               },
-              // Edge styles remain unchanged
               {
                 selector: 'edge[relationship ^= "references_key"]',
                 style: {
@@ -199,6 +320,7 @@
                   label: "data(relationship)",
                   "font-size": "10px",
                   "curve-style": "bezier",
+                  "control-point-step-size": 50,
                 },
               },
               {
@@ -211,6 +333,7 @@
                   label: "data(relationship)",
                   "font-size": "10px",
                   "curve-style": "bezier",
+                  "control-point-step-size": 50,
                 },
               },
               {
@@ -223,26 +346,20 @@
                   label: "data(relationship)",
                   "font-size": "10px",
                   "curve-style": "bezier",
+                  "control-point-step-size": 50,
                 },
               },
             ],
-            layout: {
-              name: "cose",
-              animate: true,
-              nodeRepulsion: 400000,
-              idealEdgeLength: 100,
-              gravity: 80,
-              numIter: 1000,
-              fit: true,
-              padding: 30,
-            },
+            layout: layoutConfigs["fcose"], // Default to fcose
           });
+
           cy.nodes().forEach(function (node) {
             const id = node.data("id");
-            if (id.split(":").length > 1) { // If there's more than one part
+            if (id.split(":").length > 1) {
               node.addClass("second-line-larger");
             }
           });
+
           cy.on("tap", "node", function (evt) {
             const node = evt.target;
             const data = node.data();
@@ -250,6 +367,13 @@
             document.getElementById("node-module").textContent = `Module: ${data.module}`;
             document.getElementById("node-description").textContent = `Description: ${data.description}`;
             document.getElementById("node-key").textContent = `Key: ${data.key || "N/A"}`;
+          });
+
+          // Layout selection handler
+          document.getElementById("layout-select").addEventListener("change", function (e) {
+            const selectedLayout = e.target.value;
+            const layout = cy.layout(layoutConfigs[selectedLayout]);
+            layout.run();
           });
         })
         .catch((error) => {
