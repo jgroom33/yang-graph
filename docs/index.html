@@ -116,18 +116,28 @@
                   shape: "roundrectangle",
                   label: function (ele) {
                     const id = ele.data("id");
-                    return id.split(":").join("\n"); // Split on ':' and join with newlines
+                    return id.split(":").join("\n"); // Simply split and join with newlines
                   },
                   "background-color": "#0074D9",
                   color: "#fff",
                   "text-valign": "center",
                   "text-halign": "center",
-                  width: "150px",
-                  height: "80px",
-                  "font-size": "10px",
-                  "font-weight": "bold", // Make text bold
+                  width: function (ele) {
+                    const id = ele.data("id");
+                    const parts = id.split(":");
+                    const longestPart = parts.reduce((a, b) => a.length > b.length ? a : b);
+                    return Math.max(100, longestPart.length * 10) + "px"; // Dynamic width based on longest part
+                  },
+                  height: "40px", // Increased slightly to fit more lines
+                  "font-size": "10px", // Base font size
+                  "font-weight": "bold",
                   "text-wrap": "wrap",
-                  "text-max-width": "140px",
+                  "text-max-width": function (ele) {
+                    const id = ele.data("id");
+                    const parts = id.split(":");
+                    const longestPart = parts.reduce((a, b) => a.length > b.length ? a : b);
+                    return (Math.max(90, longestPart.length * 10) - 10) + "px"; // Slightly less than width
+                  },
                   padding: "5px",
                 },
               },
@@ -138,9 +148,36 @@
                   opacity: 0.6,
                   label: function (ele) {
                     const id = ele.data("id");
-                    return id.split(":").join("\n") + "\n(missing)"; // Split and add (missing)
+                    return id.split(":").join("\n") + "\n(missing)";
                   },
-                  "font-weight": "bold", // Make text bold
+                  width: function (ele) {
+                    const id = ele.data("id");
+                    const parts = id.split(":");
+                    const longestPart = parts.reduce((a, b) => a.length > b.length ? a : b);
+                    return Math.max(100, longestPart.length * 10) + "px"; // Same dynamic width
+                  },
+                  height: "100px",
+                  "font-size": "10px",
+                  "font-weight": "bold",
+                  "text-wrap": "wrap",
+                  "text-max-width": function (ele) {
+                    const id = ele.data("id");
+                    const parts = id.split(":");
+                    const longestPart = parts.reduce((a, b) => a.length > b.length ? a : b);
+                    return (Math.max(90, longestPart.length * 10) - 10) + "px";
+                  },
+                  padding: "5px",
+                },
+              },
+              // Add a new selector for the second line (we'll assign a class dynamically)
+              {
+                selector: "node.second-line-larger",
+                style: {
+                  "font-size": function (ele) {
+                    const id = ele.data("id");
+                    const parts = id.split(":");
+                    return parts.length > 1 ? "14px" : "10px"; // Larger font for nodes with multiple parts
+                  },
                 },
               },
               {
@@ -151,6 +188,7 @@
                   "border-color": "#000",
                 },
               },
+              // Edge styles remain unchanged
               {
                 selector: 'edge[relationship ^= "references_key"]',
                 style: {
@@ -199,7 +237,12 @@
               padding: 30,
             },
           });
-
+          cy.nodes().forEach(function (node) {
+            const id = node.data("id");
+            if (id.split(":").length > 1) { // If there's more than one part
+              node.addClass("second-line-larger");
+            }
+          });
           cy.on("tap", "node", function (evt) {
             const node = evt.target;
             const data = node.data();
