@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4.1]
+### Changed
+- Better prune instructions
+
 ## [2.4.0]
 ### Added
 - Grouping
