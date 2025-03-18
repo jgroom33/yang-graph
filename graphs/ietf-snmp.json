@@ -99,11 +99,5 @@
       "key": "id"
     }
   ],
-  "edges": [
-    {
-      "source": "ietf-snmp-common:target_params",
-      "target": "ietf-snmp-common:name",
-      "relationship": "references_list"
-    }
-  ]
+  "edges": []
 }

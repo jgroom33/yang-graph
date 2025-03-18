@@ -36,11 +36,6 @@
       "relationship": "references_key:name"
     },
     {
-      "source": "ciena-itut-g8032-draft:erp_instance",
-      "target": "ciena-itut-g8032-draft:name",
-      "relationship": "references_list"
-    },
-    {
       "source": "ciena-itut-g8032-draft:port",
       "target": "ciena-itut-g8032-draft:ring_port",
       "relationship": "references_key:port-id"

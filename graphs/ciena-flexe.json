@@ -73,11 +73,6 @@
   ],
   "edges": [
     {
-      "source": "ciena-flexe:flexe_port",
-      "target": "ciena-flexe:ptp_id",
-      "relationship": "references_list"
-    },
-    {
       "source": "ciena-flexe:flexe_phys",
       "target": "ciena-flexe:flexe_port",
       "relationship": "references_key:name"

@@ -38,11 +38,6 @@
     },
     {
       "source": "ciena-mef-fd:fd",
-      "target": "ciena-mef-egress-qos:name",
-      "relationship": "references_list"
-    },
-    {
-      "source": "ciena-mef-fd:fd",
       "target": "ciena-mef-cos-to-frame-map:cos_to_frame_map",
       "relationship": "references_key:name"
     }

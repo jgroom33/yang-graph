@@ -15,16 +15,5 @@
       "key": "index"
     }
   ],
-  "edges": [
-    {
-      "source": "openconfig-interfaces:interface",
-      "target": "openconfig-interfaces:name",
-      "relationship": "references_list"
-    },
-    {
-      "source": "openconfig-interfaces:subinterface",
-      "target": "openconfig-interfaces:index",
-      "relationship": "references_list"
-    }
-  ]
+  "edges": []
 }

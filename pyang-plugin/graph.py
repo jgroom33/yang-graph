@@ -226,8 +226,7 @@ class YangGraphSingle(plugin.PyangPlugin):
                     (
                         m
                         for m in source_module.i_ctx.modules.values()
-                        if m.search_one("prefix")
-                        and m.search_one("prefix").arg == prefix
+                        if m.search_one("prefix") and m.search_one("prefix").arg == prefix
                     ),
                     current_module,
                 )
@@ -240,16 +239,15 @@ class YangGraphSingle(plugin.PyangPlugin):
                 target_list = node_name
                 key_stmt = target_stmt.search_one("key")
                 target_key = key_stmt.arg if key_stmt else None
-                break
-            elif i == len(parts) - 1:
-                target_list = node_name
+                break  # Stop at the first list
+            # Remove the fallback to set target_list to the last part
+            # elif i == len(parts) - 1:
+            #     target_list = node_name
 
         if target_list:
-            logging.debug(
-                f"Resolved to {current_module.arg}:{target_list}, key={target_key}"
-            )
+            logging.debug(f"Resolved to {current_module.arg}:{target_list}, key={target_key}")
             return current_module, target_list, target_key
-        logging.debug(f"Could not resolve path: {path}")
+        logging.debug(f"Could not resolve path to a list: {path}")
         return current_module, None, None
 
     def _find_stmt_by_name(self, module, name):

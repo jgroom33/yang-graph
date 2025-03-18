@@ -57,51 +57,5 @@
       "key": "name"
     }
   ],
-  "edges": [
-    {
-      "source": "openconfig-system:server",
-      "target": "openconfig-system:address",
-      "relationship": "references_list"
-    },
-    {
-      "source": "openconfig-system:host_entry",
-      "target": "openconfig-system:hostname",
-      "relationship": "references_list"
-    },
-    {
-      "source": "openconfig-system:ntp_key",
-      "target": "openconfig-system:key_id",
-      "relationship": "references_list"
-    },
-    {
-      "source": "openconfig-system:selector",
-      "target": "openconfig-system:facility",
-      "relationship": "references_list"
-    },
-    {
-      "source": "openconfig-system:selector",
-      "target": "openconfig-system:severity",
-      "relationship": "references_list"
-    },
-    {
-      "source": "openconfig-system:remote_server",
-      "target": "openconfig-system:host",
-      "relationship": "references_list"
-    },
-    {
-      "source": "openconfig-system:user",
-      "target": "openconfig-system:username",
-      "relationship": "references_list"
-    },
-    {
-      "source": "openconfig-system:event",
-      "target": "openconfig-system:event_type",
-      "relationship": "references_list"
-    },
-    {
-      "source": "openconfig-system:server_group",
-      "target": "openconfig-system:name",
-      "relationship": "references_list"
-    }
-  ]
+  "edges": []
 }

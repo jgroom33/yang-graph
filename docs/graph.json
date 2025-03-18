@@ -1919,156 +1919,6 @@
     },
     {
       "data": {
-        "id": "openconfig-system:address",
-        "type": "unknown",
-        "module": "openconfig-system",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "openconfig-system:hostname",
-        "type": "unknown",
-        "module": "openconfig-system",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "openconfig-system:key_id",
-        "type": "unknown",
-        "module": "openconfig-system",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "openconfig-system:facility",
-        "type": "unknown",
-        "module": "openconfig-system",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "openconfig-system:severity",
-        "type": "unknown",
-        "module": "openconfig-system",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "openconfig-system:host",
-        "type": "unknown",
-        "module": "openconfig-system",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "openconfig-system:username",
-        "type": "unknown",
-        "module": "openconfig-system",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "openconfig-system:event_type",
-        "type": "unknown",
-        "module": "openconfig-system",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "openconfig-system:name",
-        "type": "unknown",
-        "module": "openconfig-system",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "ciena-mef-egress-qos:name",
-        "type": "unknown",
-        "module": "ciena-mef-egress-qos",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "ietf-snmp-common:name",
-        "type": "unknown",
-        "module": "ietf-snmp-common",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "openconfig-interfaces:name",
-        "type": "unknown",
-        "module": "openconfig-interfaces",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "openconfig-interfaces:index",
-        "type": "unknown",
-        "module": "openconfig-interfaces",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "ciena-itut-g8032-draft:name",
-        "type": "unknown",
-        "module": "ciena-itut-g8032-draft",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
-        "id": "ciena-flexe:ptp_id",
-        "type": "unknown",
-        "module": "ciena-flexe",
-        "description": "Referenced but not defined in processed YANG modules",
-        "key": null,
-        "isPlaceholder": true
-      }
-    },
-    {
-      "data": {
         "source": "ciena-sat:entity",
         "target": "ciena-mef-logical-port:logical_port",
         "relationship": "references_key:name"
@@ -2142,69 +1992,6 @@
         "source": "ciena-sr-policy:intent_template",
         "target": "ciena-ietf-te:intent_template",
         "relationship": "references_key:name"
-      }
-    },
-    {
-      "data": {
-        "source": "openconfig-system:server",
-        "target": "openconfig-system:address",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
-        "source": "openconfig-system:host_entry",
-        "target": "openconfig-system:hostname",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
-        "source": "openconfig-system:ntp_key",
-        "target": "openconfig-system:key_id",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
-        "source": "openconfig-system:selector",
-        "target": "openconfig-system:facility",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
-        "source": "openconfig-system:selector",
-        "target": "openconfig-system:severity",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
-        "source": "openconfig-system:remote_server",
-        "target": "openconfig-system:host",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
-        "source": "openconfig-system:user",
-        "target": "openconfig-system:username",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
-        "source": "openconfig-system:event",
-        "target": "openconfig-system:event_type",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
-        "source": "openconfig-system:server_group",
-        "target": "openconfig-system:name",
-        "relationship": "references_list"
       }
     },
     {
@@ -2343,13 +2130,6 @@
     {
       "data": {
         "source": "ciena-mef-fd:fd",
-        "target": "ciena-mef-egress-qos:name",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
-        "source": "ciena-mef-fd:fd",
         "target": "ciena-mef-cos-to-frame-map:cos_to_frame_map",
         "relationship": "references_key:name"
       }
@@ -2440,37 +2220,9 @@
     },
     {
       "data": {
-        "source": "ietf-snmp-common:target_params",
-        "target": "ietf-snmp-common:name",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
-        "source": "openconfig-interfaces:interface",
-        "target": "openconfig-interfaces:name",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
-        "source": "openconfig-interfaces:subinterface",
-        "target": "openconfig-interfaces:index",
-        "relationship": "references_list"
-      }
-    },
-    {
-      "data": {
         "source": "ciena-itut-g8032-draft:ring_port",
         "target": "ietf-interfaces:interface",
         "relationship": "references_key:name"
-      }
-    },
-    {
-      "data": {
-        "source": "ciena-itut-g8032-draft:erp_instance",
-        "target": "ciena-itut-g8032-draft:name",
-        "relationship": "references_list"
       }
     },
     {
@@ -2660,13 +2412,6 @@
         "source": "ciena-dhcpv6-client:client",
         "target": "openconfig-interfaces:interface",
         "relationship": "references_key:name"
-      }
-    },
-    {
-      "data": {
-        "source": "ciena-flexe:flexe_port",
-        "target": "ciena-flexe:ptp_id",
-        "relationship": "references_list"
       }
     },
     {
