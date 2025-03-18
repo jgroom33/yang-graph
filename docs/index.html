@@ -15,6 +15,7 @@
       width: 100%;
       height: 800px;
       border: 1px solid #ccc;
+      background-color: #2c2c2c;
       position: relative;
       z-index: 1;
     }
@@ -50,7 +51,6 @@
       padding: 5px;
       margin-top: 5px;
       width: 260px;
-      /* Match search input + button width */
     }
 
     #refresh-button,
@@ -59,19 +59,35 @@
       padding: 5px;
       margin-top: 5px;
     }
+
+    .compound-parent {
+      background-color: rgba(200, 200, 200, 0.2);
+      border-width: 2px;
+      border-color: #666;
+
+      label: function (ele) {
+        return ele.data("id");
+      }
+
+      ,
+      "text-valign": "top",
+      "text-halign": "center",
+      "font-size": "16px",
+      "font-weight": "bold",
+      "padding": "10px",
+    }
   </style>
 </head>
 
 <body>
   <div id="controls-container">
-    <h3>Use Shift + Left-Click to prune a node </h3>
     <div>
       <input type="text" id="search-input" placeholder="Search nodes by ID...">
       <button onclick="searchNodes()">Search</button>
     </div>
     <select id="layout-select">
-      <option value="fcose">fcose (Force-Directed, Clustered)</option>
       <option value="cose-bilkent">cose-bilkent (Enhanced Force-Directed)</option>
+      <option value="fcose">fcose (Force-Directed, Clustered)</option>
       <option value="cose">cose (Force-Directed)</option>
       <option value="grid">Grid</option>
       <option value="circle">Circle</option>
@@ -95,7 +111,7 @@
     <p id="node-module">Module: N/A</p>
     <p id="node-description">Description: N/A</p>
     <p id="node-key">Key: N/A</p>
-    <p>Shift + Left-Click to prune a node</p>
+    <p>Shift + Left-Click to prune a node or group</p>
   </div>
   <script>
     let cy;
@@ -121,6 +137,22 @@
 
     // Layout configurations
     const layoutConfigs = {
+      "cose-bilkent": {
+        name: "cose-bilkent",
+        animate: true,
+        nodeRepulsion: 6000,
+        idealEdgeLength: 100,
+        edgeElasticity: 0.45,
+        nestingFactor: 0.5,
+        gravity: 0.25,
+        numIter: 2500,
+        fit: true,
+        padding: 50,
+        randomize: true,
+        nodeDimensionsIncludeLabels: true,
+        packComponents: true,
+        tile: true,
+      },
       fcose: {
         name: "fcose",
         animate: true,
@@ -134,21 +166,6 @@
         numIter: 2500,
         fit: true,
         padding: 50,
-        nodeDimensionsIncludeLabels: true,
-        packComponents: true,
-      },
-      "cose-bilkent": {
-        name: "cose-bilkent",
-        animate: true,
-        nodeRepulsion: 6000,
-        idealEdgeLength: 150,
-        edgeElasticity: 0.45,
-        nestingFactor: 0.1,
-        gravity: 0.25,
-        numIter: 2500,
-        fit: true,
-        padding: 50,
-        randomize: true,
         nodeDimensionsIncludeLabels: true,
         packComponents: true,
       },
@@ -247,9 +264,25 @@
           });
 
           const allNodes = filteredNodes.concat(placeholderNodes);
-          const allElements = allNodes
-            .map((n) => ({ data: n }))
-            .concat(edges.map((e) => ({ data: e })));
+
+          // Create compound parent nodes for each module
+          const moduleNodes = {};
+          allNodes.forEach((node) => {
+            const module = node.module;
+            if (!moduleNodes[module]) {
+              moduleNodes[module] = {
+                data: { id: module, isParent: true },
+                classes: "compound-parent"
+              };
+            }
+            node.parent = module; // Assign parent module
+          });
+
+          const allElements = [
+            ...Object.values(moduleNodes), // Add parent nodes first
+            ...allNodes.map((n) => ({ data: { ...n, parent: n.parent } })),
+            ...edges.map((e) => ({ data: e }))
+          ];
 
           cy = cytoscape({
             container: document.getElementById("cy"),
@@ -261,7 +294,7 @@
                   shape: "roundrectangle",
                   label: function (ele) {
                     const id = ele.data("id");
-                    return id.split(":").join("\n");
+                    return id.split(":")[1];
                   },
                   "background-color": "#0074D9",
                   color: "#fff",
@@ -283,7 +316,7 @@
                     const longestPart = parts.reduce((a, b) => a.length > b.length ? a : b);
                     return (Math.max(90, longestPart.length * 10) - 10) + "px";
                   },
-                  padding: "5px",
+                  padding: "1px",
                 },
               },
               {
@@ -311,7 +344,7 @@
                     const longestPart = parts.reduce((a, b) => a.length > b.length ? a : b);
                     return (Math.max(90, longestPart.length * 10) - 10) + "px";
                   },
-                  padding: "5px",
+                  padding: "1px",
                 },
               },
               {
@@ -320,7 +353,7 @@
                   "font-size": function (ele) {
                     const id = ele.data("id");
                     const parts = id.split(":");
-                    return parts.length > 1 ? "14px" : "10px";
+                    return parts.length > 1 ? "16px" : "10px";
                   },
                 },
               },
@@ -333,16 +366,30 @@
                 },
               },
               {
+                selector: ".compound-parent",
+                style: {
+                  "background-color": "rgba(200, 200, 200, 0.2)",
+                  "border-width": "2px",
+                  "border-color": "#666",
+                  "label": "data(id)",
+                  "text-valign": "top",
+                  "text-halign": "center",
+                  "font-size": "16px",
+                  "font-weight": "bold",
+                  "padding": "10px",
+                },
+              },
+              {
                 selector: 'edge[relationship ^= "key"]',
                 style: {
                   width: 2,
                   "line-color": "#2ECC40",
                   "target-arrow-color": "#2ECC40",
                   "target-arrow-shape": "triangle",
-                  label: "data(relationship)",
+                  /* label: "data(relationship)", */
                   "font-size": "10px",
                   "curve-style": "bezier",
-                  "control-point-step-size": 50,
+                  "control-point-step-size": "50",
                 },
               },
               {
@@ -355,7 +402,7 @@
                   label: "data(relationship)",
                   "font-size": "10px",
                   "curve-style": "bezier",
-                  "control-point-step-size": 50,
+                  "control-point-step-size": "50",
                 },
               },
               {
@@ -368,28 +415,36 @@
                   label: "data(relationship)",
                   "font-size": "10px",
                   "curve-style": "bezier",
-                  "control-point-step-size": 50,
+                  "control-point-step-size": "50",
                 },
               },
             ],
-            layout: layoutConfigs["fcose"], // Default to fcose
+            layout: layoutConfigs["cose-bilkent"], // Default to cose-bilkent
           });
 
           cy.ready(function () {
             cy.nodes().forEach(function (node) {
               const id = node.data("id");
-              if (id.split(":").length > 1) {
+              if (id.split(":").length > 1 && !node.data("isParent")) {
                 node.addClass("second-line-larger");
               }
             });
 
-            // Populate simplify dropdown with node IDs
+            // Populate simplify dropdown with grouped node IDs, sorted alphabetically
             const simplifySelect = document.getElementById("simplify-select");
-            cy.nodes().forEach(function (node) {
-              const option = document.createElement("option");
-              option.value = node.id();
-              option.text = node.id();
-              simplifySelect.appendChild(option);
+            const nodeOptions = [];
+            cy.nodes().filter(":child").forEach(function (node) {
+              const module = node.data("module");
+              const id = node.id();
+              const displayText = `[${module}] ${id.split(":").pop()}`;
+              nodeOptions.push({ id: id, text: displayText });
+            });
+            nodeOptions.sort((a, b) => a.text.localeCompare(b.text)); // Sort alphabetically
+            nodeOptions.forEach((option) => {
+              const opt = document.createElement("option");
+              opt.value = option.id;
+              opt.text = option.text;
+              simplifySelect.appendChild(opt);
             });
 
             // Add change listener for simplify dropdown
@@ -401,15 +456,34 @@
             cy.on("tap", "node", function (evt) {
               const node = evt.target;
               const data = node.data();
-              if (evt.originalEvent.shiftKey) { // Shift + Left-Click to prune
-                console.log("Shift + Left-Click detected on node:", node.id());
-                const connectedEdges = node.connectedEdges();
-                const elementsToPrune = node.add(connectedEdges);
-                prunedElements = prunedElements.concat(elementsToPrune);
-                elementsToPrune.remove();
+              if (evt.originalEvent.shiftKey) { // Shift + Left-Click
+                if (data.isParent) { // Prune entire group
+                  console.log("Shift + Left-Click detected on group:", node.id());
+                  const children = node.children();
+                  const elementsToPrune = children.add(children.connectedEdges());
+                  prunedElements = prunedElements.concat(elementsToPrune);
+                  elementsToPrune.remove();
+                  if (node.children().length === 0) { // If group is empty, prune it
+                    console.log("Group is empty, pruning:", node.id());
+                    prunedElements.push(node);
+                    node.remove();
+                  }
+                } else { // Prune individual node
+                  console.log("Shift + Left-Click detected on node:", node.id());
+                  const connectedEdges = node.connectedEdges();
+                  const elementsToPrune = node.add(connectedEdges);
+                  prunedElements = prunedElements.concat(elementsToPrune);
+                  elementsToPrune.remove();
+                  const parent = cy.getElementById(node.data("parent"));
+                  if (parent && parent.children().length === 0) { // If parent is empty, prune it
+                    console.log("Parent group is empty, pruning:", parent.id());
+                    prunedElements.push(parent);
+                    parent.remove();
+                  }
+                }
                 const selectedLayout = document.getElementById("layout-select").value;
                 // cy.layout(layoutConfigs[selectedLayout]).run();
-              } else { // Plain Left-Click for info
+              } else if (!data.isParent) { // Plain Left-Click for info on child nodes only
                 document.getElementById("node-id").textContent = `ID: ${data.id}`;
                 document.getElementById("node-module").textContent = `Module: ${data.module}`;
                 document.getElementById("node-description").textContent = `Description: ${data.description}`;
@@ -466,26 +540,68 @@
         prunedElements = [];
         const targetNode = cy.getElementById(selectedNodeId);
         if (targetNode.length > 0) {
-          const connectedElements = cy.collection();
+          // Step 1: Collect all nodes and edges in the connected component
+          const connectedNodes = cy.collection();
+          const connectedEdges = cy.collection();
           const queue = [targetNode];
 
+          console.log("Starting simplification from node:", selectedNodeId);
           while (queue.length > 0) {
             const node = queue.shift();
-            if (!connectedElements.has(node)) {
-              connectedElements.merge(node);
-              const neighbors = node.closedNeighborhood();
-              neighbors.forEach((neighbor) => {
-                if (!connectedElements.has(neighbor)) {
-                  queue.push(neighbor);
+            if (!connectedNodes.has(node) && !node.data("isParent")) {
+              connectedNodes.merge(node);
+              const edges = node.connectedEdges();
+              edges.forEach((edge) => {
+                const source = edge.source();
+                const target = edge.target();
+                if (!source.data("isParent") && !target.data("isParent")) {
+                  connectedEdges.merge(edge);
+                  if (!connectedNodes.has(source)) {
+                    console.log("Adding connected node:", source.id());
+                    queue.push(source);
+                  }
+                  if (!connectedNodes.has(target)) {
+                    console.log("Adding connected node:", target.id());
+                    queue.push(target);
+                  }
                 }
               });
             }
           }
 
-          cy.elements().not(connectedElements).forEach((ele) => {
-            prunedElements.push(ele);
-            ele.remove();
+          console.log("Connected nodes:", connectedNodes.map(n => n.id()));
+          console.log("Connected edges:", connectedEdges.map(e => e.id()));
+
+          // Step 2: Prune everything outside the connected component
+          cy.nodes().forEach((node) => {
+            if (!connectedNodes.has(node) && !node.data("isParent")) {
+              console.log("Pruning node:", node.id());
+              prunedElements.push(node);
+              node.remove();
+            }
           });
+          cy.edges().forEach((edge) => {
+            if (!connectedEdges.has(edge)) {
+              console.log("Pruning edge:", edge.id());
+              prunedElements.push(edge);
+              edge.remove();
+            }
+          });
+
+          // Step 3: Prune all empty parent nodes
+          const parents = cy.nodes().filter(n => n.data("isParent"));
+          parents.forEach((parent) => {
+            const children = parent.children();
+            if (children.length === 0) {
+              console.log("Pruning empty group after simplification:", parent.id());
+              prunedElements.push(parent);
+              parent.remove();
+            } else {
+              console.log("Group not empty, keeping:", parent.id(), "with", children.length, "children");
+            }
+          });
+
+          console.log("Remaining nodes after simplification:", cy.nodes().map(n => n.id()));
         } else {
           alert(`Node "${selectedNodeId}" not found.`);
           simplifyMode = false;

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.4.0]
+### Added
+- Grouping
+### Changed
+- background color of the graph
+
 ## [2.3.0]
 ### Added
 - Simplify around selected node
