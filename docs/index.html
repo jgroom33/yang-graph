@@ -45,12 +45,14 @@
       margin-right: 5px;
     }
 
-    #layout-select {
+    #layout-select,
+    #simplify-select {
       padding: 5px;
       margin-top: 5px;
+      width: 260px;
+      /* Match search input + button width */
     }
 
-    #simplify-button,
     #refresh-button,
     #zoom-in-button,
     #zoom-out-button {
@@ -62,6 +64,7 @@
 
 <body>
   <div id="controls-container">
+    <h3>Use Shift + Left-Click to prune a node </h3>
     <div>
       <input type="text" id="search-input" placeholder="Search nodes by ID...">
       <button onclick="searchNodes()">Search</button>
@@ -81,7 +84,9 @@
     <button id="zoom-in-button" onclick="zoomIn()">Zoom In</button>
     <button id="zoom-out-button" onclick="zoomOut()">Zoom Out</button>
     <br />
-    <button id="simplify-button" onclick="toggleSimplify()">Simplify</button>
+    <select id="simplify-select">
+      <option value="">Select a node to simplify around</option>
+    </select>
   </div>
   <div id="cy"></div>
   <div id="node-info">
@@ -378,6 +383,20 @@
               }
             });
 
+            // Populate simplify dropdown with node IDs
+            const simplifySelect = document.getElementById("simplify-select");
+            cy.nodes().forEach(function (node) {
+              const option = document.createElement("option");
+              option.value = node.id();
+              option.text = node.id();
+              simplifySelect.appendChild(option);
+            });
+
+            // Add change listener for simplify dropdown
+            simplifySelect.addEventListener("change", function (e) {
+              toggleSimplify(e.target.value);
+            });
+
             // Left-click handler: Show info or prune with Shift
             cy.on("tap", "node", function (evt) {
               const node = evt.target;
@@ -421,26 +440,31 @@
     function zoomIn() {
       const currentZoom = cy.zoom();
       cy.zoom({
-        level: currentZoom + 0.1, // Increment by 0.1
-        renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } // Center of the viewport
+        level: currentZoom + 0.1,
+        renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 }
       });
     }
 
     function zoomOut() {
       const currentZoom = cy.zoom();
-      if (currentZoom > 0.1) { // Prevent zooming out too far
+      if (currentZoom > 0.1) {
         cy.zoom({
-          level: currentZoom - 0.1, // Decrement by 0.1
-          renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } // Center of the viewport
+          level: currentZoom - 0.1,
+          renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 }
         });
       }
     }
 
-    function toggleSimplify() {
+    function toggleSimplify(selectedNodeId) {
       simplifyMode = !simplifyMode;
       if (simplifyMode) {
+        if (!selectedNodeId) {
+          alert("Please select a node to simplify around.");
+          simplifyMode = false;
+          return;
+        }
         prunedElements = [];
-        const targetNode = cy.getElementById('ciena-mef-fd:fd');
+        const targetNode = cy.getElementById(selectedNodeId);
         if (targetNode.length > 0) {
           const connectedElements = cy.collection();
           const queue = [targetNode];
@@ -463,11 +487,14 @@
             ele.remove();
           });
         } else {
-          alert('Node "ciena-mef-fd:fd" not found.');
+          alert(`Node "${selectedNodeId}" not found.`);
+          simplifyMode = false;
+          return;
         }
       } else {
         cy.add(prunedElements);
         prunedElements = [];
+        document.getElementById("simplify-select").value = ""; // Reset dropdown
       }
       const selectedLayout = document.getElementById("layout-select").value;
       cy.layout(layoutConfigs[selectedLayout]).run();

@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.0]
+### Added
+- Simplify around selected node
+
 ## [2.2.0]
 ### Added
 - Zoom in/Out buttons
