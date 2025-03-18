@@ -114,7 +114,10 @@
                 selector: "node",
                 style: {
                   shape: "roundrectangle",
-                  label: "data(id)",
+                  label: function (ele) {
+                    const id = ele.data("id");
+                    return id.split(":").join("\n"); // Split on ':' and join with newlines
+                  },
                   "background-color": "#0074D9",
                   color: "#fff",
                   "text-valign": "center",
@@ -122,6 +125,7 @@
                   width: "150px",
                   height: "80px",
                   "font-size": "10px",
+                  "font-weight": "bold", // Make text bold
                   "text-wrap": "wrap",
                   "text-max-width": "140px",
                   padding: "5px",
@@ -132,7 +136,11 @@
                 style: {
                   "background-color": "#999999",
                   opacity: 0.6,
-                  label: 'data(id) + " (missing)"',
+                  label: function (ele) {
+                    const id = ele.data("id");
+                    return id.split(":").join("\n") + "\n(missing)"; // Split and add (missing)
+                  },
+                  "font-weight": "bold", // Make text bold
                 },
               },
               {
