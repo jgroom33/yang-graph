@@ -47,12 +47,12 @@
     {
       "source": "ciena-rib:vrf",
       "target": "ciena-vrf:vrf",
-      "relationship": "references_key:vrfName"
+      "relationship": "key:vrfName"
     },
     {
       "source": "ciena-rib:next_hop",
       "target": "openconfig-interfaces:interface",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

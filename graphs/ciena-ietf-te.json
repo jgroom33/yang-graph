@@ -61,17 +61,17 @@
     {
       "source": "ciena-ietf-te:interface",
       "target": "openconfig-interfaces:interface",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-ietf-te:interface",
       "target": "ciena-ietf-te:performance_advertisement_profile",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-ietf-te:named_admin_groups",
       "target": "ciena-ietf-te:named_admin_group",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

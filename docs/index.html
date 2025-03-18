@@ -49,6 +49,11 @@
       padding: 5px;
       margin-top: 5px;
     }
+
+    #simplify-button {
+      padding: 5px;
+      margin-top: 5px;
+    }
   </style>
 </head>
 
@@ -68,6 +73,9 @@
       <option value="breadthfirst">Breadth-First</option>
       <option value="random">Random</option>
     </select>
+    <button id="refresh-button" onclick="relayout()">Relayout</button>
+    <br/>
+    <button id="simplify-button" onclick="toggleSimplify()">Simplify</button>
   </div>
   <div id="cy"></div>
   <div id="node-info">
@@ -76,9 +84,12 @@
     <p id="node-module">Module: N/A</p>
     <p id="node-description">Description: N/A</p>
     <p id="node-key">Key: N/A</p>
+    <p>Shift + Left-Click to prune a node</p> <!-- Instruction for user -->
   </div>
   <script>
     let cy;
+    let simplifyMode = false;
+    let prunedElements = [];
 
     // Register extensions
     if (typeof cytoscape !== 'undefined') {
@@ -118,17 +129,17 @@
       "cose-bilkent": {
         name: "cose-bilkent",
         animate: true,
-        nodeRepulsion: 6000, // Strong repulsion for overlap avoidance
-        idealEdgeLength: 150, // Balanced edge length
-        edgeElasticity: 0.45, // Flexible edges
-        nestingFactor: 0.1, // Reduce nesting
-        gravity: 0.25, // Light gravity
-        numIter: 2500, // More iterations for refinement
+        nodeRepulsion: 6000,
+        idealEdgeLength: 150,
+        edgeElasticity: 0.45,
+        nestingFactor: 0.1,
+        gravity: 0.25,
+        numIter: 2500,
         fit: true,
-        padding: 50, // Border spacing
-        randomize: true, // Random initial positions
-        nodeDimensionsIncludeLabels: true, // Respect dynamic sizes
-        packComponents: true, // Cluster disconnected components
+        padding: 50,
+        randomize: true,
+        nodeDimensionsIncludeLabels: true,
+        packComponents: true,
       },
       cose: {
         name: "cose",
@@ -311,7 +322,7 @@
                 },
               },
               {
-                selector: 'edge[relationship ^= "references_key"]',
+                selector: 'edge[relationship ^= "key"]',
                 style: {
                   width: 2,
                   "line-color": "#2ECC40",
@@ -353,27 +364,40 @@
             layout: layoutConfigs["fcose"], // Default to fcose
           });
 
-          cy.nodes().forEach(function (node) {
-            const id = node.data("id");
-            if (id.split(":").length > 1) {
-              node.addClass("second-line-larger");
-            }
-          });
+          cy.ready(function () {
+            cy.nodes().forEach(function (node) {
+              const id = node.data("id");
+              if (id.split(":").length > 1) {
+                node.addClass("second-line-larger");
+              }
+            });
 
-          cy.on("tap", "node", function (evt) {
-            const node = evt.target;
-            const data = node.data();
-            document.getElementById("node-id").textContent = `ID: ${data.id}`;
-            document.getElementById("node-module").textContent = `Module: ${data.module}`;
-            document.getElementById("node-description").textContent = `Description: ${data.description}`;
-            document.getElementById("node-key").textContent = `Key: ${data.key || "N/A"}`;
-          });
+            // Left-click handler: Show info or prune with Shift
+            cy.on("tap", "node", function (evt) {
+              const node = evt.target;
+              const data = node.data();
+              if (evt.originalEvent.shiftKey) { // Shift + Left-Click to prune
+                console.log("Shift + Left-Click detected on node:", node.id());
+                const connectedEdges = node.connectedEdges();
+                const elementsToPrune = node.add(connectedEdges);
+                prunedElements = prunedElements.concat(elementsToPrune);
+                elementsToPrune.remove();
+                const selectedLayout = document.getElementById("layout-select").value;
+                // cy.layout(layoutConfigs[selectedLayout]).run();
+              } else { // Plain Left-Click for info
+                document.getElementById("node-id").textContent = `ID: ${data.id}`;
+                document.getElementById("node-module").textContent = `Module: ${data.module}`;
+                document.getElementById("node-description").textContent = `Description: ${data.description}`;
+                document.getElementById("node-key").textContent = `Key: ${data.key || "N/A"}`;
+              }
+            });
 
-          // Layout selection handler
-          document.getElementById("layout-select").addEventListener("change", function (e) {
-            const selectedLayout = e.target.value;
-            const layout = cy.layout(layoutConfigs[selectedLayout]);
-            layout.run();
+            // Layout selection handler
+            document.getElementById("layout-select").addEventListener("change", function (e) {
+              const selectedLayout = e.target.value;
+              const layout = cy.layout(layoutConfigs[selectedLayout]);
+              layout.run();
+            });
           });
         })
         .catch((error) => {
@@ -381,6 +405,47 @@
           alert("Failed to load graph.json. Check the console for details.");
         });
     });
+    function relayout() {
+      const selectedLayout = document.getElementById("layout-select").value;
+      cy.layout(layoutConfigs[selectedLayout]).run();
+    }
+
+    function toggleSimplify() {
+      simplifyMode = !simplifyMode;
+      if (simplifyMode) {
+        prunedElements = [];
+        const targetNode = cy.getElementById('ciena-mef-fd:fd');
+        if (targetNode.length > 0) {
+          const connectedElements = cy.collection();
+          const queue = [targetNode];
+
+          while (queue.length > 0) {
+            const node = queue.shift();
+            if (!connectedElements.has(node)) {
+              connectedElements.merge(node);
+              const neighbors = node.closedNeighborhood();
+              neighbors.forEach((neighbor) => {
+                if (!connectedElements.has(neighbor)) {
+                  queue.push(neighbor);
+                }
+              });
+            }
+          }
+
+          cy.elements().not(connectedElements).forEach((ele) => {
+            prunedElements.push(ele);
+            ele.remove();
+          });
+        } else {
+          alert('Node "ciena-mef-fd:fd" not found.');
+        }
+      } else {
+        cy.add(prunedElements);
+        prunedElements = [];
+      }
+      const selectedLayout = document.getElementById("layout-select").value;
+      cy.layout(layoutConfigs[selectedLayout]).run();
+    }
 
     function searchNodes() {
       const searchTerm = document.getElementById("search-input").value.trim().toLowerCase();

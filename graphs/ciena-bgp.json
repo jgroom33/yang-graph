@@ -103,42 +103,42 @@
     {
       "source": "ciena-bgp:redistribute",
       "target": "ciena-routing-policy:policy",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-bgp:network",
       "target": "ciena-routing-policy:policy",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-bgp:vrf",
       "target": "ciena-vrf:vrf",
-      "relationship": "references_key:vrfName"
+      "relationship": "key:vrfName"
     },
     {
       "source": "ciena-bgp:peer",
       "target": "openconfig-interfaces:interface",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-bgp:policy",
       "target": "ciena-routing-policy:policy",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-bgp:prefix_list",
       "target": "ciena-routing-policy:prefix_list",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-bgp:l2vpn_vpls",
       "target": "ciena-l2vpn:l2vpn",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-bgp:peer_group",
       "target": "openconfig-interfaces:interface",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

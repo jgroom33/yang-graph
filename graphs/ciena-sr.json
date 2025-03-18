@@ -47,7 +47,7 @@
     {
       "source": "ciena-sr:connected_prefix_sid_map",
       "target": "openconfig-interfaces:interface",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

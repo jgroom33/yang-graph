@@ -54,32 +54,32 @@
     {
       "source": "ciena-sat:entity",
       "target": "ciena-mef-logical-port:logical_port",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-sat:test_profile",
       "target": "ciena-sat:kpi_profile",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-sat:test_profile",
       "target": "ciena-sat:bw_alloc_profile",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-sat:test_profile",
       "target": "ciena-sat:emix_sequence",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-sat:test_instance",
       "target": "ciena-mef-fp:fp",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-sat:test_instance",
       "target": "ciena-sat:test_profile",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

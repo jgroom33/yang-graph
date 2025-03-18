@@ -33,12 +33,12 @@
     {
       "source": "ciena-ldp:instance",
       "target": "openconfig-interfaces:interface",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-ldp:interface",
       "target": "openconfig-interfaces:interface",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

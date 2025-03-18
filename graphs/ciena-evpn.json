@@ -54,27 +54,27 @@
     {
       "source": "ciena-evpn:ethernet_segment",
       "target": "ciena-mef-logical-port:logical_port",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-evpn:flexible_cross_connect_vlan_aware_fd",
       "target": "ciena-mef-fd:fd",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-evpn:vpws_cross_connect_fd",
       "target": "ciena-mef-fd:fd",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-evpn:flexible_cross_connect_vlan_unaware_fd",
       "target": "ciena-mef-fd:fd",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-evpn:vpls_fd",
       "target": "ciena-mef-fd:fd",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

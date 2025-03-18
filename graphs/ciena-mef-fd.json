@@ -19,27 +19,27 @@
     {
       "source": "ciena-mef-fd:fd",
       "target": "ciena-mef-l2cp-profile:l2cp_profile",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mef-fd:fd",
       "target": "ciena-mef-flood-containment-profile:flood_containment_profile",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mef-fd:fd",
       "target": "ciena-mef-pfg-profile:pfg_profile",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mef-fd:fd",
       "target": "ciena-mef-egress-qos:cos_queue_map",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mef-fd:fd",
       "target": "ciena-mef-cos-to-frame-map:cos_to_frame_map",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

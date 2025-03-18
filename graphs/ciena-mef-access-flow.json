@@ -33,12 +33,12 @@
     {
       "source": "ciena-mef-access-flow:access_flow",
       "target": "ciena-mef-classifier:classifier",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mef-access-flow:access_flow",
       "target": "ciena-mef-access-flow:acl_action",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

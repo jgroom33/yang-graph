@@ -152,17 +152,17 @@
     {
       "source": "ciena-routing-policy:community",
       "target": "ciena-routing-policy:community_list",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-routing-policy:ext_community",
       "target": "ciena-routing-policy:ext_community_list",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-routing-policy:large_community",
       "target": "ciena-routing-policy:large_community_list",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

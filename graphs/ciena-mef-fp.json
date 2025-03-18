@@ -40,37 +40,37 @@
     {
       "source": "ciena-mef-fp:fp",
       "target": "ciena-mef-fd:fd",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mef-fp:fp",
       "target": "ciena-mef-logical-port:logical_port",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mef-fp:fp",
       "target": "ciena-mef-cos-to-frame-map:cos_to_frame_map",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mef-fp:fp",
       "target": "ciena-mef-flood-containment-profile:flood_containment_profile",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mef-fp:fp",
       "target": "ciena-mef-classifier:classifier",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mef-fp:fp",
       "target": "ciena-mef-meter-profile:meter_profile",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mef-fp:fp",
       "target": "ciena-mef-egress-qos:queue_group",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

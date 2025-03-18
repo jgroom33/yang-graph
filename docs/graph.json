@@ -1921,546 +1921,546 @@
       "data": {
         "source": "ciena-sat:entity",
         "target": "ciena-mef-logical-port:logical_port",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-sat:test_profile",
         "target": "ciena-sat:kpi_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-sat:test_profile",
         "target": "ciena-sat:bw_alloc_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-sat:test_profile",
         "target": "ciena-sat:emix_sequence",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-sat:test_instance",
         "target": "ciena-mef-fp:fp",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-sat:test_instance",
         "target": "ciena-sat:test_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-rib:vrf",
         "target": "ciena-vrf:vrf",
-        "relationship": "references_key:vrfName"
+        "relationship": "key:vrfName"
       }
     },
     {
       "data": {
         "source": "ciena-rib:next_hop",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-access-flow:access_flow",
         "target": "ciena-mef-classifier:classifier",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-access-flow:access_flow",
         "target": "ciena-mef-access-flow:acl_action",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-sr-policy:intent_template",
         "target": "ciena-ietf-te:intent_template",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-routing-policy:community",
         "target": "ciena-routing-policy:community_list",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-routing-policy:ext_community",
         "target": "ciena-routing-policy:ext_community_list",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-routing-policy:large_community",
         "target": "ciena-routing-policy:large_community_list",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-l2vpn:l2vpn",
         "target": "ciena-mef-fd:fd",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-l2vpn:l2vpn",
         "target": "ietf-pseudowires:pseudowire",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fp:fp",
         "target": "ciena-mef-fd:fd",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fp:fp",
         "target": "ciena-mef-logical-port:logical_port",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fp:fp",
         "target": "ciena-mef-cos-to-frame-map:cos_to_frame_map",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fp:fp",
         "target": "ciena-mef-flood-containment-profile:flood_containment_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fp:fp",
         "target": "ciena-mef-classifier:classifier",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fp:fp",
         "target": "ciena-mef-meter-profile:meter_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fp:fp",
         "target": "ciena-mef-egress-qos:queue_group",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-ospf:redistribute",
         "target": "ciena-routing-policy:policy",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-ospf:interface",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-ospf:prefix_list",
         "target": "ciena-routing-policy:prefix_list",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fd:fd",
         "target": "ciena-mef-l2cp-profile:l2cp_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fd:fd",
         "target": "ciena-mef-flood-containment-profile:flood_containment_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fd:fd",
         "target": "ciena-mef-pfg-profile:pfg_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fd:fd",
         "target": "ciena-mef-egress-qos:cos_queue_map",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-fd:fd",
         "target": "ciena-mef-cos-to-frame-map:cos_to_frame_map",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-l2cp-profile:protocol_disposition",
         "target": "ciena-mef-l2cp-profile:l2pt_macs",
-        "relationship": "references_key:mac-address"
+        "relationship": "key:mac-address"
       }
     },
     {
       "data": {
         "source": "ciena-mpls:interface",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mpls:vrf",
         "target": "ciena-vrf:vrf",
-        "relationship": "references_key:vrfName"
+        "relationship": "key:vrfName"
       }
     },
     {
       "data": {
         "source": "ciena-ietf-te:interface",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-ietf-te:interface",
         "target": "ciena-ietf-te:performance_advertisement_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-ietf-te:named_admin_groups",
         "target": "ciena-ietf-te:named_admin_group",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-egress-qos:scheduler",
         "target": "ciena-mef-logical-port:logical_port",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-egress-qos:cos_to_queue_map_association",
         "target": "ciena-mef-egress-qos:cos_queue_map",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-egress-qos:cos_to_queue_map_association",
         "target": "ciena-mef-logical-port:logical_port",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-ldp:instance",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-ldp:interface",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-igmp-snooping:instance",
         "target": "ciena-mef-fd:fd",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-itut-g8032-draft:ring_port",
         "target": "ietf-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-itut-g8032-draft:port",
         "target": "ciena-itut-g8032-draft:ring_port",
-        "relationship": "references_key:port-id"
+        "relationship": "key:port-id"
       }
     },
     {
       "data": {
         "source": "ciena-isis:passive",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-isis:level",
         "target": "ciena-routing-policy:prefix_list",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-isis:protocol",
         "target": "ciena-routing-policy:policy",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-isis:interface",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-evpn:ethernet_segment",
         "target": "ciena-mef-logical-port:logical_port",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-evpn:flexible_cross_connect_vlan_aware_fd",
         "target": "ciena-mef-fd:fd",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-evpn:vpws_cross_connect_fd",
         "target": "ciena-mef-fd:fd",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-evpn:flexible_cross_connect_vlan_unaware_fd",
         "target": "ciena-mef-fd:fd",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-evpn:vpls_fd",
         "target": "ciena-mef-fd:fd",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-sr:connected_prefix_sid_map",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-bgp:redistribute",
         "target": "ciena-routing-policy:policy",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-bgp:network",
         "target": "ciena-routing-policy:policy",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-bgp:vrf",
         "target": "ciena-vrf:vrf",
-        "relationship": "references_key:vrfName"
+        "relationship": "key:vrfName"
       }
     },
     {
       "data": {
         "source": "ciena-bgp:peer",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-bgp:policy",
         "target": "ciena-routing-policy:policy",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-bgp:prefix_list",
         "target": "ciena-routing-policy:prefix_list",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-bgp:l2vpn_vpls",
         "target": "ciena-l2vpn:l2vpn",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-bgp:peer_group",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-ospfv3:redistribute",
         "target": "ciena-routing-policy:policy",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-ospfv3:interface",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-logical-port:logical_port",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-logical-port:logical_port",
         "target": "ciena-mef-meter-profile:meter_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-logical-port:logical_port",
         "target": "ciena-mef-cos-to-frame-map:cos_to_frame_map",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-logical-port:logical_port",
         "target": "ciena-mef-flood-containment-profile:flood_containment_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-mef-logical-port:logical_port",
         "target": "ciena-mef-pfg-profile:pfg_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-dhcpv6-client:client",
         "target": "openconfig-interfaces:interface",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-flexe:flexe_phys",
         "target": "ciena-flexe:flexe_port",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-flexe:flexe_channel",
         "target": "ciena-flexe:flexe_group",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-flexe:flexe_channel",
         "target": "ciena-flexe:flexe_bas_oam",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-flexe:calendar_A_slots_list",
         "target": "ciena-flexe:flexe_phys",
-        "relationship": "references_key:phy-number-in-group"
+        "relationship": "key:phy-number-in-group"
       }
     },
     {
       "data": {
         "source": "ciena-flexe:calendar_B_slots_list",
         "target": "ciena-flexe:flexe_phys",
-        "relationship": "references_key:phy-number-in-group"
+        "relationship": "key:phy-number-in-group"
       }
     },
     {
       "data": {
         "source": "ciena-flexe:flexe_protection_group",
         "target": "ciena-flexe:flexe_channel",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     },
     {
       "data": {
         "source": "ciena-flexe:flexe_protection_group",
         "target": "ciena-flexe:flexe_protection_profile",
-        "relationship": "references_key:name"
+        "relationship": "key:name"
       }
     }
   ]

@@ -47,12 +47,12 @@
     {
       "source": "ciena-ospfv3:redistribute",
       "target": "ciena-routing-policy:policy",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-ospfv3:interface",
       "target": "openconfig-interfaces:interface",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

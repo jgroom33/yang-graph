@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0]
+### Added
+- shift-left click to prune a node
+- Add a simplify button
+- Add a relayout button
+
 ## [2.0.0]
 ### Added
 - Grpah layout selections

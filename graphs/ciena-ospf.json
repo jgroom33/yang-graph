@@ -89,17 +89,17 @@
     {
       "source": "ciena-ospf:redistribute",
       "target": "ciena-routing-policy:policy",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-ospf:interface",
       "target": "openconfig-interfaces:interface",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-ospf:prefix_list",
       "target": "ciena-routing-policy:prefix_list",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

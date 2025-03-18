@@ -40,7 +40,7 @@
     {
       "source": "ciena-sr-policy:intent_template",
       "target": "ciena-ietf-te:intent_template",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     }
   ]
 }

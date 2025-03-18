@@ -149,7 +149,7 @@ class YangGraphSingle(plugin.PyangPlugin):
                                         "source": list_name,
                                         "target": target_full_name,
                                         "relationship": (
-                                            f"references_key:{target_key}"
+                                            f"key:{target_key}"
                                             if target_key
                                             else "references_list"
                                         ),

@@ -47,12 +47,12 @@
     {
       "source": "ciena-mpls:interface",
       "target": "openconfig-interfaces:interface",
-      "relationship": "references_key:name"
+      "relationship": "key:name"
     },
     {
       "source": "ciena-mpls:vrf",
       "target": "ciena-vrf:vrf",
-      "relationship": "references_key:vrfName"
+      "relationship": "key:vrfName"
     }
   ]
 }
