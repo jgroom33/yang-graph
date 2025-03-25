@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-license:backup_license_servers",
+      "type": "list",
+      "module": "ciena-waveserver-license",
+      "description": "Backup external license servers.",
+      "key": "priority"
+    }
+  ],
+  "edges": []
+}

@@ -1,0 +1,85 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-sat:entity",
+      "type": "list",
+      "module": "ciena-sat",
+      "description": "Service activation testing entity configuration.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-sat:emix_sequence",
+      "type": "list",
+      "module": "ciena-sat",
+      "description": "EMIX sequence entry.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-sat:kpi_profile",
+      "type": "list",
+      "module": "ciena-sat",
+      "description": "Key performance indicator pass/fail criteria.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-sat:pcp",
+      "type": "list",
+      "module": "ciena-sat",
+      "description": "Each PCP within the KPI profile has its own configuration.",
+      "key": "pcp-value"
+    },
+    {
+      "id": "ciena-sat:bw_alloc_profile",
+      "type": "list",
+      "module": "ciena-sat",
+      "description": "BW allocation profile entry",
+      "key": "name"
+    },
+    {
+      "id": "ciena-sat:test_profile",
+      "type": "list",
+      "module": "ciena-sat",
+      "description": "Service activation test profile configuation information.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-sat:test_instance",
+      "type": "list",
+      "module": "ciena-sat",
+      "description": "Service activation test instance configuration data.",
+      "key": "name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-sat:entity",
+      "target": "ciena-mef-logical-port:logical_port",
+      "relationship": "leafref:port"
+    },
+    {
+      "source": "ciena-sat:test_profile",
+      "target": "ciena-sat:kpi_profile",
+      "relationship": "leafref:kpi-profile-name"
+    },
+    {
+      "source": "ciena-sat:test_profile",
+      "target": "ciena-sat:bw_alloc_profile",
+      "relationship": "leafref:bw-alloc-profile"
+    },
+    {
+      "source": "ciena-sat:test_profile",
+      "target": "ciena-sat:emix_sequence",
+      "relationship": "leafref:emix-sequence"
+    },
+    {
+      "source": "ciena-sat:test_instance",
+      "target": "ciena-mef-fp:fp",
+      "relationship": "leafref:flow-point-id"
+    },
+    {
+      "source": "ciena-sat:test_instance",
+      "target": "ciena-sat:test_profile",
+      "relationship": "leafref:profile"
+    }
+  ]
+}

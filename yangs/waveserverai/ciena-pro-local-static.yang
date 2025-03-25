@@ -1,0 +1,175 @@
+module ciena-pro-local-static {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-pro-local-static";
+  prefix pro-local-static;
+
+  import ciena-common-version {
+    prefix ciena-common-version;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import ciena-pro-interfaces {
+    prefix pro-if;
+  }
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com/
+     Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+  description
+    "root level container instantiation for static routing";
+
+  revision 2021-04-19 {
+    ciena-common-version:string "1.0.0";
+    description
+      "Initial version";
+  }
+
+  identity LOCAL_DEFINED_NEXT_HOP {
+    description
+      "A base identity type of local defined next-hops";
+  }
+
+  identity DROP {
+    base LOCAL_DEFINED_NEXT_HOP;
+    description
+      "Discard traffic for the corresponding destination";
+  }
+
+  identity LOCAL_LINK {
+    base LOCAL_DEFINED_NEXT_HOP;
+    description
+      "Treat traffic towards addresses within the specified
+       next-hop prefix as though they are connected to a local
+       link. When the LOCAL_LINK next-hop type is specified,
+       an interface must also be specified such that
+       the local system can determine which link to trigger
+       link-layer address discovery against";
+  }
+
+  typedef local-defined-next-hop {
+    type identityref {
+      base LOCAL_DEFINED_NEXT_HOP;
+    }
+    description
+      "Pre-defined next-hop designation for locally generated
+       routes";
+  }
+
+  grouping local-static-config {
+    description
+      "Configuration data for static routes.";
+    list static {
+      key "prefix";
+      description
+        "List of locally configured static routes";
+      leaf prefix {
+        type inet:ip-prefix;
+        description
+          "Destination prefix for the static route, either IPv4 or
+           IPv6.";
+      }
+
+      list next-hops {
+        key "index";
+        description
+          "A list of next-hops to be utilised for the static
+           route being specified.";
+        uses local-static-nexthop-config;
+
+        uses pro-if:interface-ref-common;
+      }
+    }
+  }
+
+  grouping local-static-nexthop-config {
+    description
+      "Configuration parameters related to each next-hop entry
+       specified for a static route";
+    leaf index {
+      type string;
+      description
+        "An user-specified identifier utilised to uniquely reference
+         the next-hop entry in the next-hop list. The value of this
+         index has no semantic meaning other than for referencing
+         the entry.";
+    }
+
+    leaf next-hop {
+      type union {
+        type inet:ip-address;
+        type local-defined-next-hop;
+      }
+      description
+        "The next-hop that is to be used for the static route
+         - this may be specified as an IP address, an interface
+         or a pre-defined next-hop type - for instance, DROP or
+         LOCAL_LINK. When this leaf is not set, and the interface-ref
+         value is specified for the next-hop, then the system should
+         treat the prefix as though it is directly connected to the
+         interface.";
+    }
+
+    leaf metric {
+      type uint32;
+      description
+        "A metric which is utilised to specify the preference of
+         the next-hop entry when it is injected into the RIB. The
+         lower the metric, the more preferable the prefix is. When
+         this value is not specified the metric is inherited from
+         the default metric utilised for static routes within the
+         network instance that the static routes are being
+         instantiated. When multiple next-hops are specified for a
+         static route, the metric is utilised to determine which of
+         the next-hops is to be installed in the RIB. When multiple
+         next-hops have the same metric (be it specified, or simply
+         the default) then these next-hops should all be installed
+         in the RIB";
+    }
+
+    leaf recurse {
+      type boolean;
+      default "false";
+      description
+        "Determines whether the next-hop should be allowed to
+         be looked up recursively - i.e., via a RIB entry which has
+         been installed by a routing protocol, or another static route
+         - rather than needing to be connected directly to an
+         interface of the local system within the current network
+         instance. When the interface reference specified within the
+         next-hop entry is set (i.e., is not null) then forwarding is
+         restricted to being via the interface specified - and
+         recursion is hence disabled.";
+    }
+  }
+
+  grouping local-static-nexthop-state {
+    description
+      "Operational state parameters relating to a next-hop entry
+       for a static route";
+  }
+
+  grouping local-static-top {
+    description
+      "Top-level grouping for the list of static route definitions";
+    container static-routes {
+      description
+        "Enclosing container for the list of static routes";
+      uses local-static-config;
+
+      container state {
+        config false;
+        description
+          "State";
+        uses local-static-config;
+      }
+    }
+  }
+}

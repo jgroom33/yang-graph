@@ -1,0 +1,81 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-mef-fp:fp",
+      "type": "list",
+      "module": "ciena-mef-fp",
+      "description": "A list of all mef-fp configuration entries.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-fp:ingress_l2_transform",
+      "type": "list",
+      "module": "ciena-mef-fp",
+      "description": "Ingress L2-transform configured on this flow-point.",
+      "key": "ingress-name"
+    },
+    {
+      "id": "ciena-mef-fp:vlan_stack",
+      "type": "list",
+      "module": "ciena-mef-fp",
+      "description": "This configures VLAN stack on the flow-point.",
+      "key": "tag"
+    },
+    {
+      "id": "ciena-mef-fp:egress_l2_transform",
+      "type": "list",
+      "module": "ciena-mef-fp",
+      "description": "Egress L2-transform configured on this flow-point.",
+      "key": "egress-name"
+    },
+    {
+      "id": "ciena-mef-fp:normalized_vid",
+      "type": "list",
+      "module": "ciena-mef-fp",
+      "description": "Used to represent normalized-vid values for EVPN FXC, e.g. MPLS label + vid lookup. The tag number represents the position of the normalized-vid. tag '1' represents outer most tag, tag '2' next outer most, etc. Note that the normalized-vid is used in conjunction with an ingress-l2-transform of the same flow-point. That is, an ingress-l2-xform operation of push/stamp is generally used to ensure that the frame contains the normalized-vid in flow-point to EVPN service-tunnel direction. In the case of the ingress-l2-transform stamp operation; - ingress-l2-transform stamp tag 1 (outer) matches normalized-vid tag 1 (outer). - ingress-l2-transform stamp tag 2 (next outer) matches normalized-vid tag 2 (next outer (aka inner)). In the case of the ingress-l2-transform push operation; - ingress-l2-transform push tag 1 (outer most) matches normalized-vid tag 1 (outer), when 1 tag is being pushed via the ingress-l2-transform. - ingress-l2-transform push tag 2 (next outer most) matches normalized-vid tag 1 (outer), when 2 tags are being pushed via the ingress-l2-transform. - ingress-l2-transform push tag 1 (outer most) matches normalized-vid tag 2 (next outer (aka inner)), when 2 tags are being pushed via the ingress-l2-transform.",
+      "key": "tag"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-mef-fp:fp",
+      "target": "ciena-mef-fd:fd",
+      "relationship": "leafref:fd-name"
+    },
+    {
+      "source": "ciena-mef-fp:fp",
+      "target": "ciena-mef-logical-port:logical_port",
+      "relationship": "leafref:logical-port"
+    },
+    {
+      "source": "ciena-mef-fp:fp",
+      "target": "ciena-mef-frame-to-cos-map:frame_to_cos_map",
+      "relationship": "leafref:frame-to-cos-map"
+    },
+    {
+      "source": "ciena-mef-fp:fp",
+      "target": "ciena-mef-cos-to-frame-map:cos_to_frame_map",
+      "relationship": "leafref:cos-to-frame-map"
+    },
+    {
+      "source": "ciena-mef-fp:fp",
+      "target": "ciena-mef-flood-containment-profile:flood_containment_profile",
+      "relationship": "leafref:flood-containment-profile"
+    },
+    {
+      "source": "ciena-mef-fp:fp",
+      "target": "ciena-mef-classifier:classifier",
+      "relationship": "leafref:classifier-list"
+    },
+    {
+      "source": "ciena-mef-fp:fp",
+      "target": "ciena-mef-meter-profile:meter_profile",
+      "relationship": "leafref:meter-profile"
+    },
+    {
+      "source": "ciena-mef-fp:fp",
+      "target": "ciena-mef-egress-qos:queue_group",
+      "relationship": "leafref:queue-group-instance"
+    }
+  ]
+}

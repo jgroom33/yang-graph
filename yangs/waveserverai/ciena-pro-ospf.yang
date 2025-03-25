@@ -1,0 +1,258 @@
+module ciena-pro-ospf {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-pro-ospf";
+  prefix pro-ospf;
+
+  import ciena-common-version {
+    prefix ciena-common-version;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  include "ciena-pro-ospf-global";
+
+  include "ciena-pro-ospf-area";
+
+  include "ciena-pro-ospf-area-interface";
+
+  include "ciena-pro-ospf-common";
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com/
+     Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+  description
+    "This module defines OSPFv2 and OSPFv3 top level routing objects.";
+
+  revision 2019-08-28 {
+    ciena-common-version:string "1.0.0";
+    description
+      "Initial revision";
+  }
+
+  grouping ospf-config-top {
+    description
+      "Top-level OSPF configuration and operational state";
+    leaf enabled {
+      type boolean;
+      description
+        "A boolean value indicating whether the local protocol
+         instance is enabled.";
+    }
+
+    leaf router-id {
+      type yang:dotted-quad;
+      description
+        "A 32-bit number represented as a dotted quad assigned to
+         each router running the OSPF protocol. This number should
+         be unique within the autonomous system";
+      reference
+        "rfc2828";
+    }
+
+    leaf default-metric {
+      type uint32;
+      description
+        "The default metric within the RIB for entries that are
+         installed by this protocol instance. This value may
+         be overridden by protocol specific configuration options.
+         The lower the metric specified the more preferable the RIB
+         entry is to be selected for use within the network instance.
+         Where multiple entries have the same metric value then these
+         equal cost paths should be treated according to the specified
+         ECMP path selection behaviour for the instance";
+    }
+
+    container areas {
+      description
+        "Configuration and operational state relating to an
+         OSPFv2 area.";
+      list area {
+        key "identifier";
+        description
+          "The OSPFv2 areas within which the local system exists";
+        uses ospf-area-common;
+      }
+    }
+  }
+
+  grouping ospf-state-top {
+    description
+      "Top-level OSPF configuration and operational state";
+    leaf enabled {
+      type boolean;
+      description
+        "A boolean value indicating whether the local protocol
+         instance is enabled.";
+    }
+
+    leaf router-id {
+      type yang:dotted-quad;
+      description
+        "A 32-bit number represented as a dotted quad assigned to
+         each router running the OSPF protocol. This number should
+         be unique within the autonomous system";
+      reference
+        "rfc2828";
+    }
+
+    leaf default-metric {
+      type uint32;
+      description
+        "The default metric within the RIB for entries that are
+         installed by this protocol instance. This value may
+         be overridden by protocol specific configuration options.
+         The lower the metric specified the more preferable the RIB
+         entry is to be selected for use within the network instance.
+         Where multiple entries have the same metric value then these
+         equal cost paths should be treated according to the specified
+         ECMP path selection behaviour for the instance";
+    }
+
+    container areas {
+      description
+        "Configuration and operational state relating to an
+         OSPFv2 area.";
+      list area {
+        key "identifier";
+        description
+          "The OSPFv2 areas within which the local system exists";
+        uses ospf-area-common-state;
+      }
+    }
+  }
+
+  grouping ospf-top {
+    description
+      "Top-level OSPF configuration and operational state";
+    container ospf {
+      description
+        "Top-level configuration and operational state for
+         Open Shortest Path First (OSPF)";
+      uses pro-ospf:ospf-config-top;
+
+      container state {
+        config false;
+        description
+          "State";
+        uses pro-ospf:ospf-state-top;
+      }
+    }
+  }
+
+  grouping ospfv3-config-top {
+    description
+      "Top-level OSPF configuration and operational state";
+    leaf enabled {
+      type boolean;
+      description
+        "A boolean value indicating whether the local protocol
+         instance is enabled.";
+    }
+
+    leaf router-id {
+      type yang:dotted-quad;
+      description
+        "A 32-bit number represented as a dotted quad assigned to
+         each router running the OSPF protocol. This number should
+         be unique within the autonomous system";
+      reference
+        "rfc2828";
+    }
+
+    leaf default-metric {
+      type uint32;
+      description
+        "The default metric within the RIB for entries that are
+         installed by this protocol instance. This value may
+         be overridden by protocol specific configuration options.
+         The lower the metric specified the more preferable the RIB
+         entry is to be selected for use within the network instance.
+         Where multiple entries have the same metric value then these
+         equal cost paths should be treated according to the specified
+         ECMP path selection behaviour for the instance";
+    }
+
+    container areas {
+      description
+        "Configuration and operational state relating to an
+         OSPFv3 area.";
+      list area {
+        key "identifier";
+        description
+          "The OSPFv3 areas within which the local system exists";
+        uses ospf-area-common;
+      }
+    }
+  }
+
+  grouping ospfv3-state-top {
+    description
+      "Top-level OSPFv3 operational state";
+    leaf enabled {
+      type boolean;
+      description
+        "A boolean value indicating whether the local protocol
+         instance is enabled.";
+    }
+
+    leaf router-id {
+      type yang:dotted-quad;
+      description
+        "A 32-bit number represented as a dotted quad assigned to
+         each router running the OSPF protocol. This number should
+         be unique within the autonomous system";
+      reference
+        "rfc2828";
+    }
+
+    leaf default-metric {
+      type uint32;
+      description
+        "The default metric within the RIB for entries that are
+         installed by this protocol instance. This value may
+         be overridden by protocol specific configuration options.
+         The lower the metric specified the more preferable the RIB
+         entry is to be selected for use within the network instance.
+         Where multiple entries have the same metric value then these
+         equal cost paths should be treated according to the specified
+         ECMP path selection behaviour for the instance";
+    }
+
+    container areas {
+      description
+        "Configuration and operational state relating to an
+         OSPFv3 area.";
+      list area {
+        key "identifier";
+        description
+          "The OSPFv3 areas within which the local system exists";
+        uses ospf-area-common-state;
+      }
+    }
+  }
+
+  grouping ospfv3-top {
+    description
+      "Top-level OSPF configuration and operational state";
+    container ospfv3 {
+      description
+        "Top-level configuration and operational state for
+         Open Shortest Path First (OSPF)";
+      uses pro-ospf:ospfv3-config-top;
+
+      container state {
+        config false;
+        description
+          "State";
+        uses pro-ospf:ospfv3-state-top;
+      }
+    }
+  }
+}

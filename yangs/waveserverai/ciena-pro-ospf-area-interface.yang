@@ -1,0 +1,434 @@
+submodule ciena-pro-ospf-area-interface {
+  belongs-to ciena-pro-ospf {
+    prefix pro-ospf;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import ciena-pro-interfaces {
+    prefix pro-if;
+  }
+
+  import ciena-pro-ospf-types {
+    prefix pro-ospf-types;
+  }
+
+  import ciena-common-version {
+    prefix ciena-common-version;
+  }
+
+  description
+    "This submodule provides OSPF configuration and operational
+     state parameters that are specific to the area interface context";
+
+  revision 2022-07-28 {
+    ciena-common-version:string "1.3.0";
+    description
+      "Add IP address to ospf-area-interfaces-neighbors";
+  }
+  revision 2022-06-24 {
+    ciena-common-version:string "1.2.0";
+    description
+      "Move ospf-area-interfaces-neighbour-state and
+            ospf-area-interface-statistics-grouping from a pro-routing augment
+        to  ospf-area-interfaces-state";
+  }
+  revision 2022-06-06 {
+    ciena-common-version:string "1.1.0";
+    description
+      "Add ospf statistics";
+  }
+  revision 2019-10-08 {
+    ciena-common-version:string "1.0.0";
+    description
+      "Added Ciena common version";
+  }
+
+  grouping ospf-area-interface-timers {
+    description
+      "Configuration parameters relating to per-interface OSPF
+       timers";
+    leaf dead-interval {
+      type uint32;
+      units "seconds";
+      default "40";
+      description
+        "The number of seconds that the local system should let
+         elapse before declaring a silent router down";
+      reference
+        "RFC2328";
+    }
+
+    leaf hello-interval {
+      type uint32;
+      units "seconds";
+      default "10";
+      description
+        "The number of seconds the local system waits between the
+         transmission of subsequent Hello packets";
+    }
+
+    leaf retransmission-interval {
+      type uint32;
+      units "seconds";
+      default "5";
+      description
+        "The number of seconds that the local system waits before
+         retransmitting an unacknowledged LSA.";
+    }
+
+    leaf interface-transmission-delay {
+      type uint32;
+      units "seconds";
+      default "1";
+      description
+        "The estimated number of seconds it takes to transmit a Link State
+         Update packet over this interface.";
+    }
+  }
+
+  grouping ospf-area-interfaces {
+    description
+      "Configuration parameters for an OSPF interface";
+    uses pro-if:interface-ref-common;
+
+    leaf network-type {
+      type identityref {
+        base pro-ospf-types:OSPF_NETWORK_TYPE;
+      }
+      description
+        "The type of network that OSPFv2 should use for the specified
+         interface.";
+    }
+
+    leaf priority {
+      type uint8;
+      default "1";
+      description
+        "The local system's priority to become the designated
+         router";
+    }
+
+    leaf multi-area-adjacency-primary {
+      type boolean;
+      default "true";
+      description
+        "When the specified interface is included in more than one
+         area's configuration, this leaf marks whether the area should
+         be considered the primary (when the value is true). In the
+         case that this value is false, the area is considered a
+         secondary area.";
+    }
+
+    leaf metric {
+      type pro-ospf-types:ospf-metric;
+      default "10";
+      description
+        "The metric for the interface";
+    }
+
+    leaf passive {
+      type boolean;
+      default "false";
+      description
+        "When this leaf is set to true, the interface should be
+         advertised within the OSPF area but OSPF adjacencies should
+         not be established over the interface";
+    }
+
+    uses ospf-area-interface-timers;
+  }
+
+  grouping ospf-area-interfaces-state {
+    description
+      "Operation state parameters of an OSPF interface";
+    uses pro-if:interface-ref-common;
+
+    leaf network-type {
+      type identityref {
+        base pro-ospf-types:OSPF_NETWORK_TYPE;
+      }
+      description
+        "The type of network that OSPFv2 should use for the specified
+         interface.";
+    }
+
+    leaf priority {
+      type uint8;
+      default "1";
+      description
+        "The local system's priority to become the designated
+         router";
+    }
+
+    leaf multi-area-adjacency-primary {
+      type boolean;
+      default "true";
+      description
+        "When the specified interface is included in more than one
+         area's configuration, this leaf marks whether the area should
+         be considered the primary (when the value is true). In the
+         case that this value is false, the area is considered a
+         secondary area.";
+    }
+
+    leaf metric {
+      type pro-ospf-types:ospf-metric;
+      default "10";
+      description
+        "The metric for the interface";
+    }
+
+    leaf passive {
+      type boolean;
+      default "false";
+      description
+        "When this leaf is set to true, the interface should be
+         advertised within the OSPF area but OSPF adjacencies should
+         not be established over the interface";
+    }
+
+    uses ospf-area-interface-timers;
+
+    uses ospf-area-interface-neighbor-defect;
+
+    uses ospf-area-interface-neighbor-state;
+
+    uses ospf-area-interface-statistics-grouping;
+  }
+
+  grouping ospf-area-interface-state {
+    description
+      "Operation state parameters of an OSPF interface";
+    leaf dr-router-id {
+      type yang:dotted-quad;
+      description
+        "The router-id of the designated router for this interface.";
+    }
+
+    leaf dr-ip-address {
+      type inet:ip-address;
+      description
+        "The IP address of the designated router for this interface.";
+    }
+
+    leaf bdr-router-id {
+      type yang:dotted-quad;
+      description
+        "The router-id of the backup designated router for this
+         interface.";
+    }
+
+    leaf bdr-ip-address {
+      type inet:ip-address;
+      description
+        "The IP address of the backup designated router for this
+         interface.";
+    }
+  }
+
+  grouping ospf-area-interface-neighbor-config {
+    description
+      "Configuration parameters relating to an individual neighbor
+       system on an interface within an OSPF area";
+    leaf neighbor-ip-address {
+      type inet:ip-address;
+      description
+        "The IP address of the configured neighbor.";
+    }
+
+    leaf metric {
+      type pro-ospf-types:ospf-metric;
+      description
+        "The metric that should be considered to the remote neighbor
+         over this interface. This configuration is only applicable
+         for multiple-access networks";
+    }
+
+    leaf poll-interval {
+      type uint16;
+      description
+        "Neighbor poll interval (seconds) for sending OSPF Hello
+         packets to discover the neighbor on NBMA networks. Refer
+         Appendix C.5 in RFC 2328.";
+    }
+
+    leaf priority {
+      type uint8;
+      default "1";
+      description
+        "The local system's priority to become the designated router";
+    }
+  }
+
+  grouping ospf-area-interface-statistics-grouping {
+    container statistics {
+      leaf hello-sent {
+        type uint64;
+        description
+          "Hello's sent.";
+      }
+
+      leaf hello-received {
+        type uint64;
+        description
+          "Hello's received.";
+      }
+
+      leaf dd-sent {
+        type uint64;
+        description
+          "Total number of database description packets sent.";
+      }
+
+      leaf dd-received {
+        type uint64;
+        description
+          "Total number of database description packets received.";
+      }
+
+      leaf ls-request-sent {
+        type uint64;
+        description
+          "Total number of LS requests sent.";
+      }
+
+      leaf ls-request-received {
+        type uint64;
+        description
+          "Total number of LS requests received.";
+      }
+
+      leaf ls-update-sent {
+        type uint64;
+        description
+          "Total number of LS updates sent.";
+      }
+
+      leaf ls-update-received {
+        type uint64;
+        description
+          "Total number of LS updates received.";
+      }
+
+      leaf ls-ack-sent {
+        type uint64;
+        description
+          "Total number of LS acknowledgements sent.";
+      }
+
+      leaf ls-ack-received {
+        type uint64;
+        description
+          "Total number of LS acknowledgements received.";
+      }
+
+      leaf discards-count {
+        type uint64;
+        description
+          "Number of incoming packets discarded.";
+      }
+    }
+  }
+
+  grouping ospf-area-interface-neighbor-state {
+    description
+      "Operational state parameters relating an individual neighbor
+       system on an interface within an OSPF area";
+    container neighbors {
+      description
+        "Enclosing container for the list of neighbors that
+         an adjacency has been established with on the interface";
+      list neighbor {
+        key "router-id";
+        description
+          "A neighbor with which an OSPFv2 adjacency has been
+           established within this area";
+        leaf router-id {
+          type yang:dotted-quad;
+          description
+            "The router ID of the remote system.";
+        }
+
+        leaf address {
+          type inet:ip-address;
+          description
+            "The IP address of the remote system.";
+        }
+
+        leaf priority {
+          type uint8;
+          description
+            "The remote system's priority to become the designated
+             router";
+        }
+
+        leaf dead-time {
+          type yang:timeticks;
+          description
+            "The time at which this neighbor's adjacency will be
+             considered dead. The value is expressed relative to
+             the Unix Epoch (Jan 1, 1970 00:00:00 UTC).";
+        }
+
+        leaf dr-router-id {
+          type yang:dotted-quad;
+          description
+            "The router ID of designated router for the adjacency. This device
+             advertises the Network LSA for broadcast and NBMA networks.";
+        }
+
+        leaf dr-ip-address {
+          type inet:ip-address;
+          description
+            "The IP address of designated router for the adjacency. This device
+             advertises the Network LSA for broadcast and NBMA networks.";
+        }
+
+        leaf bdr-router-id {
+          type yang:dotted-quad;
+          description
+            "The router ID of backup designated router for the adjacency.";
+        }
+
+        leaf bdr-ip-address {
+          type inet:ip-address;
+          description
+            "The IP address of backup designated router for the adjacency.";
+        }
+
+        leaf adjacency-state {
+          type identityref {
+            base pro-ospf-types:OSPF_NEIGHBOR_STATE;
+          }
+          description
+            "The state of the adjacency with the neighbor.";
+        }
+
+        leaf state-changes {
+          type uint32;
+          description
+            "The number of transitions out of the FULL state that this
+             neighbor has been through";
+        }
+      }
+    }
+  }
+
+  grouping ospf-area-interface-neighbor-defect {
+    description
+      "Defect state relating an individual neighbor
+       system on an interface within an OSPF area";
+    leaf loss-of-adjacency {
+      type boolean;
+      description
+        "Defect state indicating that ospf negihtbor adjacency is lost";
+    }
+  }
+}

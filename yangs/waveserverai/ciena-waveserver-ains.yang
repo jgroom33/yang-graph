@@ -1,0 +1,105 @@
+module ciena-waveserver-ains {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-ws:ciena-waveserver-ains";
+  prefix ains;
+
+  import ciena-ui {
+    prefix ui;
+  }
+
+  import ciena-pro-ains-types {
+    prefix pro-ains;
+  }
+
+  import ciena-waveserver-port {
+    prefix port;
+  }
+
+  import ciena-waveserver-ptp {
+    prefix ptp;
+  }
+
+  import ciena-waveserver-system {
+    prefix system;
+  }
+
+  import ciena-waveserver-xcvr {
+    prefix xcvr;
+  }
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com/
+     Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+  description
+    "This module defines AINS augment.";
+
+  revision 2023-02-03 {
+    description
+      "Added augment leaf 'admin-state' to ptp and xcvr module, 'ains-global' to system /global-provisioning and /default-settings module, and 'ains-service-data' to port module.";
+    reference
+      "Waveserver OS R2.4.0 user's guide.";
+  }
+
+  augment "/port:waveserver-ports/port:ports" {
+    description
+      "Auto-in-service.";
+    container auto-in-service {
+      ui:ui-name "Auto-in-service.";
+      description
+        "Auto-in-service.";
+      uses pro-ains:ains-service-data;
+    }
+  }
+
+  augment "/ptp:waveserver-ptps/ptp:ptps/ptp:state" {
+    description
+      "Auto-in-service admin state.";
+    leaf ains-admin-state {
+      ui:ui-name "Auto-in-service admin state.";
+      type pro-ains:admin-state;
+      config false;
+      description
+        "Auto-in-service admin state.";
+    }
+  }
+
+  augment "/xcvr:waveserver-xcvrs/xcvr:xcvrs/xcvr:state" {
+    description
+      "Auto-in-service admin state.";
+    leaf ains-admin-state {
+      ui:ui-name "Auto-in-service admin state.";
+      type pro-ains:admin-state;
+      config false;
+      description
+        "Auto-in-service admin state.";
+    }
+  }
+
+  augment "/system:waveserver-system/system:global-provisioning" {
+    description
+      "Auto-in-service admin state.";
+    container auto-in-service {
+      ui:ui-name "Auto-in-service.";
+      description
+        "Auto-in-service.";
+      uses pro-ains:ains-global;
+    }
+  }
+
+  augment "/system:waveserver-system/system:default-settings" {
+    description
+      "Auto-in-service admin state.";
+    container auto-in-service {
+      ui:ui-name "Auto-in-service.";
+      config false;
+      description
+        "Auto-in-service.";
+      uses pro-ains:ains-global;
+    }
+  }
+}

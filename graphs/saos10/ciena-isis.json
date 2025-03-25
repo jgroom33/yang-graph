@@ -1,0 +1,101 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-isis:instance",
+      "type": "list",
+      "module": "ciena-isis",
+      "description": "IS-IS structure",
+      "key": "tag"
+    },
+    {
+      "id": "ciena-isis:passive",
+      "type": "list",
+      "module": "ciena-isis",
+      "description": "Indicates whetherthe interface is in passive mode (IS-IS not running but network is advertised).",
+      "key": "passive-if-name"
+    },
+    {
+      "id": "ciena-isis:level",
+      "type": "list",
+      "module": "ciena-isis",
+      "description": "IS-IS protocol redistribute configuration",
+      "key": "type"
+    },
+    {
+      "id": "ciena-isis:protocol",
+      "type": "list",
+      "module": "ciena-isis",
+      "description": "Redistribute routes from static, bgp, ospf, connected into IS-IS levels",
+      "key": "name"
+    },
+    {
+      "id": "ciena-isis:summary_address",
+      "type": "list",
+      "module": "ciena-isis",
+      "description": "List of summary address used for route summarization",
+      "key": "address"
+    },
+    {
+      "id": "ciena-isis:multi_topology",
+      "type": "list",
+      "module": "ciena-isis",
+      "description": "Support for Multiple-Topology Routing (MTR), RFC5120 - M-IS-IS; Multi Topology Routing in IS-IS",
+      "key": "level"
+    },
+    {
+      "id": "ciena-isis:interface",
+      "type": "list",
+      "module": "ciena-isis",
+      "description": "ISIS interface related operations",
+      "key": "name"
+    },
+    {
+      "id": "ciena-isis:address_family",
+      "type": "list",
+      "module": "ciena-isis",
+      "description": "List IS-IS Address Family that takes Afi and Safi related configuration",
+      "key": "afi safi"
+    },
+    {
+      "id": "ciena-isis:ldp_igp_sync",
+      "type": "list",
+      "module": "ciena-isis",
+      "description": "Enables IGP/LDP synchronization",
+      "key": "level-type"
+    },
+    {
+      "id": "ciena-isis:srgb",
+      "type": "list",
+      "module": "ciena-isis",
+      "description": "List of global blocks to be advertised.",
+      "key": "lower-bound upper-bound"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-isis:passive",
+      "target": "openconfig-interfaces:interface",
+      "relationship": "leafref:passive-if-name"
+    },
+    {
+      "source": "ciena-isis:level",
+      "target": "ciena-routing-policy:prefix_list",
+      "relationship": "leafref:prefix-list"
+    },
+    {
+      "source": "ciena-isis:instance",
+      "target": "ciena-routing-policy:policy",
+      "relationship": "leafref:policy"
+    },
+    {
+      "source": "ciena-isis:protocol",
+      "target": "ciena-routing-policy:policy",
+      "relationship": "leafref:policy"
+    },
+    {
+      "source": "ciena-isis:interface",
+      "target": "openconfig-interfaces:interface",
+      "relationship": "leafref:name"
+    }
+  ]
+}

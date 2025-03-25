@@ -1,0 +1,28 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-igmp-snooping:instance",
+      "type": "list",
+      "module": "ciena-igmp-snooping",
+      "description": "Specifies a list of IGMP snooping instances.",
+      "key": "fd-name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-igmp-snooping:instance",
+      "target": "ciena-mef-fd:fd",
+      "relationship": "leafref:fd-name"
+    },
+    {
+      "source": "ciena-igmp-snooping:instance",
+      "target": "ciena-mef-fp:fp",
+      "relationship": "leafref:fp-name"
+    },
+    {
+      "source": "ciena-igmp-snooping:instance",
+      "target": "ietf-pseudowires:pseudowire",
+      "relationship": "leafref:pw-name"
+    }
+  ]
+}

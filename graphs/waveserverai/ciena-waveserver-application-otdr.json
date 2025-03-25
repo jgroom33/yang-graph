@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-application-otdr:profile",
+      "type": "list",
+      "module": "ciena-waveserver-application-otdr",
+      "description": "Configuration data for the OTDR Profiles",
+      "key": "profile-id"
+    }
+  ],
+  "edges": []
+}

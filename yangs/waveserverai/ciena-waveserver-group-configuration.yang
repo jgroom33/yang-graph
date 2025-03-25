@@ -1,0 +1,54 @@
+module ciena-waveserver-group-configuration {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-ws:ciena-waveserver-group-configuration";
+  prefix group-configuration;
+
+  import ciena-common-version {
+    prefix ciena-common-version;
+  }
+
+  import ciena-common-yang {
+    prefix ciena-common;
+  }
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com/
+     Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+  description
+    "This module defines group configuration for the Waveserver.";
+
+  revision 2022-12-01 {
+    ciena-common-version:string "1.0.0";
+    description
+      "Initial revision";
+    reference
+      "1.0.0";
+  }
+
+  rpc waveserver-group-configuration-save {
+    description
+      "For all members of a group, save the running config to the startup config.";
+
+    output {
+      uses ciena-common:rpc-result-common;
+
+      list member {
+        key "name";
+        description
+          "Consolidated RPC output information for all members in a group.";
+        leaf name {
+          type string;
+          description
+            "Identifying name of the member, unique within a group.";
+        }
+
+        uses ciena-common:rpc-result-common;
+      }
+    }
+  }
+}

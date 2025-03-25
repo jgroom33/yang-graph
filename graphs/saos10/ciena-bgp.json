@@ -1,0 +1,169 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-bgp:instance",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "Top level bgp list with maximum number of instances 1",
+      "key": "as"
+    },
+    {
+      "id": "ciena-bgp:address_family",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "List BGP address family that takes AFI and SAFI related configuration",
+      "key": "afi safi"
+    },
+    {
+      "id": "ciena-bgp:aggregate_address",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "Configure BGP aggregate entries to to minimize the size of routing tables",
+      "key": "address"
+    },
+    {
+      "id": "ciena-bgp:redistribute",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "Inject routes from one routing process into another. Redistribution is used by routing protocols to advertise routes that are learned by some other means, such as by another routing protocol or by static routes",
+      "key": "protocol"
+    },
+    {
+      "id": "ciena-bgp:network",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "Specify the network to be advertised by the BGP routing process",
+      "key": "address"
+    },
+    {
+      "id": "ciena-bgp:vrf",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "Vrf list containing vrf related configuration such as rd, rt and peer",
+      "key": "name"
+    },
+    {
+      "id": "ciena-bgp:route_target",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "Route Target list that takes route target id and direction",
+      "key": "id"
+    },
+    {
+      "id": "ciena-bgp:vrf_address_family",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "List of vrf address families such as ipv4 unicast",
+      "key": "afi safi"
+    },
+    {
+      "id": "ciena-bgp:peer",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "List of vrf peer related configuration information",
+      "key": "address"
+    },
+    {
+      "id": "ciena-bgp:policy",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "Routing policy to be attached to this peer.",
+      "key": "name direction"
+    },
+    {
+      "id": "ciena-bgp:prefix_list",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "Container to attach prefix list to the neighbor",
+      "key": "name direction"
+    },
+    {
+      "id": "ciena-bgp:l2vpn_vpls",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "L2VPN VPLS list containing L2VPN instance related configuration such as RD, RT and VPLS ID",
+      "key": "name"
+    },
+    {
+      "id": "ciena-bgp:peer_group",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "List of peer groups and its related configuration",
+      "key": "name"
+    },
+    {
+      "id": "ciena-bgp:srgb",
+      "type": "list",
+      "module": "ciena-bgp",
+      "description": "List of global blocks to be advertised.",
+      "key": "lower-bound upper-bound"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-bgp:address_family",
+      "target": "ciena-sr:locator",
+      "relationship": "leafref:locator"
+    },
+    {
+      "source": "ciena-bgp:address_family",
+      "target": "ciena-routing-policy:policy",
+      "relationship": "leafref:policy"
+    },
+    {
+      "source": "ciena-bgp:redistribute",
+      "target": "ciena-routing-policy:policy",
+      "relationship": "leafref:policy"
+    },
+    {
+      "source": "ciena-bgp:network",
+      "target": "ciena-routing-policy:policy",
+      "relationship": "leafref:policy"
+    },
+    {
+      "source": "ciena-bgp:vrf",
+      "target": "ciena-vrf:vrf",
+      "relationship": "leafref:name"
+    },
+    {
+      "source": "ciena-bgp:vrf_address_family",
+      "target": "ciena-sr:locator",
+      "relationship": "leafref:locator"
+    },
+    {
+      "source": "ciena-bgp:peer",
+      "target": "openconfig-interfaces:interface",
+      "relationship": "leafref:update-source-interface"
+    },
+    {
+      "source": "ciena-bgp:policy",
+      "target": "ciena-routing-policy:policy",
+      "relationship": "leafref:name"
+    },
+    {
+      "source": "ciena-bgp:peer",
+      "target": "ciena-routing-policy:policy",
+      "relationship": "leafref:policy"
+    },
+    {
+      "source": "ciena-bgp:prefix_list",
+      "target": "ciena-routing-policy:prefix_list",
+      "relationship": "leafref:name"
+    },
+    {
+      "source": "ciena-bgp:l2vpn_vpls",
+      "target": "ciena-l2vpn:l2vpn",
+      "relationship": "leafref:name"
+    },
+    {
+      "source": "ciena-bgp:peer_group",
+      "target": "openconfig-interfaces:interface",
+      "relationship": "leafref:update-source-interface"
+    },
+    {
+      "source": "ciena-bgp:instance",
+      "target": "ciena-sr:locator",
+      "relationship": "leafref:locator"
+    }
+  ]
+}

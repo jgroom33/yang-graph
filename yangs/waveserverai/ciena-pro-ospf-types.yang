@@ -1,0 +1,241 @@
+module ciena-pro-ospf-types {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-pro-ospf-types";
+  prefix ciena-pro-ospft;
+
+  import ciena-common-version {
+    prefix ciena-common-version;
+  }
+
+  import ietf-yang-types {
+    prefix yang;
+  }
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com/
+     Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+  description
+    "This submodule provides identities and typedefs that are shared across
+     multiple contexts";
+
+  revision 2019-08-28 {
+    ciena-common-version:string "1.0.0";
+    description
+      "Initial revision";
+  }
+
+  identity OSPF-AREA-TYPE {
+    description
+      "Base identity for OSPF area type.";
+  }
+
+  identity NORMAL {
+    base OSPF-AREA-TYPE;
+    description
+      "OSPF normal area.";
+  }
+
+  identity STUB {
+    base OSPF-AREA-TYPE;
+    description
+      "OSPF stub area.";
+  }
+
+  identity NSSA {
+    base OSPF-AREA-TYPE;
+    description
+      "OSPF NSSA area.";
+  }
+
+  identity OSPF-ABR-TYPE {
+    description
+      "Base identity for OSPF area boarder router type.";
+  }
+
+  identity RFC3509-COMPATIBLE {
+    base OSPF-ABR-TYPE;
+    description
+      "OSPF ABR requires backbone area as one of the multiple
+       areas.";
+  }
+
+  identity RFC2328-COMPATIBLE {
+    base OSPF-ABR-TYPE;
+    description
+      "OSPF ABR does not require backbone area as one of
+       the multiple areas.";
+  }
+
+  identity OSPF_NEIGHBOR_STATE {
+    description
+      "The state of an adjacency between the local system and a remote
+       device";
+  }
+
+  identity DOWN {
+    base OSPF_NEIGHBOR_STATE;
+    description
+      "The initial state of a neighbor, indicating that no recent
+       information has been received from the neighbor.";
+    reference
+      "RFC2328";
+  }
+
+  identity ATTEMPT {
+    base OSPF_NEIGHBOR_STATE;
+    description
+      "Utilised for neighbors that are attached to NBMA networks, it
+       indicates that no information has been recently received from
+       the neighbor but that Hello packets should be directly sent
+       to that neighbor.";
+    reference
+      "RFC2328";
+  }
+
+  identity INIT {
+    base OSPF_NEIGHBOR_STATE;
+    description
+      "Indicates that a Hello packet has been received from the
+       neighbor but bi-directional communication has not yet been
+       established. That is to say that the local Router ID does
+       not appear in the list of neighbors in the remote system's
+       Hello packet.";
+    reference
+      "RFC2328";
+  }
+
+  identity TWO_WAY {
+    base OSPF_NEIGHBOR_STATE;
+    description
+      "Communication between the local and remote system is
+       bi-directional such that the local system's Router ID is listed
+       in the received remote system's Hello packet.";
+    reference
+      "RFC2328";
+  }
+
+  identity EXSTART {
+    base OSPF_NEIGHBOR_STATE;
+    description
+      "An adjacency with the remote system is being formed. The local
+       system is currently transmitting empty database description
+       packets in order to establish the master/slave relationship for
+       the adjacency.";
+    reference
+      "RFC2328";
+  }
+
+  identity EXCHANGE {
+    base OSPF_NEIGHBOR_STATE;
+    description
+      "The local and remote systems are currently exchanging database
+       description packets in order to determine which elements of
+       their local LSDBs are out of date.";
+    reference
+      "RFC2328";
+  }
+
+  identity LOADING {
+    base OSPF_NEIGHBOR_STATE;
+    description
+      "The local system is sending Link State Request packets to the
+       remote system in order to receive the more recently LSAs that
+       were discovered during the Exchange phase of the procedure
+       establishing the adjacency.";
+    reference
+      "RFC2328";
+  }
+
+  identity FULL {
+    base OSPF_NEIGHBOR_STATE;
+    description
+      "The neighboring routers are fully adjacent such that both
+       LSDBs are synchronized. The adjacency will appear in Router and
+       Network LSAs";
+    reference
+      "RFC2328";
+  }
+
+  identity OSPF_NETWORK_TYPE {
+    description
+      "Types of network that OSPF should consider attached to an
+       interface";
+  }
+
+  identity POINT_TO_POINT_NETWORK {
+    base OSPF_NETWORK_TYPE;
+    description
+      "A interface that connects two routers.";
+    reference
+      "RFC2328";
+  }
+
+  identity BROADCAST_NETWORK {
+    base OSPF_NETWORK_TYPE;
+    description
+      "An interface that supports >2 attached routers which has the
+       ability to address all connected systems via a single
+       (broadcast) address.";
+  }
+
+  identity NON_BROADCAST_NETWORK {
+    base OSPF_NETWORK_TYPE;
+    description
+      "An interface that supports >2 attached rotuers which does not
+       have the ability to address all connected systems with a
+       broadcast address.";
+  }
+
+  identity MAX_METRIC_TRIGGER {
+    description
+      "Triggers which cause the maximum metric to be set for
+       entities advertised in OSPF";
+  }
+
+  identity MAX_METRIC_ON_SYSTEM_BOOT {
+    base MAX_METRIC_TRIGGER;
+    description
+      "Set the maximum metric when the system boots.";
+  }
+
+  identity MAX_METRIC_INCLUDE {
+    description
+      "Entities that may optionally be included when advertising
+       the maximum metric.";
+  }
+
+  identity MAX_METRIC_INCLUDE_STUB {
+    base MAX_METRIC_INCLUDE;
+    description
+      "Include stub networks when advertising the maximum metric.";
+  }
+
+  identity MAX_METRIC_INCLUDE_TYPE2_EXTERNAL {
+    base MAX_METRIC_INCLUDE;
+    description
+      "Include OSPF Type 2 external routes when advertising
+       the maximum metric.";
+  }
+
+  typedef ospf-area-identifier {
+    type union {
+      type uint32;
+      type yang:dotted-quad;
+    }
+    description
+      "An identifier for an area with OSPF version 2 or 3. This value
+       is expressed as either a dotted-quad, or a unsigned 32-bit
+       number";
+  }
+
+  typedef ospf-metric {
+    type uint16;
+    description
+      "A common type that can be utilised to express an OSPF metric";
+  }
+}

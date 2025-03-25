@@ -63,13 +63,8 @@ class YangGraphSingle(plugin.PyangPlugin):
         if not module:
             module = stmt.i_module
 
-        if (
-            stmt.keyword in ("container", "leaf", "leaf-list", "list")
-            and not stmt.i_config
-        ):
-            return
-
-        if stmt.keyword == "list":
+        # Handle lists (only config true for full processing)
+        if stmt.keyword == "list" and stmt.i_config:
             list_name = qualify_name(stmt, module)
             if list_name in processed_nodes:
                 return
@@ -91,111 +86,141 @@ class YangGraphSingle(plugin.PyangPlugin):
                 "key": key,
             }
             result["nodes"].append(node)
-            logging.debug(f"Added node: {list_name}")
+            logging.debug(f"Added list node: {list_name}")
 
-            for child in stmt.i_children:
-                if child.keyword in ("leaf", "leaf-list"):
-                    logging.debug(f"Processing leaf/leaf-list: {child.arg}")
-                    type_stmt = child.search_one("type")
-                    if type_stmt:
-                        logging.debug(f"Type found: {type_stmt.arg}")
-                        path_stmt = type_stmt.search_one("path")
-                        if not path_stmt and ":" in type_stmt.arg:
-                            prefix, type_name = type_stmt.arg.split(":", 1)
-                            target_module = next(
-                                (
-                                    m
-                                    for m in module.i_ctx.modules.values()
-                                    if m.search_one("prefix")
-                                    and m.search_one("prefix").arg == prefix
-                                ),
-                                None,
+        # Process leaf/leaf-list with leafrefs (direct or via typedef)
+        if stmt.keyword in ("leaf", "leaf-list"):
+            type_stmt = stmt.search_one("type")
+            if type_stmt:
+                path_stmt = type_stmt.search_one("path")
+                resolved_type = type_stmt
+
+                # Resolve typedef if present
+                if ":" in type_stmt.arg and not path_stmt:
+                    prefix, type_name = type_stmt.arg.split(":", 1)
+                    target_module = next(
+                        (
+                            m
+                            for m in module.i_ctx.modules.values()
+                            if m.search_one("prefix")
+                            and m.search_one("prefix").arg == prefix
+                        ),
+                        None,
+                    )
+                    if target_module:
+                        typedef = self._find_typedef_by_name(target_module, type_name)
+                        if typedef:
+                            resolved_type = typedef.search_one("type")
+                            path_stmt = (
+                                resolved_type.search_one("path")
+                                if resolved_type
+                                else None
                             )
-                            if target_module:
-                                logging.debug(
-                                    f"Target module found: {target_module.arg}"
+                            logging.debug(
+                                f"Resolved typedef {type_stmt.arg} to {resolved_type.arg if resolved_type else 'no type'}"
+                            )
+
+                if path_stmt:  # Leafref detected (direct or via typedef)
+                    logging.debug(
+                        f"Found leafref: {stmt.arg} with path {path_stmt.arg}"
+                    )
+                    parent_list = self._find_parent_list(stmt)
+                    if parent_list:
+                        source_name = qualify_name(parent_list, module)
+                        if source_name not in processed_nodes:
+                            description = parent_list.search_one("description")
+                            description_str = (
+                                preprocess_string(description.arg)
+                                if description
+                                else "No description available"
+                            )
+                            key_stmt = parent_list.search_one("key")
+                            key = key_stmt.arg if key_stmt else None
+                            node = {
+                                "id": source_name,
+                                "type": "list",
+                                "module": module.arg,
+                                "description": description_str,
+                                "key": key,
+                            }
+                            result["nodes"].append(node)
+                            processed_nodes.add(source_name)
+                            logging.debug(f"Added source node: {source_name}")
+
+                        # Resolve leafref target
+                        target_module, target_list, target_key = (
+                            self._resolve_leafref_path(path_stmt.arg, module)
+                        )
+                        if target_module and target_list:
+                            target_full_name = f"{target_module.arg}:{target_list}"
+                            if target_full_name not in processed_nodes:
+                                target_module_stmt = module.i_ctx.modules.get(
+                                    target_module.arg
                                 )
-                                typedef = self._find_typedef_by_name(
-                                    target_module, type_name
-                                )
-                                if typedef:
-                                    # Get the type statement from the typedef
-                                    typedef_type = typedef.search_one("type")
-                                    if typedef_type and typedef_type.arg == "leafref":
-                                        path_stmt = typedef_type.search_one("path")
-                                    logging.debug(
-                                        f"Resolved typedef {type_stmt.arg} to {path_stmt.arg if path_stmt else 'no path'}"
+                                if target_module_stmt:
+                                    target_list_stmt = self._find_stmt_by_name(
+                                        target_module_stmt, target_list
                                     )
+                                    if target_list_stmt:
+                                        description = target_list_stmt.search_one(
+                                            "description"
+                                        )
+                                        description_str = (
+                                            preprocess_string(description.arg)
+                                            if description
+                                            else "No description available"
+                                        )
+                                        key_stmt = target_list_stmt.search_one("key")
+                                        key = key_stmt.arg if key_stmt else None
+                                        node = {
+                                            "id": target_full_name,
+                                            "type": "list",
+                                            "module": target_module.arg,
+                                            "description": description_str,
+                                            "key": key,
+                                        }
+                                        result["nodes"].append(node)
+                                        processed_nodes.add(target_full_name)
+                                        logging.debug(
+                                            f"Added target node: {target_full_name}"
+                                        )
+                                    else:
+                                        logging.debug(
+                                            f"Target list {target_list} not found in {target_module.arg}"
+                                        )
                                 else:
                                     logging.debug(
-                                        f"Typedef {type_name} not found in {target_module.arg}"
+                                        f"Target module {target_module.arg} not in context"
                                     )
-                            else:
-                                logging.debug(
-                                    f"No module found for prefix {prefix} in context"
-                                )
 
-                        if path_stmt:
+                            if source_name != target_full_name:
+                                edge = {
+                                    "source": source_name,
+                                    "target": target_full_name,
+                                    "relationship": f"leafref:{stmt.arg}",
+                                }
+                                if edge not in result["edges"]:
+                                    result["edges"].append(edge)
+                                    logging.debug(
+                                        f"Added edge: {source_name} -> {target_full_name}"
+                                    )
+                        else:
                             logging.debug(
-                                f"Found leafref in {list_name}: {path_stmt.arg}"
+                                f"Failed to resolve leafref path: {path_stmt.arg}"
                             )
-                            target_module, target_list, target_key = (
-                                self._resolve_leafref_path(path_stmt.arg, module)
-                            )
-                            if target_list and target_module:
-                                target_full_name = f"{target_module.arg}:{target_list}"
-                                if list_name != target_full_name:
-                                    edge = {
-                                        "source": list_name,
-                                        "target": target_full_name,
-                                        "relationship": (
-                                            f"key:{target_key}"
-                                            if target_key
-                                            else "references_list"
-                                        ),
-                                    }
-                                    if edge not in result["edges"]:
-                                        result["edges"].append(edge)
-                                        logging.debug(
-                                            f"Added edge: {list_name} -> {target_full_name}"
-                                        )
-                            else:
-                                logging.debug(
-                                    f"Failed to resolve leafref path: {path_stmt.arg}"
-                                )
-                        elif type_stmt and ":" in type_stmt.arg:
-                            prefix, type_name = type_stmt.arg.split(":", 1)
-                            target_module = next(
-                                (
-                                    m
-                                    for m in module.i_ctx.modules.values()
-                                    if m.search_one("prefix")
-                                    and m.search_one("prefix").arg == prefix
-                                ),
-                                None,
-                            )
-                            if target_module:
-                                base_name = type_name.replace("-ref", "")
-                                target_stmt = self._find_stmt_by_name(
-                                    target_module, base_name
-                                )
-                                if target_stmt and target_stmt.keyword == "list":
-                                    target_full_name = (
-                                        f"{target_module.arg}:{base_name}"
-                                    )
-                                    edge = {
-                                        "source": list_name,
-                                        "target": target_full_name,
-                                        "relationship": "references_type",
-                                    }
-                                    if edge not in result["edges"]:
-                                        result["edges"].append(edge)
-                                        logging.debug(
-                                            f"Added type edge: {list_name} -> {target_full_name}"
-                                        )
 
+        # Process children
         for child in getattr(stmt, "i_children", []):
             self._build_graph(child, result, processed_nodes, module)
+
+    def _find_parent_list(self, stmt):
+        """Find the nearest parent list of a statement."""
+        current = stmt
+        while current and current.keyword != "module":
+            if current.keyword == "list":
+                return current
+            current = current.parent
+        return None
 
     def _find_typedef_by_name(self, module, name):
         """Find a typedef statement by name in the module."""
@@ -226,7 +251,8 @@ class YangGraphSingle(plugin.PyangPlugin):
                     (
                         m
                         for m in source_module.i_ctx.modules.values()
-                        if m.search_one("prefix") and m.search_one("prefix").arg == prefix
+                        if m.search_one("prefix")
+                        and m.search_one("prefix").arg == prefix
                     ),
                     current_module,
                 )
@@ -245,7 +271,9 @@ class YangGraphSingle(plugin.PyangPlugin):
             #     target_list = node_name
 
         if target_list:
-            logging.debug(f"Resolved to {current_module.arg}:{target_list}, key={target_key}")
+            logging.debug(
+                f"Resolved to {current_module.arg}:{target_list}, key={target_key}"
+            )
             return current_module, target_list, target_key
         logging.debug(f"Could not resolve path to a list: {path}")
         return current_module, None, None
@@ -262,15 +290,22 @@ class YangGraphSingle(plugin.PyangPlugin):
 
 
 def prune_statements(stmt):
-    """Prunes all statements except those that are config true."""
+    """Prunes all statements except those that are config true or contain leafrefs."""
     pruned_children = []
     for child in stmt.i_children:
         if child.keyword in ("notification", "rpc", "augment", "deviation"):
             logging.debug(f"Pruning {child.keyword} statement: {child.arg}")
             continue
+        # Check if this is a leaf/leaf-list with a leafref
+        is_leafref = (
+            child.keyword in ("leaf", "leaf-list")
+            and child.search_one("type")
+            and child.search_one("type").search_one("path")
+        )
         if (
             child.keyword in ("container", "leaf", "leaf-list", "list")
             and not child.i_config
+            and not is_leafref  # Preserve leafrefs even if config false
         ):
             logging.debug(f"Pruning config false {child.keyword}: {child.arg}")
             continue

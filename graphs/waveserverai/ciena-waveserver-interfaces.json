@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-interfaces:physical_interface",
+      "type": "list",
+      "module": "ciena-waveserver-interfaces",
+      "description": "List of physical Ethernet management interfaces (or interface ports).",
+      "key": "name"
+    },
+    {
+      "id": "ciena-waveserver-interfaces:logical_interface",
+      "type": "list",
+      "module": "ciena-waveserver-interfaces",
+      "description": "List of logical IP management interfaces (e.g. 'local').",
+      "key": "name"
+    },
+    {
+      "id": "ciena-waveserver-interfaces:user_ip_address",
+      "type": "list",
+      "module": "ciena-waveserver-interfaces",
+      "description": "List of provisioned IPv6 addresses.",
+      "key": "ip-address"
+    },
+    {
+      "id": "ciena-waveserver-interfaces:ipv4_static_route",
+      "type": "list",
+      "module": "ciena-waveserver-interfaces",
+      "description": "List of IPv4 static routing entries.",
+      "key": "destination"
+    },
+    {
+      "id": "ciena-waveserver-interfaces:next_hop",
+      "type": "list",
+      "module": "ciena-waveserver-interfaces",
+      "description": "A list of next-hop entries associated with the static route.",
+      "key": "index"
+    },
+    {
+      "id": "ciena-waveserver-interfaces:ipv6_static_route",
+      "type": "list",
+      "module": "ciena-waveserver-interfaces",
+      "description": "List of IPv6 static routing entries.",
+      "key": "destination gateway metric"
+    },
+    {
+      "id": "ciena-waveserver-interfaces:acl_ipv4",
+      "type": "list",
+      "module": "ciena-waveserver-interfaces",
+      "description": "IP-layer ACLs with IPv4 addresses",
+      "key": "sequence-id"
+    },
+    {
+      "id": "ciena-waveserver-interfaces:acl_ipv6",
+      "type": "list",
+      "module": "ciena-waveserver-interfaces",
+      "description": "IP-layer ACLs with IPv6 addresses",
+      "key": "sequence-id"
+    },
+    {
+      "id": "ciena-waveserver-interfaces:peer",
+      "type": "list",
+      "module": "ciena-waveserver-interfaces",
+      "description": "A list of BGP peers. BGP peers are created by the system when BGP is enabled. Users are not allowed to create or delete peers",
+      "key": "name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-waveserver-interfaces:logical_interface",
+      "target": "ciena-waveserver-interfaces:physical_interface",
+      "relationship": "leafref:associated-physical-interface"
+    },
+    {
+      "source": "ciena-waveserver-interfaces:peer",
+      "target": "ciena-waveserver-interfaces:physical_interface",
+      "relationship": "leafref:interface"
+    }
+  ]
+}

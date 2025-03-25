@@ -1,0 +1,25 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-lldp:port",
+      "type": "list",
+      "module": "ciena-waveserver-lldp",
+      "description": "LLDP Port configuration and operational data.",
+      "key": "port-id"
+    },
+    {
+      "id": "ciena-waveserver-lldp:interface_port",
+      "type": "list",
+      "module": "ciena-waveserver-lldp",
+      "description": "Interface Port LLDP configuration and operational data.",
+      "key": "name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-waveserver-lldp:interface_port",
+      "target": "ciena-waveserver-interfaces:physical_interface",
+      "relationship": "leafref:name"
+    }
+  ]
+}

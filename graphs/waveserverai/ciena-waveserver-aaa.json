@@ -1,0 +1,47 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-aaa:authentication_method",
+      "type": "list",
+      "module": "ciena-waveserver-aaa",
+      "description": "Ordered list of authentication methods for user login attempts, indexed by priority. If an authentication attempt fails using the first method, the next defined method will be attempted, until all specified authentication methods have been tried, at which point the user will be denied access. By default, this list will have a single entry with type 'local'.",
+      "key": "priority"
+    },
+    {
+      "id": "ciena-waveserver-aaa:user",
+      "type": "list",
+      "module": "ciena-waveserver-aaa",
+      "description": "List of local user accounts used for local authentication.",
+      "key": "user-name"
+    },
+    {
+      "id": "ciena-waveserver-aaa:server",
+      "type": "list",
+      "module": "ciena-waveserver-aaa",
+      "description": "Global list of TACACS+ servers to use for AAA functions.",
+      "key": "address"
+    },
+    {
+      "id": "ciena-waveserver-aaa:authentication_server",
+      "type": "list",
+      "module": "ciena-waveserver-aaa",
+      "description": "List of TACACS+ authentication servers to use for AAA functions.",
+      "key": "address"
+    },
+    {
+      "id": "ciena-waveserver-aaa:authorization_server",
+      "type": "list",
+      "module": "ciena-waveserver-aaa",
+      "description": "List of TACACS+ authorization servers to use for AAA functions.",
+      "key": "address"
+    },
+    {
+      "id": "ciena-waveserver-aaa:accounting_server",
+      "type": "list",
+      "module": "ciena-waveserver-aaa",
+      "description": "List of TACACS+ accounting servers to use for AAA functions.",
+      "key": "address"
+    }
+  ],
+  "edges": []
+}

@@ -1,0 +1,67 @@
+module ciena-pro-ains-types {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-pro-ains-types";
+  prefix ains;
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com/
+     Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+  description
+    "This YANG module defines Ciena's commonly used AINS typedefs";
+
+  revision 2022-11-08 {
+    description
+      "Added 'admin-state' enum values, 'timeout-period', and 'end-time' for Auto-in-service. Edited 'end-time' to be read-only.";
+    reference
+      "See product documentation";
+  }
+
+  typedef admin-state {
+    type enumeration {
+      enum "enabled" {
+        description
+          "Admin State of Auto-in-service is enabled.";
+      }
+      enum "disabled" {
+        description
+          "Admin State of Auto-in-service is disabled.";
+      }
+    }
+    description
+      "Type enum value of the Auto-in-service admin state.";
+  }
+
+  grouping ains-global {
+    description
+      "AINS global properties.";
+    leaf admin-state {
+      type admin-state;
+      description
+        "Auto-in-service Admin State.";
+    }
+
+    leaf timeout-period {
+      type uint32;
+      description
+        "Auto-in-service Timeout Period.";
+    }
+  }
+
+  grouping ains-service-data {
+    description
+      "AINS service data.";
+    uses ains-global;
+
+    leaf end-time {
+      type string;
+      config false;
+      description
+        "Auto-in-service End Time.";
+    }
+  }
+}

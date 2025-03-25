@@ -1,0 +1,69 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-mef-access-flow:acl_custom_destination",
+      "type": "list",
+      "module": "ciena-mef-access-flow",
+      "description": "A list of ACL-customized-destinations that the classified flows may be directed to.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-access-flow:acl_action",
+      "type": "list",
+      "module": "ciena-mef-access-flow",
+      "description": "A list of ACL-actions, where each ACL-action specifies the action of the classified flow.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-access-flow:access_flow",
+      "type": "list",
+      "module": "ciena-mef-access-flow",
+      "description": "List of access-flow configuration entries. Each entry defines an ACL rule specific to an interface.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-mef-access-flow:access_profile",
+      "type": "list",
+      "module": "ciena-mef-access-flow",
+      "description": "A list of all access-profile configuration entries.",
+      "key": "name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-mef-access-flow:acl_action",
+      "target": "ciena-mef-logical-port:logical_port",
+      "relationship": "leafref:logical-port"
+    },
+    {
+      "source": "ciena-mef-access-flow:acl_action",
+      "target": "ciena-mef-fp:fp",
+      "relationship": "leafref:flow-point"
+    },
+    {
+      "source": "ciena-mef-access-flow:acl_action",
+      "target": "ciena-mef-access-flow:acl_custom_destination",
+      "relationship": "leafref:custom"
+    },
+    {
+      "source": "ciena-mef-access-flow:access_flow",
+      "target": "ciena-mef-classifier:classifier",
+      "relationship": "leafref:classifier-list"
+    },
+    {
+      "source": "ciena-mef-access-flow:access_flow",
+      "target": "ciena-mef-logical-port:logical_port",
+      "relationship": "leafref:parent-port"
+    },
+    {
+      "source": "ciena-mef-access-flow:access_flow",
+      "target": "ciena-mef-fp:fp",
+      "relationship": "leafref:parent-fp"
+    },
+    {
+      "source": "ciena-mef-access-flow:access_flow",
+      "target": "ciena-mef-access-flow:acl_action",
+      "relationship": "leafref:augment-action"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-snmp:target",
+      "type": "list",
+      "module": "ciena-waveserver-snmp",
+      "description": "List of target transport addresses (e.g. trap destinations) to be used in the generation of SNMP messages.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-waveserver-snmp:target_params",
+      "type": "list",
+      "module": "ciena-waveserver-snmp",
+      "description": "List of objects containing one ore more SNMP parameters which can be associated with an SNMP transport target.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-waveserver-snmp:community",
+      "type": "list",
+      "module": "ciena-waveserver-snmp",
+      "description": "List of community entries for SNMP v1 and v2c security.",
+      "key": "index"
+    },
+    {
+      "id": "ciena-waveserver-snmp:user",
+      "type": "list",
+      "module": "ciena-waveserver-snmp",
+      "description": "List of SNMPv3 user profiles. A double-keyed list that consists of a user name and an Engine Id value. The combination of user name and Engine Id make up SNMP MIB user profile.",
+      "key": "name engine-id"
+    },
+    {
+      "id": "ciena-waveserver-snmp:viewtree",
+      "type": "list",
+      "module": "ciena-waveserver-snmp",
+      "description": "List of view tree definitions. A double-keyed list that consists of a view tree name and sub-tree OID string value. The combination of sub-tree entries with the same viewtree name make up an SNMP MIB Viewtree or View Tree Family.",
+      "key": "name sub-tree"
+    },
+    {
+      "id": "ciena-waveserver-snmp:security_to_group",
+      "type": "list",
+      "module": "ciena-waveserver-snmp",
+      "description": "List of security-to-group entries. A double-keyed list of entries identified by security criteria (name and model) which can be assigned to an access group name. Security groups can be created to identify sets of users with similar read/write access control permissions or notification view filtering.",
+      "key": "user sec-model"
+    },
+    {
+      "id": "ciena-waveserver-snmp:access",
+      "type": "list",
+      "module": "ciena-waveserver-snmp",
+      "description": "List of access entry profiles, defining access privileges and MIB read/write and notification view filters for a particular user class group of users.",
+      "key": "entry sec-model sec-level"
+    },
+    {
+      "id": "ciena-waveserver-snmp:notify",
+      "type": "list",
+      "module": "ciena-waveserver-snmp",
+      "description": "List of notification target entries. Used to select management targets which should receive notifications, as well as the type of notification which should be sent to each selected management target.",
+      "key": "name"
+    }
+  ],
+  "edges": []
+}

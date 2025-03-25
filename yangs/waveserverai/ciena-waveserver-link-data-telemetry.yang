@@ -1,0 +1,177 @@
+module ciena-waveserver-link-data-telemetry {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-ws:ciena-waveserver-link-data-telemetry";
+  prefix link-data;
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL:\thttp://www.ciena.com/
+     Postal: \t7035 Ridge Road
+          Hanover, Maryland 21076
+          U.S.A.
+     Phone:  \t+1 800-921-1144
+     Fax:    \t+1 410-694-5750";
+  description
+    "This module defines the SOP (State of Polarization) telemetry data";
+
+  revision 2021-09-21 {
+    description
+      "Initial Creation of YANG for streaming of high resolution sample data";
+    reference
+      "TBD";
+  }
+
+  typedef high-res-sop-stat-id-type {
+    type enumeration {
+      enum "BER" {
+        description
+          "Bit Error Rate";
+      }
+      enum "SOPs1f0" {
+        description
+          "sops1f0";
+      }
+      enum "SOPs2f0" {
+        description
+          "sops2f0";
+      }
+      enum "SOPs3f0" {
+        description
+          "sops3f0";
+      }
+      enum "SOPs1f1" {
+        description
+          "sops1f1";
+      }
+      enum "SOPs2f1" {
+        description
+          "sops2f1";
+      }
+      enum "SOPs3f1" {
+        description
+          "sops3f1";
+      }
+      enum "SOPs1f2" {
+        description
+          "sops1f2";
+      }
+      enum "SOPs2f2" {
+        description
+          "sops2f2";
+      }
+      enum "SOPs3f2" {
+        description
+          "sops3f2";
+      }
+      enum "SOPs1f3" {
+        description
+          "sops1f3";
+      }
+      enum "SOPs2f3" {
+        description
+          "sops2f3";
+      }
+      enum "SOPs3f3" {
+        description
+          "sops3f3";
+      }
+    }
+    description
+      "Typedef for high resolution statistic names";
+  }
+
+  typedef decimal64-4digits {
+    type decimal64 {
+      fraction-digits 4;
+    }
+    description
+      "Typedef for statistic value type";
+  }
+
+  typedef decimal64-9digits {
+    type decimal64 {
+      fraction-digits 9;
+    }
+    description
+      "Typedef for statistic value type";
+  }
+
+  typedef high-res-sop-stat-value-type {
+    type decimal64-9digits;
+    description
+      "Typedef for statistic value type";
+  }
+
+  container waveserver-link-data {
+    description
+      "SOP Link Data";
+    list high-res-sop-data {
+      key "slot port";
+      config false;
+      description
+        "High resolution link data";
+      leaf slot {
+        type uint32;
+        description
+          "Slot number index";
+      }
+
+      leaf port {
+        type uint32;
+        description
+          "Port number index";
+      }
+
+      leaf base-timestamp {
+        type uint64;
+        units "ns";
+        description
+          "Time in ns from epoch that sampling began";
+      }
+
+      leaf duration {
+        type uint64;
+        units "ns";
+        description
+          "Interval in ns that this sample covers (e.g., 1-sec from base-timestamp) ";
+      }
+
+      list stats {
+        key "stat-id";
+        config false;
+        description
+          "stats list";
+        leaf stat-id {
+          type high-res-sop-stat-id-type;
+          description
+            "Statistic identifier";
+        }
+
+        leaf sample-rate {
+          type uint64;
+          units "ns";
+          description
+            "Rate of sampling in ns. Sample time = base + interval-id * sample-rate";
+        }
+
+        list samples {
+          key "interval-id";
+          config false;
+          description
+            "Sample list for stat-id containing (../../interval)/(../sample-rate) number of entries";
+          leaf interval-id {
+            type uint32;
+            description
+              "Sample number from base-timestamp";
+          }
+
+          leaf value {
+            type high-res-sop-stat-value-type;
+            description
+              "Statistical value";
+          }
+        }
+      }
+    }
+  }
+}

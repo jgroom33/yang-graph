@@ -1,0 +1,40 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-chassis:power_supply_units",
+      "type": "list",
+      "module": "ciena-waveserver-chassis",
+      "description": "Power Supply Unit Status.",
+      "key": "psu-id"
+    },
+    {
+      "id": "ciena-waveserver-chassis:cooling_fan_units",
+      "type": "list",
+      "module": "ciena-waveserver-chassis",
+      "description": "Cooling Fan Unit Status.",
+      "key": "cfu-id"
+    },
+    {
+      "id": "ciena-waveserver-chassis:management_port",
+      "type": "list",
+      "module": "ciena-waveserver-chassis",
+      "description": "A list to manage chassis ports.",
+      "key": "port-id"
+    },
+    {
+      "id": "ciena-waveserver-chassis:slot",
+      "type": "list",
+      "module": "ciena-waveserver-chassis",
+      "description": "Chassis slot power management.",
+      "key": "slot-id"
+    },
+    {
+      "id": "ciena-waveserver-chassis:sub_slot",
+      "type": "list",
+      "module": "ciena-waveserver-chassis",
+      "description": "Chassis sub-slot power management.",
+      "key": "sub-slot-id"
+    }
+  ],
+  "edges": []
+}

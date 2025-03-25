@@ -1,0 +1,26 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-port:ports",
+      "type": "list",
+      "module": "ciena-waveserver-port",
+      "description": "Configuration and operational data for the port.",
+      "key": "port-id"
+    },
+    {
+      "id": "ciena-waveserver-port:connection_peer",
+      "type": "list",
+      "module": "ciena-waveserver-port",
+      "description": "Port connection peer list. Indicates the client/line port/channel that may be connected to this line/client port. For certain client ports, the connection state is user-configurable or can be system assigned on port creation based on bandwidth availability. For other ports, the connection state is fixed and cannot be manually configured.",
+      "key": "peer-id"
+    },
+    {
+      "id": "ciena-waveserver-port:channels",
+      "type": "list",
+      "module": "ciena-waveserver-port",
+      "description": "List of ODU4 channels within the parent OTU port object.",
+      "key": "channel-id"
+    }
+  ],
+  "edges": []
+}

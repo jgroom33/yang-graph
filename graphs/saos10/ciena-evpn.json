@@ -1,0 +1,80 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-evpn:ethernet_segment",
+      "type": "list",
+      "module": "ciena-evpn",
+      "description": "Top level ES configuration list",
+      "key": "name"
+    },
+    {
+      "id": "ciena-evpn:evpn_instance",
+      "type": "list",
+      "module": "ciena-evpn",
+      "description": "Top level EVPN instance configuration list",
+      "key": "id"
+    },
+    {
+      "id": "ciena-evpn:flexible_cross_connect_vlan_aware_fd",
+      "type": "list",
+      "module": "ciena-evpn",
+      "description": "Vlan-aware EVPN-FXC service",
+      "key": "forwarding-domain"
+    },
+    {
+      "id": "ciena-evpn:vpws_cross_connect_fd",
+      "type": "list",
+      "module": "ciena-evpn",
+      "description": "EVPN-VPWS service",
+      "key": "forwarding-domain"
+    },
+    {
+      "id": "ciena-evpn:flexible_cross_connect_vlan_unaware_fd",
+      "type": "list",
+      "module": "ciena-evpn",
+      "description": "Vlan-unaware EVPN-FXC service",
+      "key": "forwarding-domain"
+    },
+    {
+      "id": "ciena-evpn:vpls_fd",
+      "type": "list",
+      "module": "ciena-evpn",
+      "description": "EVPN-VPLS service",
+      "key": "forwarding-domain"
+    },
+    {
+      "id": "ciena-evpn:vpn_target",
+      "type": "list",
+      "module": "ciena-evpn",
+      "description": "List of Route Targets.",
+      "key": "route-target"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-evpn:ethernet_segment",
+      "target": "ciena-mef-logical-port:logical_port",
+      "relationship": "leafref:logical-port"
+    },
+    {
+      "source": "ciena-evpn:flexible_cross_connect_vlan_aware_fd",
+      "target": "ciena-mef-fd:fd",
+      "relationship": "leafref:forwarding-domain"
+    },
+    {
+      "source": "ciena-evpn:vpws_cross_connect_fd",
+      "target": "ciena-mef-fd:fd",
+      "relationship": "leafref:forwarding-domain"
+    },
+    {
+      "source": "ciena-evpn:flexible_cross_connect_vlan_unaware_fd",
+      "target": "ciena-mef-fd:fd",
+      "relationship": "leafref:forwarding-domain"
+    },
+    {
+      "source": "ciena-evpn:vpls_fd",
+      "target": "ciena-mef-fd:fd",
+      "relationship": "leafref:forwarding-domain"
+    }
+  ]
+}

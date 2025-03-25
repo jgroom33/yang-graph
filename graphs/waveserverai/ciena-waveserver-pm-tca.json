@@ -1,0 +1,90 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-pm-tca:otu_profiles",
+      "type": "list",
+      "module": "ciena-waveserver-pm-tca",
+      "description": "OTU TCA profiles.",
+      "key": "profile-name"
+    },
+    {
+      "id": "ciena-waveserver-pm-tca:odu_profiles",
+      "type": "list",
+      "module": "ciena-waveserver-pm-tca",
+      "description": "ODU TCA profiles.",
+      "key": "profile-name"
+    },
+    {
+      "id": "ciena-waveserver-pm-tca:ethernet_profiles",
+      "type": "list",
+      "module": "ciena-waveserver-pm-tca",
+      "description": "Ethernet TCA profiles.",
+      "key": "profile-name"
+    },
+    {
+      "id": "ciena-waveserver-pm-tca:encryption_gcm_profiles",
+      "type": "list",
+      "module": "ciena-waveserver-pm-tca",
+      "description": "Channel Encryption GCM TCA profiles.",
+      "key": "profile-name"
+    },
+    {
+      "id": "ciena-waveserver-pm-tca:photonics_profiles",
+      "type": "list",
+      "module": "ciena-waveserver-pm-tca",
+      "description": "Photonics TCA profiles.",
+      "key": "profile-name"
+    },
+    {
+      "id": "ciena-waveserver-pm-tca:optical_power_profiles",
+      "type": "list",
+      "module": "ciena-waveserver-pm-tca",
+      "description": "Optical power TCA profiles.",
+      "key": "profile-name"
+    },
+    {
+      "id": "ciena-waveserver-pm-tca:modem_profiles",
+      "type": "list",
+      "module": "ciena-waveserver-pm-tca",
+      "description": "Modem TCA profiles.",
+      "key": "profile-name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-waveserver-pm-tca:otu_profiles",
+      "target": "ciena-waveserver-pm:otu_performance_instances",
+      "relationship": "leafref:assigned-pm-instances"
+    },
+    {
+      "source": "ciena-waveserver-pm-tca:odu_profiles",
+      "target": "ciena-waveserver-pm:odu_performance_instances",
+      "relationship": "leafref:assigned-pm-instances"
+    },
+    {
+      "source": "ciena-waveserver-pm-tca:ethernet_profiles",
+      "target": "ciena-waveserver-pm:ethernet_performance_instances",
+      "relationship": "leafref:assigned-pm-instances"
+    },
+    {
+      "source": "ciena-waveserver-pm-tca:encryption_gcm_profiles",
+      "target": "ciena-waveserver-pm:encryption_gcm_performance_instances",
+      "relationship": "leafref:assigned-pm-instances"
+    },
+    {
+      "source": "ciena-waveserver-pm-tca:photonics_profiles",
+      "target": "ciena-waveserver-pm:photonics_instances",
+      "relationship": "leafref:assigned-pm-instances"
+    },
+    {
+      "source": "ciena-waveserver-pm-tca:optical_power_profiles",
+      "target": "ciena-waveserver-pm:optical_power_instances",
+      "relationship": "leafref:assigned-pm-instances"
+    },
+    {
+      "source": "ciena-waveserver-pm-tca:modem_profiles",
+      "target": "ciena-waveserver-pm:modem_performance_instances",
+      "relationship": "leafref:assigned-pm-instances"
+    }
+  ]
+}

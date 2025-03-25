@@ -1,0 +1,61 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-pm:ethernet_performance_instances",
+      "type": "list",
+      "module": "ciena-waveserver-pm",
+      "description": "Ethernet port PM instances.",
+      "key": "instance-name"
+    },
+    {
+      "id": "ciena-waveserver-pm:optical_power_instances",
+      "type": "list",
+      "module": "ciena-waveserver-pm",
+      "description": "PTP Optical Power PM instances.",
+      "key": "instance-name"
+    },
+    {
+      "id": "ciena-waveserver-pm:photonics_instances",
+      "type": "list",
+      "module": "ciena-waveserver-pm",
+      "description": "PTP Photonics PM instances.",
+      "key": "instance-name"
+    },
+    {
+      "id": "ciena-waveserver-pm:modem_performance_instances",
+      "type": "list",
+      "module": "ciena-waveserver-pm",
+      "description": "PTP Modem PM instances.",
+      "key": "instance-name"
+    },
+    {
+      "id": "ciena-waveserver-pm:otu_performance_instances",
+      "type": "list",
+      "module": "ciena-waveserver-pm",
+      "description": "Port OTU PM instances.",
+      "key": "instance-name"
+    },
+    {
+      "id": "ciena-waveserver-pm:odu_performance_instances",
+      "type": "list",
+      "module": "ciena-waveserver-pm",
+      "description": "Port/channel ODU PM instances.",
+      "key": "instance-name"
+    },
+    {
+      "id": "ciena-waveserver-pm:encryption_gcm_performance_instances",
+      "type": "list",
+      "module": "ciena-waveserver-pm",
+      "description": "Channel Encryption-GCM PM instances.",
+      "key": "instance-name"
+    },
+    {
+      "id": "ciena-waveserver-pm:protection_group_performance_instances",
+      "type": "list",
+      "module": "ciena-waveserver-pm",
+      "description": "Protection PM instances.",
+      "key": "instance-name"
+    }
+  ],
+  "edges": []
+}

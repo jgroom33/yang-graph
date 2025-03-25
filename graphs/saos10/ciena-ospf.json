@@ -1,0 +1,105 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-ospf:instance",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "OSPF structure",
+      "key": "tag"
+    },
+    {
+      "id": "ciena-ospf:redistribute",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "Redistribute routes to external process",
+      "key": "protocol"
+    },
+    {
+      "id": "ciena-ospf:interface",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "List of OSPF interfaces.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-ospf:authentication",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "OSPF message-digest-key (MD5) related operations",
+      "key": "id"
+    },
+    {
+      "id": "ciena-ospf:area",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "List of OSPF areas",
+      "key": "id"
+    },
+    {
+      "id": "ciena-ospf:network",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "OSPF network",
+      "key": "prefix"
+    },
+    {
+      "id": "ciena-ospf:prefix_list",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "Name of the prefix list",
+      "key": "prefix-name"
+    },
+    {
+      "id": "ciena-ospf:range",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "Summarize routes matching address/mask (Area Border Routers (ABRs) only)",
+      "key": "prefix"
+    },
+    {
+      "id": "ciena-ospf:virtual_link",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "Virtual link ID(IP addr) associated with neighbor",
+      "key": "peer-id"
+    },
+    {
+      "id": "ciena-ospf:protection",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "Protection provided to the repair tunnel",
+      "key": "protection-type"
+    },
+    {
+      "id": "ciena-ospf:srgb",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "List of global blocks to be advertised.",
+      "key": "lower-bound upper-bound"
+    },
+    {
+      "id": "ciena-ospf:summary_address",
+      "type": "list",
+      "module": "ciena-ospf",
+      "description": "Summary address for external routes. address/mask",
+      "key": "prefix"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-ospf:redistribute",
+      "target": "ciena-routing-policy:policy",
+      "relationship": "leafref:policy"
+    },
+    {
+      "source": "ciena-ospf:interface",
+      "target": "openconfig-interfaces:interface",
+      "relationship": "leafref:name"
+    },
+    {
+      "source": "ciena-ospf:prefix_list",
+      "target": "ciena-routing-policy:prefix_list",
+      "relationship": "leafref:prefix-name"
+    }
+  ]
+}

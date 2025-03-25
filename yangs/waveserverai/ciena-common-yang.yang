@@ -1,0 +1,1987 @@
+module ciena-common-yang {
+  yang-version 1.1;
+  namespace "urn:ciena:params:xml:ns:yang:ciena-common-yang";
+  prefix yang;
+
+  import ciena-common-version {
+    prefix version;
+  }
+
+  import ietf-yang-types {
+    prefix ietf-yang;
+  }
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com/
+     Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+  description
+    "holds definitions that are commonly used across the system.";
+
+  revision 2024-01-18 {
+    version:version "version" {
+      version:string "1.52.0";
+    }
+    description
+      "Add suppress-pre-initial and defer-concurrent option for get-intial";
+  }
+  revision 2023-12-05 {
+    version:version "version" {
+      version:string "1.51.0";
+    }
+    description
+      "Removed typedef for ddf-parser packing directives";
+  }
+  revision 2023-12-01 {
+    version:version "version" {
+      version:string "1.50.0";
+    }
+    description
+      "Added get-initial-time in yang-delivery";
+  }
+  revision 2023-10-26 {
+    version:version "version" {
+      version:string "1.49.0";
+    }
+    description
+      "Add unionptr extension.";
+  }
+  revision 2023-07-07 {
+    version:version "version" {
+      version:string "1.48.0";
+    }
+    description
+      "Add input path to yang-get-targets RPC.";
+  }
+  revision 2023-07-07 {
+    version:version "version" {
+      version:string "1.47.0";
+    }
+    description
+      "Add yang-get-keys RPC.";
+  }
+  revision 2023-07-31 {
+    version:version "version" {
+      version:string "1.46.0";
+    }
+    description
+      "Added a 'group' option to request-object so that multiple
+       subscriptions can be published together in one publication";
+  }
+  revision 2023-06-29 {
+    version:version "version" {
+      version:string "1.46.0";
+    }
+    description
+      "Add suppress-sensitive enum for use in yang.";
+  }
+  revision 2023-06-28 {
+    version:version "version" {
+      version:string "1.45.0";
+    }
+    description
+      "Added an option in yang-get-object to treat a subtree as a set of
+       values to match on, as opposed to a filter";
+  }
+  revision 2023-06-07 {
+    version:version "version" {
+      version:string "1.44.0";
+    }
+    description
+      "Added get-initial flag in yang-delivery.";
+  }
+  revision 2023-05-12 {
+    version:version "version" {
+      version:string "1.43.0";
+    }
+    description
+      "Added target-domain and target-service to refresh-object rpc.";
+  }
+  revision 2023-03-30 {
+    version:version "version" {
+      version:string "1.42.0";
+    }
+    description
+      "Renamed minimal to minimal-config attribute in yang-get-object rpc.";
+  }
+  revision 2023-03-15 {
+    version:version "version" {
+      version:string "1.41.0";
+    }
+    description
+      "Added Service to send notifications for async response";
+  }
+  revision 2023-03-13 {
+    version:version "version" {
+      version:string "1.40.0";
+    }
+    description
+      "Added timeout support in yang-rpc-action ";
+  }
+  revision 2023-03-02 {
+    version:version "version" {
+      version:string "1.39.0";
+    }
+    description
+      "Added yang alias for async-options and added async-output container for tracker information";
+  }
+  revision 2023-02-15 {
+    version:version "version" {
+      version:string "1.38.0";
+    }
+    description
+      "Added yang-async-rpc-delivery notification for asynchronous RPC response through notification";
+  }
+  revision 2023-02-14 {
+    version:version "version" {
+      version:string "1.37.0";
+    }
+    description
+      "Added yang-get-object option to get minimal config";
+  }
+  revision 2023-01-25 {
+    version:version "version" {
+      version:string "1.36.0";
+    }
+    description
+      "Added encryption related extensions";
+  }
+  revision 2023-01-11 {
+    version:version "version" {
+      version:string "1.35.0";
+    }
+    description
+      "Added RPC to get status of asynchronous RPCs, and async-options container for asynchronous RPCs to yang-rpc-action";
+  }
+  revision 2023-01-10 {
+    version:version "version" {
+      version:string "1.34.0";
+    }
+    description
+      "Added list of domains and services to yang-delivery notification.";
+  }
+  revision 2022-12-20 {
+    version:version "version" {
+      version:string "1.33.0";
+    }
+    description
+      "Added report-existence error code.";
+  }
+  revision 2022-12-19 {
+    version:version "version" {
+      version:string "1.32.0";
+    }
+    description
+      "Added typedef ui-name";
+  }
+  revision 2022-11-25 {
+    version:version "version" {
+      version:string "1.31.0";
+    }
+    description
+      "Added fields leaf in yang-unsubscribe.";
+  }
+  revision 2022-10-19 {
+    version:version "version" {
+      version:string "1.30.0";
+    }
+    description
+      "Add extension for encryption";
+  }
+  revision 2022-10-03 {
+    version:version "version" {
+      version:string "1.29.0";
+    }
+    description
+      "Added options for yang-get-targets to better select the
+       method of target selection to use";
+  }
+  revision 2022-09-27 {
+    version:version "version" {
+      version:string "1.28.0";
+    }
+    description
+      "Added typedef and extension for packing directives into ddf parser";
+  }
+  revision 2022-07-13 {
+    version:version "version" {
+      version:string "1.27.0";
+    }
+    description
+      "Added suppress-redundant-grouping.";
+  }
+  revision 2022-06-07 {
+    version:version "version" {
+      version:string "1.26.0";
+    }
+    description
+      "Added sensitive extension.";
+  }
+  revision 2022-05-25 {
+    version:version "version" {
+      version:string "1.25.0";
+    }
+    description
+      "Added error codes for path parsing and generation failures.";
+  }
+  revision 2022-02-23 {
+    version:version "version" {
+      version:string "1.24.0";
+    }
+    description
+      "Added definitions for defaults.";
+  }
+  revision 2022-01-18 {
+    version:version "version" {
+      version:string "1.23.0";
+    }
+    description
+      "Added error codes for mandatory and out of range elements.";
+  }
+  revision 2022-01-18 {
+    version:version "version" {
+      version:string "1.22.0";
+    }
+    description
+      "Added tolerances to get-patches";
+  }
+  revision 2021-12-16 {
+    version:version "version" {
+      version:string "1.21.0";
+    }
+    description
+      "Added yang lib mismatch error code";
+  }
+  revision 2021-12-09 {
+    version:version "version" {
+      version:string "1.20.1";
+    }
+    description
+      "Changed path leaves to stringptr";
+  }
+  revision 2021-11-26 {
+    version:version "version" {
+      version:string "1.20.0";
+    }
+    description
+      "Added containerptr extension.";
+  }
+  revision 2021-11-10 {
+    version:version "version" {
+      version:string "1.19.0";
+    }
+    description
+      "Added grouping transaction-id.";
+  }
+  revision 2021-09-29 {
+    version:version "version" {
+      version:string "1.18.0";
+    }
+    description
+      "Added error code for non-configurable data.";
+  }
+  revision 2021-06-09 {
+    version:version "version" {
+      version:string "1.17.0";
+    }
+    description
+      "Add mount-start and mount-end extensions.";
+  }
+  revision 2021-05-04 {
+    version:version "version" {
+      version:string "1.16.0";
+    }
+    description
+      "Add deadline field to indicate when processing should stop.";
+  }
+  revision 2021-04-26 {
+    version:version "version" {
+      version:string "1.15.0";
+    }
+    description
+      "Add info and warning return code.";
+  }
+  revision 2021-04-19 {
+    version:version "version" {
+      version:string "1.14.0";
+    }
+    description
+      "Add the more field to paging result to support iterative paging";
+  }
+  revision 2021-02-08 {
+    version:version "version" {
+      version:string "1.13.0";
+    }
+    description
+      "Add extensions to support metadata generation.";
+  }
+  revision 2021-02-07 {
+    version:version "version" {
+      version:string "1.12.0";
+    }
+    description
+      "Add new container to yang-rpc-action and error-code to support
+       confirmed rpcs";
+  }
+  revision 2020-12-15 {
+    version:version "version" {
+      version:string "1.11.0";
+    }
+    description
+      "Add new grouping and rpc to support paging";
+  }
+  revision 2020-11-25 {
+    version:version "version" {
+      version:string "1.10.0";
+    }
+    description
+      "Add new content option - keys";
+  }
+  revision 2020-11-13 {
+    version:version "version" {
+      version:string "1.9.1";
+    }
+    description
+      "Make new grouping for patch and map it yang-set-obj-input";
+  }
+  revision 2020-11-05 {
+    version:version "version" {
+      version:string "1.9.0";
+    }
+    description
+      "Added depth to yang-get-object input options";
+  }
+  revision 2020-11-04 {
+    version:version "version" {
+      version:string "1.8.0";
+    }
+    description
+      "Added get-target RPC and subtree/target support in
+       yang-get-object";
+  }
+  revision 2020-07-05 {
+    version:version "version" {
+      version:string "1.7.0";
+    }
+    description
+      "Added priority to yang-rpc-action and yang-delivery";
+  }
+  revision 2020-07-05 {
+    version:version "version" {
+      version:string "1.6.0";
+    }
+    description
+      "Added path to yang-unsubscribe to unsubscribe
+       yang paths in an on-change subscription ";
+  }
+  revision 2020-06-26 {
+    version:version "version" {
+      version:string "1.5.0";
+    }
+    description
+      "Added a better description for target-node, and
+       changed refresh-object to use it instead of instance-id.
+
+       Added a 'delete-element' action";
+  }
+  revision 2020-01-27 {
+    version:version "version" {
+      version:string "1.4.0";
+    }
+    description
+      "Added patches to yang-delivery to support bulked notifications";
+  }
+  revision 2019-12-20 {
+    version:version "version" {
+      version:string "1.3.0";
+    }
+    description
+      "Added new error-codes for authentication failed and
+       connection failed.
+       -Changed the path in yang-get-patches
+        to use instance-id instead of string.";
+  }
+  revision 2019-10-10 {
+    version:version "version" {
+      version:string "1.2.0";
+    }
+    description
+      "-Added tag to yang-delivery.
+       -Added new rpc for refreshing object.";
+  }
+  revision 2019-07-30 {
+    version:version "version" {
+      version:string "1.1.0";
+    }
+    description
+      "Added patches to yang-stage-object RPC output to allow for
+       multiple actions to be reported as the result of a stage.
+
+       Added augment-name exension";
+  }
+  revision 2019-03-02 {
+    version:version "version" {
+      version:string "1.0.0";
+    }
+    description
+      "Added typedef target-node";
+  }
+
+  extension encrypt {
+    argument value;
+    description
+      "The name of the encrypted field of this yang data";
+  }
+
+  extension decrypt {
+    argument value;
+    description
+      "The name of the decrypted field of this yang data";
+  }
+
+  extension encrypt-path {
+    argument value;
+    description
+      "The absolute path of the encrypted field of this yang data";
+  }
+
+  extension encrypt-relative-path {
+    argument value;
+    description
+      "The relative path of the encrypted field of this yang data";
+  }
+
+  extension decrypt-path {
+    argument value;
+    description
+      "The path of the decrypted field of this yang data";
+  }
+
+  extension ui-name {
+    argument name;
+    description
+      "Name to use in external UIs.";
+  }
+
+  extension packing {
+    argument value;
+    description
+      "Optional packing specifier for containers and lists
+
+       Values:
+         packed (default) - C structures are packed
+         unpacked         - C structures are not packed
+         reordered        - C structures are unpacked but reordered to
+                            try and minimize padding
+       ";
+  }
+
+  extension augment-name {
+    argument value;
+    description
+      "Optional internal name for this augmentation.  If not supplied, the name
+       defaults to the module name and the number of the augmentation
+       in this module.";
+  }
+
+  extension handler {
+    argument value;
+    description
+      "Handler for this YANG data type";
+  }
+
+  extension alias {
+    argument value;
+    description
+      "Alias for generated bindings for a container, list element, or
+       augment.";
+  }
+
+  extension metadata-extension {
+    argument extension;
+    description
+      "This extension is used to identify an extension used for metadata
+       in a container or list.  This will generate a structure that can
+       be used to fill in data for each element in the structure.";
+  }
+
+  extension metadata {
+    argument data {
+      yin-element true;
+    }
+    description
+      "This extension is used inside a container or element that has
+       used the metadata-extension.  These fields will be extracted
+       and populated in the metadata.";
+  }
+
+  extension mount-depth {
+    argument value;
+    description
+      "Maximum depth a module can include itself to in this mount";
+  }
+
+  extension mount {
+    argument module;
+    description
+      "Mount the specified module under this anyxml node.";
+  }
+
+  extension mount-start {
+    argument module;
+    description
+      "When a mount module is processed, the whole module should appear
+       as a 'uses' in a container with the name of the anyxml/anydata.
+
+       Each mounted module needs to be grouped in such a way that it
+       refects the root level module so a module can easily be converted
+       between the root-level and the mount-level.
+
+       At the mount point, there is no explicit container in the path
+       for each module, since there is no explicit path element for a
+       module, but the mount-level content still needs to be grouped
+       together properly.
+
+       This cannot be done as a container, or a module, or an extension
+       since it would break the yang inclusion rules or require special
+       processing.
+
+       This start tag (and the associated end tag) are used to group the
+       root level content at the mount point without interfering in
+       normal modeling rules.";
+  }
+
+  extension mount-end {
+    argument module;
+    description
+      "When a mount module is processed, the whole module should appear
+       as a 'uses' in a container with the name of the anyxml/anydata.
+
+       Each mounted module needs to be grouped in such a way that it
+       refects the root level module so a module can easily be converted
+       between the root-level and the mount-level.
+
+       At the mount point, there is no explicit container in the path
+       for each module, since there is no explicit path element for a
+       module, but the mount-level content still needs to be grouped
+       together properly.
+
+       This cannot be done as a container, or a module, or an extension
+       since it would break the yang inclusion rules or require special
+       processing.
+
+       This end tag (and the associated start tag) are used to group the
+       root level content at the mount point without interfering in
+       normal modeling rules.";
+  }
+
+  extension create-supported {
+    argument value;
+    description
+      "Denotes whether a node may be created.";
+  }
+
+  extension edit-supported {
+    argument value;
+    description
+      "Denotes whether a node may be modified/edited.";
+  }
+
+  extension get-supported {
+    argument value;
+    description
+      "Denotes whether a node may be retrieved.";
+  }
+
+  extension delete-supported {
+    argument value;
+    description
+      "Denotes whether a node may be deleted.";
+  }
+
+  extension yang-data {
+    argument value;
+  }
+
+  extension stringptr {
+    argument value;
+    description
+      "Flag that indicates that this string type should be handled as a
+       pointer to a string instead of a static string";
+  }
+
+  extension containerptr {
+    argument value;
+    description
+      "Flag that indicates that this container type should be handled as a
+       pointer to a container instead of a static container";
+  }
+
+  extension unionptr {
+    argument value;
+    description
+      "Flag to indicate that this union type should be converted to a
+       pointer to a string instead of a static string";
+  }
+
+  extension sensitive {
+    argument value;
+    description
+      "Flag that indicates that this leaf is sensitive data and can
+       optionally be hidden or omitted in serialization";
+  }
+
+  yang:yang-data "yang-priority" {
+    container priority {
+      leaf value {
+        type yang-priority;
+      }
+    }
+  }
+
+  identity error-code {
+    description
+      "The base identity to represent error codes";
+  }
+
+  identity error-unknown {
+    base error-code;
+    description
+      "Error was generated for unknown reason.";
+  }
+
+  identity success {
+    base error-code;
+    description
+      "Success.";
+  }
+
+  identity info {
+    base error-code;
+    description
+      "Extra information.";
+  }
+
+  identity warning {
+    base error-code;
+    description
+      "Warning.";
+  }
+
+  identity error-internal {
+    base error-code;
+    description
+      "Error was generated by an internal failure.";
+  }
+
+  identity error-does-not-exist {
+    base error-code;
+    description
+      "Error was generated because the instance does not exist.";
+  }
+
+  identity error-already-exist {
+    base error-code;
+    description
+      "Error was generated because the instance already exists.";
+  }
+
+  identity error-already-locked {
+    base error-code;
+    description
+      "Error was generated because the instance is already locked.";
+  }
+
+  identity error-connection-failed {
+    base error-code;
+    description
+      "Error was generated because connection failed for talking
+       to service owning the instance.";
+  }
+
+  identity error-authentication-failed {
+    base error-code;
+    description
+      "Error was generated because authentication failed trying
+       to connect to service owning the instance.";
+  }
+
+  identity error-deserialize-failed {
+    base error-code;
+    description
+      "Error was generated while parsing a message";
+  }
+
+  identity error-serialize-failed {
+    base error-code;
+    description
+      "Error was generated while generating a message";
+  }
+
+  identity error-confirmation-required {
+    base error-code;
+    description
+      "Confirmation for an operation is required and was not supplied.";
+  }
+
+  identity error-not-configurable {
+    base error-code;
+    description
+      "Element is not configurable.";
+  }
+
+  identity error-yang-lib-mismatch {
+    base error-code;
+    description
+      "Yang library mismatch error was detected in zmq gpb message.";
+  }
+
+  identity error-mandatory {
+    base error-code;
+    description
+      "Mandatory element is missing or is being deleted.";
+  }
+
+  identity error-out-of-range {
+    base error-code;
+    description
+      "Element is out of range.";
+  }
+
+  identity error-path-parsing {
+    base error-code;
+    description
+      "Error parsing path";
+  }
+
+  identity error-path-generation {
+    base error-code;
+    description
+      "Error generating a path";
+  }
+
+  identity report-existence {
+    base error-code;
+    description
+      "This is used to report if any existing attribute or instance
+       is modified for a configurable yang data element.";
+  }
+
+  identity state-name {
+    description
+      "Base identity to represent FSM(Finite State Machine) state";
+  }
+
+  typedef yang-action {
+    type enumeration {
+      enum "create" {
+        description
+          "Create an object.  A create may trigger special validation
+           for mandatory parameters, and staging of default data when
+           created.  Otherwise, in a set operation, this is equivalent
+           to an edit.  If the element already exists, a create will
+           merge content with it.
+
+           When a create is reported in a delivery message, it indicates
+           a new object has been created where one did not exist before.";
+      }
+      enum "edit" {
+        description
+          "Edit an object.  If the element already exists, editing  will
+           merge content with it.  If the element does not exist, it
+           will be created.
+
+           When an edit is reported in a delivery message, it indicates
+           an existing object has been modified.";
+      }
+      enum "update" {
+        description
+          "The update action is supported in a delivery message.  It
+           indicates a more recent state of an object, typically
+           as a result of a polled or initial subscription.  An update
+           is used when the previous state is not known by the
+           publisher.";
+      }
+      enum "replace" {
+        description
+          "Replace an object with the provided data.  Elements which
+           are not supplied in the edit but are present in the
+           current datastore will be deleted.  Elements which are
+           supplied in the edit but are not present in the target
+           datastore will be created.  All other elements will be
+           edited wherever the new config differs from the target
+           datastore";
+      }
+      enum "delete" {
+        description
+          "Delete children of an element.
+
+           In a set command, a delete can be specified with no data
+           and this indicates that the entire element provided by
+           the path or target.
+
+           In a set command, if data is provided, this indicates
+           that the provided data should be deleted from the target
+           datastore at the path provided.
+
+           In diffs, provider callouts, and notifications, a
+           'delete' action is used when the element
+           at the path is not deleted, but all child elements provided
+           in the data are deleted.  Compare with the 'delete-element'
+           action, which indicates the entire element specified
+           in the path is to be removed.";
+      }
+      enum "delete-element" {
+        description
+          "Delete an element.
+
+           In a set command, a delete can be specified with no data
+           and this indicates that the entire element provided by
+           the path or target.
+
+           In a set command, if data is provided, this indicates
+           that the provided data should be deleted from the target
+           datastore at the path provided.
+
+           In diffs, provider callouts, and notifications, a
+           'delete-element' action is used when the entire element
+           specified in the path is to be removed.  Compare with the
+           'delete' action, which indicates the element
+           at the path is not deleted, but all child elements provided
+           in the data are deleted.";
+      }
+    }
+  }
+
+  typedef yang-phase {
+    type enumeration {
+      enum "commit";
+    }
+    description
+      "Optional flag that specifies if the data should persist.";
+  }
+
+  typedef yang-status {
+    type enumeration {
+      enum "failed";
+      enum "ok";
+    }
+    description
+      "Summary yang action status.";
+  }
+
+  typedef yang-priority {
+    type enumeration {
+      enum "system" {
+        description
+          "Messages and notifications of highest priority.  Reserved
+           for system use";
+      }
+      enum "high" {
+        description
+          "Messages and notifications of high priority.  This is
+           the highest priority a service should send.";
+      }
+      enum "medium" {
+        description
+          "Messages and notifications of medium priority.  This is
+           the normal priority for RPCs.";
+      }
+      enum "low" {
+        description
+          "Messages and notifications of low priority.  This is
+           the normal priority for notifications.";
+      }
+    }
+    description
+      "Priority of an action or delivery";
+  }
+
+  typedef service {
+    type string {
+      length "1..32";
+    }
+    description
+      "Specifies the name of the Service being requested. Allows the
+       routing of messages and requests to the appropriate
+       destination.";
+  }
+
+  typedef target-node {
+    type string;
+    description
+      "This points to a schema path or an instance with an optional field
+       filter.
+
+       A field filter is a string version of a filter in RESTCONF
+       'fields' style specification.
+
+       Matches the following rule:
+
+       path '(' fields-expr ')' / path ';' fields-expr / path
+
+       ';' is used to select multiple nodes.  For example,
+       to filter the 'genre' and 'year' of an album, use 'genre;year'.
+
+       Parentheses are used to specify sub-selectors of a node.  Note that
+       there is no path separator character '/' between a 'path' field and a
+       left parenthesis character '('.
+
+       For example, assume that the target resource is the 'album' list.  To
+       filter only the 'label' and 'catalogue-number' of the 'admin'
+       container within an album, use 'admin(label;catalogue-number)'.
+
+       '/' is used in a path to retrieve a child node of a node.  For
+       example, to filter only the 'label' of an album, use 'admin/label'.";
+  }
+
+  typedef async-status {
+    type enumeration {
+      enum "completed" {
+        description
+          "The RPC execution is complete";
+      }
+      enum "in-progress" {
+        description
+          "The RPC is still in progress.";
+      }
+    }
+    description
+      "Execution status of the given RPC";
+  }
+
+  typedef suppress-sensitive {
+    type enumeration {
+      enum "none";
+      enum "star";
+      enum "remove";
+    }
+    description
+      "YANG counterpart to ddf_suppress_sensitive_t. If editing, please keep this
+       enum in sync with ddf_suppress_sensitive_t in ddy_model.xml.";
+  }
+
+  grouping patch {
+    leaf path {
+      type instance-identifier;
+      description
+        "path of object the set is to be applied to";
+    }
+
+    leaf action {
+      type yang-action;
+    }
+
+    leaf phase {
+      type yang-phase;
+      description
+        "Phase of the edit operation.";
+    }
+
+    anyxml config {
+      description
+        "Anyxml data for set-object operation.";
+    }
+  }
+
+  grouping yang-set-obj-input {
+    uses patch;
+  }
+
+  grouping paging-grouping {
+    leaf cursor {
+      type target-node;
+      description
+        "Node to start paging with.";
+    }
+
+    leaf count {
+      type uint32;
+      description
+        "Number of items to return for one paging request.";
+    }
+
+    leaf more {
+      type boolean;
+      default "false";
+      description
+        "Flag indicating whether there is more data left in to be retrieved.";
+    }
+  }
+
+  grouping suppress-redundant-grouping {
+    leaf suppress-redundant {
+      type boolean;
+      default "false";
+      description
+        "set to true for sampled subscription, target should not generate telemetry
+         update message unless the value of the path being reported on
+         has changed since the last update was generated.";
+    }
+
+    leaf heartbeat-interval {
+      type uint32;
+      units "ms";
+      description
+        "Target must generate one telemetry update per heartbeat interval,
+         regardless of whether the suppress_redundant flag is set to true.";
+    }
+  }
+
+  grouping rpc-result-common {
+    description
+      "Common RPC output data (return codes) that should be shared across all
+       RPCs.";
+    list return-code-list {
+      yang:alias "yang-return-code-list";
+      uses return-code;
+    }
+
+    leaf status {
+      type yang-status;
+    }
+  }
+
+  grouping return-code {
+    leaf instance {
+      type instance-identifier;
+      mandatory false;
+      description
+        "The instance to which the return code applies.";
+    }
+
+    leaf error {
+      type identityref {
+        base error-code;
+      }
+    }
+
+    leaf action {
+      type yang-action;
+      mandatory false;
+      description
+        "The action performed for which the return code applies.";
+    }
+
+    leaf error-str {
+      type string;
+      mandatory false;
+      description
+        "A string description of the return code.";
+    }
+  }
+
+  grouping confirmation {
+    description
+      "Container to hold data for confirmations.";
+    container confirmation {
+      yang:alias "yang-confirmation";
+      leaf required {
+        type boolean;
+        description
+          "Indicates if confirmation is required for this user for sensitive operations.";
+      }
+
+      leaf supplied {
+        type boolean;
+        description
+          "Indicates if confirmation is supplied for sensitive operations.";
+      }
+    }
+  }
+
+  grouping transaction-id {
+    description
+      "id of a transaction that is used by service-broker for processing
+       operations and ddy-db while processing wal records.";
+    leaf id {
+      type string {
+        length "64";
+      }
+    }
+  }
+
+  grouping async-output-grouping {
+    leaf tracker {
+      type uint64;
+      description
+        "unique tracker generated to track asynchronous RPCs";
+    }
+
+    leaf path {
+      type string {
+        yang:stringptr "true";
+      }
+      description
+        "rpc or path to execute action on";
+    }
+
+    leaf start-time {
+      type ietf-yang:date-and-time;
+    }
+
+    leaf end-time {
+      type ietf-yang:date-and-time;
+    }
+
+    leaf status {
+      type async-status;
+      description
+        "Execution status of the given RPC";
+    }
+
+    anyxml data;
+  }
+
+  rpc yang-del-object {
+    input {
+      leaf path {
+        type string {
+          yang:stringptr "true";
+        }
+        description
+          "path of object the delete is to be applied to";
+      }
+    }
+
+    output {
+      uses rpc-result-common;
+    }
+  }
+
+  rpc yang-set-object {
+    input {
+      uses patch;
+    }
+
+    output {
+      uses rpc-result-common;
+    }
+  }
+
+  rpc yang-stage-object {
+    input {
+      leaf path {
+        type string {
+          yang:stringptr "true";
+        }
+        description
+          "path of object to be staged";
+      }
+
+      leaf action {
+        type yang-action;
+        default "edit";
+      }
+
+      anyxml in;
+
+      container options {
+        yang:alias "yang-stage-object-options";
+        description
+          "Flags used to control yang-stage-object behavior";
+        leaf ignore-destination {
+          type boolean;
+          default "false";
+          description
+            "Flag used to tell the stager that running db and
+             destination db should be ignored for this operation.";
+        }
+
+        leaf remove-triggers {
+          type boolean;
+          default "false";
+          description
+            "Flag used to tell the stagers to remove the elements they
+             used during processing.";
+        }
+      }
+    }
+
+    output {
+      uses rpc-result-common;
+
+      anyxml out;
+
+      list patches {
+        yang:alias "yang-patch";
+        key "action path";
+        uses patch;
+      }
+    }
+  }
+
+  rpc yang-val-object {
+    input {
+      leaf path {
+        type string {
+          yang:stringptr "true";
+        }
+        description
+          "path of object to be validated";
+      }
+
+      leaf action {
+        type yang-action;
+        default "edit";
+      }
+
+      anyxml config;
+    }
+
+    output {
+      uses rpc-result-common;
+    }
+  }
+
+  rpc yang-get-patches {
+    description
+      "Compare two objects and return a set of patches that will
+       convert the old data to the new data";
+    input {
+      anyxml old;
+
+      anyxml new;
+
+      leaf path {
+        type instance-identifier;
+        description
+          "path of the object we are comparing";
+      }
+
+      anyxml tolerances {
+        description
+          "Optional data node representing tolerances to use when
+           comparing.  Numeric data will not be marked as changed
+           if the change is less than or equal to the provided
+           tolerance";
+      }
+    }
+
+    output {
+      list patches {
+        yang:alias "yang-patch";
+        key "action path";
+        uses patch;
+      }
+
+      uses rpc-result-common;
+    }
+  }
+
+  rpc yang-get-targets {
+    description
+      "Convert a data tree or subtree into a set of target nodes";
+    input {
+      anyxml tree;
+
+      leaf path {
+        type string {
+          yang:stringptr "true";
+        }
+        description
+          "get targets of path. if path is given, other input options are ignored";
+      }
+
+      leaf get-deepest {
+        type boolean;
+        default "false";
+        status deprecated;
+        description
+          "Get deepest lists only if true";
+      }
+
+      leaf method {
+        type enumeration {
+          enum "all-list-elements" {
+            description
+              "All list elements are returned.  This is useful
+               for converting a subtree into targets used by a
+               subsequent get operation";
+          }
+          enum "get-deepest" {
+            description
+              "Only the deepest list elements are returned.  This is
+               useful when querying data via paged output.  The higher
+               level elements are represented as contexts for the lowest
+               level children, when doing a paged get of the deepest
+               elements";
+          }
+          enum "leafy-containers" {
+            description
+              "All elements (list and container) which have non-key
+               leaves present, or only-keys and no other children,
+               will be returned.  This is useful to get a list of
+               'interesting' (non-structural) content in a tree";
+          }
+          enum "highest-leafy" {
+            description
+              "All elements (list and container) which have non-key
+               leaves present, or only-keys and no other children,
+               will be returned, but only at the hightest level.
+               This is useful to get a list of targets for a filter,
+               or the 'interesting' parts of a root structure.";
+          }
+        }
+        default "all-list-elements";
+      }
+    }
+
+    output {
+      leaf-list target-nodes {
+        type target-node;
+      }
+
+      uses rpc-result-common;
+    }
+  }
+
+  rpc yang-get-object {
+    input {
+      leaf path {
+        type string {
+          yang:stringptr "true";
+        }
+        description
+          "path to get object from";
+      }
+
+      container options {
+        yang:alias "yang-get-object-options";
+        leaf content {
+          type enumeration {
+            enum "config" {
+              description
+                "Only retrieve config data";
+            }
+            enum "nonconfig" {
+              description
+                "Only retrieve non-config data";
+            }
+            enum "all" {
+              description
+                "Retrieve all data";
+            }
+            enum "keys" {
+              description
+                "Only retrieve keys";
+            }
+            enum "minimal-config" {
+              description
+                "Retrieve minimal config";
+            }
+          }
+          default "all";
+          description
+            "specify the type of content to return (config/nonconfig/all/keys)";
+        }
+
+        leaf fields {
+          type string {
+            length "1..30000";
+          }
+          description
+            "restconf style fields filter";
+        }
+
+        anyxml subtree {
+          description
+            "Subtree filter to use for get operation.  The keys used in
+             lists will be used to restrict the get operation to these
+             list elements.  Content in containers and lists will be
+             used as a filter to determine what leaves should be
+             reported.  The values used must be allowed values from a
+             schema perspective, but the values are not used in the
+             filtering, only the presence of the leaf.
+
+             When used in conjunction with the path, the subtree and the
+             targets filters are used to restrict the internal queries
+             and then the path with the fields filter is used to extract
+             the filtered path from the subtree/targets.
+
+             Subtree and targets can contain the same element or
+             intersections of similar elements and the results will be
+             merged before the path/fields are extracted";
+        }
+
+        leaf subtree-value-match {
+          type boolean;
+          default "false";
+          description
+            "Flag that indicates if the subtree should be treated as a
+             filter or as a tree used for value matching.  Default
+             behaviour is to treat it as a filter";
+        }
+
+        leaf-list targets {
+          type target-node;
+          description
+            "Target filter to use for get operation.  The targets
+             provided here will be used to restrict the get operation to
+             these targets.
+
+             When used in conjunction with the path, the subtree and the
+             targets filters are used to restrict the internal queries
+             and then the path with the fields filter is used to extract
+             the filtered path from the subtree/targets.
+
+             Subtree and targets can contain the same element or
+             intersections of similar elements and the results will be
+             merged before the path/fields are extracted";
+        }
+
+        leaf depth {
+          type uint16 {
+            range "1..65535";
+          }
+          description
+            "Restconf style depth filter. Data nodes with a depth level greater
+             than the specified value are not returned in the response.
+
+             The requested data node has a depth level of 1. If the fields
+             option is used to select descendant data nodes, then these nodes
+             and all of their ancestor nodes also have a depth value of 1.
+             (This has the effect of including the nodes specified by the
+             fields, even if the depth value is less than the actual depth
+             level of the specified fields.) Any other child node has a depth
+             value that is 1 greater than its parent.
+
+             If the depth option is omitted, the data nodes included in the
+             response are not constrained by their depth level.";
+        }
+
+        container paging {
+          yang:alias "yang-paging-in";
+          uses paging-grouping;
+        }
+
+        leaf defaults {
+          type enumeration {
+            enum "report-all" {
+              description
+                "Report all default data.";
+            }
+            enum "trim" {
+              description
+                "Default values are removed from the output.";
+            }
+            enum "explicit" {
+              description
+                "Do not add or remove defaults.  Report as they are
+                 reported from the service.";
+            }
+          }
+          default "explicit";
+          description
+            "Leaf that indicates how defaults should be reported from
+             the system.";
+        }
+      }
+    }
+
+    output {
+      uses rpc-result-common;
+
+      anyxml data;
+
+      container paging {
+        yang:alias "yang-paging-results";
+        uses paging-grouping;
+      }
+    }
+  }
+
+  rpc yang-request-object {
+    input {
+      leaf path {
+        type string {
+          yang:stringptr "true";
+        }
+        description
+          "path to request object from";
+      }
+
+      leaf subscriber {
+        type string;
+        description
+          "name of the subscriber.  This is used in the notification to route the data to the correct destination";
+      }
+
+      container options {
+        yang:alias "yang-request-object-options";
+        leaf config {
+          type boolean;
+          default "false";
+          description
+            "set to true if only config data to be returned.";
+        }
+
+        leaf get-initial {
+          type boolean;
+          description
+            "set to true if the request should report the data initially.";
+        }
+
+        leaf get-on-change {
+          type boolean;
+          description
+            "set to true if changes to the data should be reported.";
+        }
+
+        leaf frequency {
+          type uint32;
+          units "ms";
+          description
+            "frequency of subscription";
+        }
+
+        leaf fields {
+          type string {
+            length "1..20000";
+          }
+          description
+            "restconf style fields filter";
+        }
+
+        uses suppress-redundant-grouping;
+
+        leaf group {
+          type string;
+          description
+            "A grouping of subscriptions that should be reported in
+             one publication.";
+        }
+
+        leaf suppress-pre-initial {
+          type boolean;
+          description
+            "To discard pubsub notifications before get started when get-intial=true.
+             This option has no effect if get-initial=false.";
+        }
+
+        leaf defer-concurrent {
+          type boolean;
+          description
+            "To delay pubsub notifications during the initial getObject when get-intial=true.
+             This option has no effect if get-initial=false.";
+        }
+      }
+    }
+
+    output {
+      uses rpc-result-common;
+
+      leaf request-id {
+        type uint64;
+        description
+          "number used to reference the request in the future";
+      }
+    }
+  }
+
+  rpc yang-unsubscribe {
+    input {
+      leaf subscriber {
+        type string;
+        description
+          "name of the subscriber.  This was supplied in the request";
+      }
+
+      leaf request-id {
+        type uint64;
+        description
+          "number used to reference the periodic request. Mandatory to unsubscribe from periodic notifications.";
+      }
+
+      leaf path {
+        type string {
+          yang:stringptr "true";
+        }
+        description
+          "path of the request object.  Mandatory to unsubscribe from on-change notifications.";
+      }
+
+      leaf fields {
+        type string {
+          yang:stringptr "true";
+        }
+        description
+          "fields/filter of the request object. Used to identify the subscription.";
+      }
+    }
+
+    output {
+      uses rpc-result-common;
+    }
+  }
+
+  rpc yang-rpc-action {
+    input {
+      leaf tag {
+        type uint64;
+        description
+          "tag to return in a response";
+      }
+
+      leaf deadline {
+        type uint64;
+        units "ns";
+        default "0";
+        description
+          "Time in nanoseconds budgeted for this message.  After this
+           time, the client(s) will have timed out and no further
+           processing should occur since the results will be
+           discarded.  A value of 0 means the deadline should be
+           ignored.";
+      }
+
+      leaf timeout {
+        type decimal64 {
+          fraction-digits 8;
+          range "0..3600";
+        }
+        units "seconds";
+        default "0";
+        description
+          "Time in seconds budgeted for this message. This represents a
+           relative time while deadline is a absolute time. After this
+           time interval, the client(s) will have timed out and no
+           further processing should occur since the results will be
+           discarded.
+           A value of 0 means the timeout should be ignored.
+           if deadline and timeout both supplied, deadline will be
+           preferred.";
+      }
+
+      leaf priority {
+        type yang-priority;
+        default "medium";
+        description
+          "Priority of the action.  Used to allow the service to
+           process faster or slower than a normal message.";
+      }
+
+      leaf action {
+        type string;
+        description
+          "action to perform";
+      }
+
+      leaf path {
+        type string {
+          yang:stringptr "true";
+        }
+        description
+          "rpc or path to execute action on";
+      }
+
+      leaf msg-trace {
+        type string;
+        description
+          "Message tracing tag list";
+      }
+
+      container async-options {
+        yang:alias "yang-rpc-action-async-options";
+        description
+          "This contains all different options related to asynchronous RPC calls";
+        leaf response-type {
+          type bits {
+            bit table {
+              position 0;
+              description
+                "Setting this bit means asynchronous RPC output data is required in table";
+            }
+            bit notification {
+              position 1;
+              description
+                "set this bit if asynchronous RPC output data is required through notification";
+            }
+          }
+          description
+            "bits indicating type of response required for asynchronous RPCs ie. table, no response";
+        }
+
+        leaf domain {
+          type string;
+          description
+            "domain for sending notification if response-type for asynchronous RPC output is notification";
+        }
+
+        leaf service {
+          type string;
+          description
+            "service for sending notification if response-type for asynchronous RPC output is notification";
+        }
+
+        leaf passphrase {
+          type string;
+          description
+            "This passphrase can be used to get all asynchronous RPCs status with same passphrase";
+        }
+      }
+
+      anyxml data;
+
+      uses confirmation;
+    }
+
+    output {
+      uses rpc-result-common;
+
+      leaf tag {
+        type uint64;
+        description
+          "tag provided in the request";
+      }
+
+      container async-output {
+        yang:alias "yang-rpc-action-async-output";
+        description
+          "This contains information about async executed RPC";
+        leaf tracker {
+          type uint64;
+          description
+            "unique tracker generated to track asynchronous RPCs";
+        }
+      }
+
+      leaf path {
+        type string {
+          yang:stringptr "true";
+        }
+        description
+          "rpc or path to execute action on";
+      }
+
+      anyxml data;
+    }
+  }
+
+  rpc refresh-object {
+    description
+      "This RPC is used to refresh a targeted node by issuing
+       a yang-delivery of the current state with an action of update";
+    input {
+      leaf target-node {
+        type target-node;
+        description
+          "The instance for which refresh is to be performed.";
+      }
+
+      leaf target-domain {
+        type string;
+        description
+          "Target domain that the refresh will publish the data to. If domain is specified,
+           must also specify service.";
+      }
+
+      leaf target-service {
+        type string;
+        description
+          "Target service that the refresh will publish the data to. If service is specified,
+           must also specify domain.";
+      }
+    }
+
+    output {
+      uses rpc-result-common;
+    }
+  }
+
+  rpc cursor-count-to-subtree {
+    description
+      "This RPC is used to convert a path with a cursor and count to
+       a subtree";
+    input {
+      leaf path {
+        type target-node;
+      }
+
+      uses paging-grouping;
+    }
+
+    output {
+      uses rpc-result-common;
+
+      anyxml data;
+
+      uses paging-grouping;
+    }
+  }
+
+  rpc async-rpc-status {
+    description
+      "This RPC is to get the status of asynchronous RPC, data can be queried using tracker or passphrase,
+       when queried with tracker, data will be deleted, and if not queried for certain time, data will
+       be deleted automatically";
+    input {
+      leaf tracker {
+        type uint64;
+        description
+          "unique tracker generated to track asynchronous RPCs";
+      }
+
+      leaf passphrase {
+        type string;
+        description
+          "This passphrase can be used to get all asynchronous RPCs status with same passphrase";
+      }
+    }
+
+    output {
+      uses rpc-result-common;
+
+      list async-output {
+        key "tracker";
+        uses async-output-grouping;
+      }
+    }
+  }
+
+  rpc yang-get-keys {
+    description
+      "This RPC by default does a GET of keys-only and depth of 2 for the provided input path.";
+    input {
+      leaf path {
+        type target-node;
+        mandatory true;
+        description
+          "Path to get keys from.";
+      }
+
+      leaf action {
+        type yang-action;
+        description
+          "A service can choose to design custom behaviour for each action. In a
+           hypothetical scenario, on CREATE action, get-keys could return a list
+           of the valid configuration options that do not yet exist but can be
+           provisioned. Then on EDIT, get-keys would return only the configurations
+           previously provisioned (keys that actually exist in db/cache).";
+      }
+    }
+
+    output {
+      uses rpc-result-common;
+
+      anyxml data;
+    }
+  }
+
+  notification yang-delivery {
+    leaf tag {
+      type uint64;
+      description
+        "tag provided in the delivery";
+    }
+
+    leaf priority {
+      type yang-priority;
+      default "low";
+      description
+        "Priority of the notification.  Used to allow the
+         client to process faster or slower than a normal message.";
+    }
+
+    leaf timestamp {
+      type uint64;
+    }
+
+    leaf get-time {
+      type uint64;
+      description
+        "Time before doing a get in case of get-initial request, the time took for
+         get-initial is the difference between timestamp and get-time";
+    }
+
+    leaf path {
+      type instance-identifier;
+      description
+        "path of object the delivery applies to.  If this is provided,
+         the patches should not be provided.";
+    }
+
+    leaf subscriber {
+      type string;
+      description
+        "name of the subscriber.  This was supplied in the request";
+    }
+
+    leaf request-id {
+      type uint64;
+      description
+        "number used to reference the request";
+    }
+
+    leaf action {
+      type yang-action;
+      description
+        "Action type being performed on this path. If this is provided,
+         the patches should not be provided.  Update is provided for
+         published data that is not known to have changed.  Create/Edit/
+         Delete are provided if the object has changed.  Notify can be
+         supplied to wrap a notifcation in a yang-delivery.";
+    }
+
+    leaf get-initial {
+      type boolean;
+      default "false";
+      description
+        "Indicates whether this is the initial update. See get-initial
+         in yang-request-object-options for more info.";
+    }
+
+    list patches {
+      key "action path";
+      description
+        "This is a list of actions and paths against the data
+         field.  This allows one data field to be presented with
+         bulk actions provided against it for efficiency.  This
+         is exclusive of path and action at the top level.  If
+         patches is provided, the top level path and action will
+         not be present";
+      leaf action {
+        type yang-action;
+        description
+          "Action type being performed on this path.  Update is provided for
+           published data that is not known to have changed.  Create/Edit/
+           Delete are provided if the object has changed.  Notify can be
+           supplied to wrap a notifcation in a yang-delivery.";
+      }
+
+      leaf path {
+        type instance-identifier;
+        description
+          "Path of object the delivery applies to.  If this is provided,
+           the top level path should not be provided.";
+      }
+    }
+
+    leaf domain {
+      type string;
+      description
+        "Target domain for the notification.";
+    }
+
+    leaf service {
+      type string;
+      description
+        "Target service for the notification.";
+    }
+
+    anyxml data;
+
+    anyxml create;
+
+    anyxml delete;
+  }
+
+  notification yang-async-response {
+    uses async-output-grouping;
+  }
+}

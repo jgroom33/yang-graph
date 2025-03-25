@@ -1,0 +1,46 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-sr-policy:segment_list",
+      "type": "list",
+      "module": "ciena-sr-policy",
+      "description": "Segment-list properties",
+      "key": "name"
+    },
+    {
+      "id": "ciena-sr-policy:segment",
+      "type": "list",
+      "module": "ciena-sr-policy",
+      "description": "Configure segment/hop at the index",
+      "key": "index"
+    },
+    {
+      "id": "ciena-sr-policy:policy",
+      "type": "list",
+      "module": "ciena-sr-policy",
+      "description": "SR policy properties",
+      "key": "color endpoint"
+    },
+    {
+      "id": "ciena-sr-policy:candidate_path",
+      "type": "list",
+      "module": "ciena-sr-policy",
+      "description": "SR policy Candidate path(s) list entry",
+      "key": "protocol-origin originator discriminator"
+    },
+    {
+      "id": "ciena-sr-policy:intent_template",
+      "type": "list",
+      "module": "ciena-sr-policy",
+      "description": "Intent templates for dynamic path calculation",
+      "key": "name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-sr-policy:intent_template",
+      "target": "ciena-ietf-te:intent_template",
+      "relationship": "leafref:name"
+    }
+  ]
+}

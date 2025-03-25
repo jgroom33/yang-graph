@@ -1,0 +1,53 @@
+module ciena-pro-routing {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-pro-routing";
+  prefix pro-routing;
+
+  import ciena-common-version {
+    prefix ciena-common-version;
+  }
+
+  import ciena-pro-local-static {
+    prefix pro-ls;
+  }
+
+  import ciena-pro-ospf {
+    prefix pro-ospf;
+  }
+
+  import ciena-pro-fib {
+    prefix pro-fib;
+  }
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com";
+  description
+    "Basic single instance comms routing root module";
+
+  revision 2022-06-24 {
+    ciena-common-version:string "1.1.0";
+    description
+      "Move ospf-area-interfaces-neighbour-state and
+            ospf-area-interface-statistics-grouping from a pro-routing augment
+        to  ospf-area-interfaces-state";
+  }
+  revision 2022-06-06 {
+    ciena-common-version:string "1.1.0";
+    description
+      "Add ospf statistics";
+  }
+  revision 2021-04-20 {
+    ciena-common-version:string "1.0.0";
+    description
+      "Initial revision";
+  }
+
+  uses pro-ls:local-static-top;
+
+  uses pro-ospf:ospf-top;
+
+  uses pro-ospf:ospfv3-top;
+
+  uses pro-fib:fib-top;
+}

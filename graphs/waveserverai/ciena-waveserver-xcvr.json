@@ -1,0 +1,19 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-xcvr:xcvrs",
+      "type": "list",
+      "module": "ciena-waveserver-xcvr",
+      "description": "Waveserver transceiver (XCVR) list.",
+      "key": "xcvr-id"
+    },
+    {
+      "id": "ciena-waveserver-xcvr:xcvr_profiles",
+      "type": "list",
+      "module": "ciena-waveserver-xcvr",
+      "description": "List of XCVR profiles.",
+      "key": "xcvr-profile-index"
+    }
+  ],
+  "edges": []
+}

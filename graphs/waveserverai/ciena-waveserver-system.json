@@ -1,0 +1,68 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-system:allowed_clients",
+      "type": "list",
+      "module": "ciena-waveserver-system",
+      "description": "List of allowed client IP addresses.",
+      "key": "ip-address"
+    },
+    {
+      "id": "ciena-waveserver-system:key_exchange",
+      "type": "list",
+      "module": "ciena-waveserver-system",
+      "description": "List of SSH key exchange algorithms. The algorithm names are system assigned.",
+      "key": "algorithm-name"
+    },
+    {
+      "id": "ciena-waveserver-system:encryption",
+      "type": "list",
+      "module": "ciena-waveserver-system",
+      "description": "List of SSH encryption algorithms. The algorithm names are system assigned.",
+      "key": "algorithm-name"
+    },
+    {
+      "id": "ciena-waveserver-system:message_authentication_code",
+      "type": "list",
+      "module": "ciena-waveserver-system",
+      "description": "List of SSH message authentication code algorithms. The algorithm names are system assigned.",
+      "key": "algorithm-name"
+    },
+    {
+      "id": "ciena-waveserver-system:public_key_authentication",
+      "type": "list",
+      "module": "ciena-waveserver-system",
+      "description": "List of SSH public key authentication algorithms. The algorithm names are system assigned.",
+      "key": "algorithm-name"
+    },
+    {
+      "id": "ciena-waveserver-system:server",
+      "type": "list",
+      "module": "ciena-waveserver-system",
+      "description": "List of remote servers. Entries may be configured in this list to configure trusted-dns on a per-server basis, for example in certain dial-out telemetry operational workflows.",
+      "key": "address"
+    },
+    {
+      "id": "ciena-waveserver-system:ntp_key",
+      "type": "list",
+      "module": "ciena-waveserver-system",
+      "description": "List of NTP authentication keys.",
+      "key": "key-id"
+    },
+    {
+      "id": "ciena-waveserver-system:multicast_server",
+      "type": "list",
+      "module": "ciena-waveserver-system",
+      "description": "List of NTP multicast servers to use for time synchronization.",
+      "key": "ip-address"
+    },
+    {
+      "id": "ciena-waveserver-system:tls_cipher_suite_algorithms",
+      "type": "list",
+      "module": "ciena-waveserver-system",
+      "description": "List of transport layer security(TLS) cipher suite algorithms. The algorithm names are system assigned.",
+      "key": "algorithm-name"
+    }
+  ],
+  "edges": []
+}

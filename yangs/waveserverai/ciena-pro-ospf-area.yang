@@ -1,0 +1,177 @@
+submodule ciena-pro-ospf-area {
+  belongs-to ciena-pro-ospf {
+    prefix pro-ospf;
+  }
+
+  import ciena-pro-ospf-types {
+    prefix ciena-pro-ospft;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  import ciena-common-version {
+    prefix ciena-common-version;
+  }
+
+  include "ciena-pro-ospf-area-interface";
+
+  description
+    "This submodule provides configuration and operational
+     state parameters that are specific to the area context";
+
+  revision 2019-10-08 {
+    ciena-common-version:string "1.0.0";
+    description
+      "Initial version";
+  }
+
+  grouping address-range-config {
+    description
+      "Configuration data for static routes.";
+    leaf prefix {
+      type inet:ip-prefix;
+      description
+        "IP address range";
+    }
+
+    leaf status {
+      type enumeration {
+        enum "ADVERTISE" {
+          description
+            "The route is advertised.";
+        }
+        enum "DONOTADVERTISE" {
+          description
+            "The route is not advertised.";
+        }
+      }
+      default "ADVERTISE";
+      description
+        "Set to either Advertise or DoNotAdvertise.  Routing information
+         is condensed at area boundaries.  External to the area, at most
+         a single route is advertised (via a inter-area-prefix-LSA) for
+         each address range.  The route is advertised if and only if the
+         address range's Status is set to Advertise.  Unadvertised
+         ranges allow the existence of certain networks to be
+         intentionally hidden from other areas.";
+    }
+  }
+
+  grouping address-range-state {
+    description
+      "Operational state data for address range";
+  }
+
+  grouping ospf-area-common {
+    description
+      "Configuration parameters relating to an OSPF area";
+    leaf identifier {
+      type ciena-pro-ospft:ospf-area-identifier;
+      description
+        "An identifier for the OSPFv2 area - described as either a
+         32-bit unsigned integer, or a dotted-quad";
+    }
+
+    container interfaces {
+      description
+        "Enclosing container for a list of interfaces enabled within
+         this area";
+      list interface {
+        key "associated-interface associated-sub-interface";
+        description
+          "List of sub-interfaces associated with this routing instance.";
+        uses ospf-area-interfaces;
+      }
+    }
+  }
+
+  grouping ospf-area-common-state {
+    description
+      "Configuration parameters relating to an OSPF area";
+    leaf identifier {
+      type ciena-pro-ospft:ospf-area-identifier;
+      description
+        "An identifier for the OSPFv2 area - described as either a
+         32-bit unsigned integer, or a dotted-quad";
+    }
+
+    container interfaces {
+      description
+        "Enclosing container for a list of interfaces enabled within
+         this area";
+      list interface {
+        key "associated-interface associated-sub-interface";
+        description
+          "List of sub-interfaces associated with this routing instance.";
+        uses ospf-area-interfaces-state;
+      }
+    }
+  }
+
+  grouping ospf-area-state {
+    description
+      "Configuration parameters relating to an OSPF area";
+    leaf identifier {
+      type ciena-pro-ospft:ospf-area-identifier;
+      description
+        "An identifier for the OSPFv2 area - described as either a
+         32-bit unsigned integer, or a dotted-quad";
+    }
+
+    leaf type {
+      type identityref {
+        base ciena-pro-ospft:OSPF-AREA-TYPE;
+      }
+      default "ciena-pro-ospft:NORMAL";
+      description
+        "OSPF area type.";
+    }
+
+    leaf stub-default-cost {
+      type uint32 {
+        range "1..16777215";
+      }
+      description
+        "If the area has been configured as a stub area,
+         and the router itself is an area border router,
+         then the StubDefaultCost indicates the cost of
+         the default inter-area-prefix-LSA that the router
+         should advertise into the area.";
+    }
+
+    leaf import-summaries {
+      type boolean;
+      default "true";
+      description
+        "When set to enabled, prefixes external to the
+         area are imported into the area via the advertisement
+         of inter-area-prefix-LSAs. When set to disabled,
+         inter-area routes are not imported into the
+         area.";
+    }
+
+    list address-ranges {
+      key "prefix";
+      description
+        "List of IPv6 addresses contained in the address range";
+      uses address-range-config;
+
+      uses address-range-state;
+    }
+  }
+
+  grouping ospf-area-structure-config {
+    description
+      "Structural grouping for configuration and operational state
+       parameters that relate to an individual area";
+  }
+
+  grouping ospf-area-structure-state {
+    description
+      "Structural grouping for configuration and operational state
+       parameters that relate to an individual area";
+    uses ospf-area-interface-neighbor-state;
+  }
+}

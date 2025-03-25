@@ -1,0 +1,939 @@
+module ciena-waveserver-encryption {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-ws:ciena-waveserver-encryption";
+  prefix encryption;
+
+  import ciena-waveserver-typedefs {
+    prefix cienawstypes;
+  }
+
+  import ciena-waveserver-port {
+    prefix port;
+  }
+
+  import ciena-waveserver-system {
+    prefix system;
+  }
+
+  import ciena-ui {
+    prefix ui;
+  }
+
+  import ciena-ddf {
+    prefix ddf;
+  }
+
+  import ietf-inet-types {
+    prefix inet;
+  }
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com/
+     Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+  description
+    "Datapath encryption support on Waveserver.
+
+     Encryption support includes global encryption status and per-channel pre-shared-key
+     provisioning, authentication, and state.";
+
+  revision 2023-11-06 {
+    description
+      "Added container 'last-entity-certificate-check' augment to 'waveserver-system'.
+       Added  'key-update-completed-log', 'squelch-on-key-update-failure' and 'key-update-failure-squelch-threshold' to container 'key-server'.
+       Added  'external-key-etsi-with-pre-shared-key' and 'external-key-etsi-with-certificate-ECC' to rpc 'waveserver-encryption-clear-critical-security-parameters'.
+       Added  'waveserver-encryption-key-server-test' and 'waveserver-encryption-key-server-key-update' rpc.
+       Added  'key-server' container augment to 'waveserver-system' and 'external-key-etsi-status' to 'waveserver-port'.
+       Added rpc 'waveserver-encryption-activate-data-path-pre-shared-key'.
+       Added 'overhead-encryption' container to port 'encryption' container.
+       Added 'admin-state' to overhead-encryption container under port 'encryption'.
+       Updated key-update-interval-type to allow 0 value.";
+    reference
+      "Waveserver OS R2.4.5 user's guide.";
+  }
+  revision 2022-07-20 {
+    description
+      "Added  'admin-state' to system 'encryption' container.
+       Added  'remote-auth-tacacs' to system 'encryption' container.
+       Added  'remote-auth-radius' to system 'encryption' container.
+       Added  'remote-auth-radsec' to system 'encryption' container.";
+    reference
+      "Waveserver OS R2.3.11 user's guide.";
+  }
+  revision 2022-03-11 {
+    description
+      "Modified PSK string range from '32..512' to '64..1024'.
+       Added  'waveserver-encryption-reset-remote-comms' rpc.
+       Added  'waveserver-encryption-restore' rpc.
+       Added  'backup' and 'backup-passphrase' to system 'encryption' container.
+       Added  'certificate-peer-authentication-mode' to system 'encryption' container.
+       Added  'certificate-RSA' to 'authentication-material-type-enum'.";
+    reference
+      "Waveserver OS R2.3.1 user's guide.";
+  }
+  revision 2021-06-25 {
+    description
+      "Added augment for '/port:waveserver-ports/ports/properties', added container 'encryption'.";
+    reference
+      "Waveserver OS R2.3 user's guide.";
+  }
+  revision 2019-08-09 {
+    description
+      "Added re-keying-period leaf.";
+    reference
+      "Waveserver Ai R1.5 user's guide.";
+  }
+  revision 2018-09-19 {
+    description
+      "Waveserver Platform Data Model
+       Migrated from Waveserver Classic R1.6 YANG model.
+       Updated namespace to 'ciena-waveserver'.
+       Removed several unsupported attributes/containers/RPCs.
+       Changed the augment's target node from 'ports/properties' to 'channel/properties'.
+       Added container peer-authenticaltion with leafs: status and status-update-time.
+       Added typedef authentication-material-type-enum.
+       Added augment for '/system:waveserver-system', added container 'encryption'
+       and its leafs.";
+    reference
+      "Waveserver Ai R1.3 user's guide.";
+  }
+
+  typedef authentication-material-type-enum {
+    type enumeration {
+      enum "pre-shared-key" {
+        value 1;
+        description
+          "Pre-shared key(PSK).";
+      }
+      enum "certificate-ECC" {
+        value 2;
+        description
+          "Elliptic Curve Cryptography(ECC) based X 509 certificate.";
+      }
+      enum "certificate-RSA" {
+        value 3;
+        description
+          "RSA based X 509 certificate.";
+      }
+      enum "external-key-etsi-with-pre-shared-key" {
+        value 4;
+        description
+          "Authentication material type is external key ETSI with Pre-Shared-Key.";
+      }
+      enum "external-key-etsi-with-certificate-ECC" {
+        value 5;
+        description
+          "Authentication material type is external key ETSI with ECC certificate.";
+      }
+    }
+    description
+      "Enum definitions for the type of authentication material to be used in
+       datapath encryption peer authentication.";
+  }
+
+  typedef sae-role {
+    type enumeration {
+      enum "unknown" {
+        value 0;
+        description
+          "Secure Application Entity (SAE) role is unknown.";
+      }
+      enum "primary" {
+        value 1;
+        description
+          "Secure Application Entity (SAE) role is primary.";
+      }
+      enum "secondary" {
+        value 2;
+        description
+          "Secure Application Entity (SAE) role is secondary.";
+      }
+    }
+    description
+      "Data Path Encryption (DPE) external key ETSI Secure Application Entity (SAE) role type.";
+  }
+
+  typedef key-update-interval-type {
+    type uint32 {
+      range "0 .. 1440";
+    }
+    units "minutes";
+    description
+      "Type definition for the key update interval, in minutes.";
+  }
+
+  typedef certificate-check-status-enum {
+    type enumeration {
+      enum "Not Validated" {
+        description
+          "The Data Path Encryption (DPE) certificate is not validated.";
+      }
+      enum "Valid" {
+        description
+          "The Data Path Encryption (DPE) certificate is valid.";
+      }
+      enum "Invalid" {
+        description
+          "The Data Path Encryption (DPE) certificate is invalid.";
+      }
+    }
+    description
+      "Data Path Encryption (DPE) certificate check status.";
+  }
+
+  typedef certificate-invalid-reason-enum {
+    type enumeration {
+      enum "Entity Certificate not found" {
+        description
+          "The Entity Certificate is not found.";
+      }
+      enum "CA Certificate not found" {
+        description
+          "The Signing CA Certificate is not found.";
+      }
+      enum "Entity Certificate not ECC based" {
+        description
+          "The Entity Certificate is not ECC based certificate.";
+      }
+      enum "CA Certificate not ECC based" {
+        description
+          "The Signing CA Certificate is not ECC based certificate.";
+      }
+      enum "Entity Certificate invalid curve algorithm" {
+        description
+          "The Entity Certificate does not have supported Elliptic Curves and
+           signing algorithms (i.e. SECP384R1/SHA384, SECP521R1/SHA512).";
+      }
+      enum "CA Certificate invalid curve algorithm" {
+        description
+          "The Signing CA Certificate does not have supported Elliptic Curves and
+           signing algorithms (i.e. SECP384R1/SHA384, SECP521R1/SHA512).";
+      }
+      enum "Not a valid Entity Certificate" {
+        description
+          "The Entity Certificate is not a valid Entity Certificate.";
+      }
+      enum "Not a valid CA Certificate" {
+        description
+          "The Signing CA Certificate is not a valid CA Certificate.";
+      }
+      enum "Digital Signature not defined in Entity" {
+        description
+          "The Entity Certificate does not have Digital Signature defined
+           in X509v3 Key Usage.";
+      }
+      enum "TLS Web Server/Client not defined in Entity" {
+        description
+          "The Entity Certificate does not have both TLS Web Server Authentication
+           and TLS Web Client Authentication defined in X509v3 Extended Key Usage.";
+      }
+      enum "Entity Certificate expired" {
+        description
+          "The Entity Certificate has expired.";
+      }
+      enum "Entity Certificate not yet valid" {
+        description
+          "The Entity Certificate is not yet valid.";
+      }
+      enum "CA Certificate expired" {
+        description
+          "The Signing CA Certificate has expired.";
+      }
+      enum "CA Certificate not yet valid" {
+        description
+          "The Signing CA Certificate is not yet valid.";
+      }
+      enum "Entity Certificate OCSP cannot be checked" {
+        description
+          "The Entity Certificate OCSP cannot be checked.";
+      }
+      enum "Entity Certificate revoked" {
+        description
+          "The Entity Certificate is revoked.";
+      }
+      enum "Entity Certificate cannot be validated by CA" {
+        description
+          "The Entity Certificate cannot be validated
+           by Signing CA Certificate.";
+      }
+      enum "Entity Certificate Common Name missing" {
+        description
+          "The Entity Certificate's Common Name is blank
+           and CN field is mandatory field.";
+      }
+      enum "CA Certificate Common Name missing" {
+        description
+          "The Signing CA Certificate's Common Name
+           is blank and CN field is mandatory field.";
+      }
+      enum "Entity Certificate invalid time" {
+        description
+          "The Entity Certificate Expires On time
+           is earlier than Begins On time.";
+      }
+      enum "CA Certificate invalid time" {
+        description
+          "The Signing CA Certificate Expires On time
+           is earlier than Begins On time.";
+      }
+      enum "Entity Certificate too large" {
+        description
+          "The Entity Certificate content size exceeds Data Path Encryption
+           certificate supported size. Please check Entity Certificate's Subject fields,
+           Issuer fields and Extensions fields to remove the unnecessary information.";
+      }
+      enum "CA Certificate too large" {
+        description
+          "The Signing CA Certificate content size exceeds
+           Data Path Encryption certificate supported size.
+           Please check Signing CA Certificate's Subject fields,
+           Issuer fields and Extensions fields to remove the unnecessary information.";
+      }
+      enum "Certificate invalid" {
+        description
+          "Certificate invalid.";
+      }
+    }
+    description
+      "Data Path Encryption (DPE) certificate invalid reason.";
+  }
+
+  grouping pre-shared-key-configuration {
+    description
+      "Pre-shared key (PSK) configurations and attributes.";
+    leaf value {
+      ui:ui-name "Pre Shared Key Value";
+      type string {
+        length "0..1 | 64..1024";
+        pattern "[0-9a-fA-F]*|\\*";
+      }
+      description
+        "Value for a pre-shared-key (PSK).
+         The value must be specified as a hexadecimal encoded string.
+         The string must be 64 characters to 512 characters consisting of (0-9, a-f, A-F).
+         This is for support of 256bit key to 2048bit key in increment of 8 bits.
+         Setting this attribute to an empty or blank string will clear the PSK.
+         A read of this attribute will always return '*' to protect the plaintext value.
+
+         Note: This is a write-only attribute.";
+    }
+
+    leaf fingerprint {
+      ui:ui-name "Pre Shared Key Fingerprint";
+      type cienawstypes:string-maxl-32;
+      config false;
+      description
+        "A system generated hash value based on the provisioned pre-shared-key.
+         If no key is provisioned, the fingerprint is empty.";
+    }
+
+    leaf status {
+      ui:ui-name "Pre Shared Key Provisioned Status";
+      type boolean;
+      config false;
+      description
+        "Boolean value to indicate whether the pre-shared-key has been
+         setup by user or not.";
+    }
+
+    leaf description {
+      ui:ui-name "Pre Shared Key Description";
+      type string {
+        length "0..60";
+      }
+      description
+        "A human-readable description for the applied pre-shared-key.
+         Eg. 'PSK for site 1 and site 2'";
+    }
+  }
+
+  augment "/port:waveserver-ports/port:ports/port:properties" {
+    description
+      "Data path encryption properties  on the
+       Waveserver modules that support data path encryption at port level.";
+    container encryption {
+      ui:ui-name "Data Path Encryption";
+      description
+        "Data path encryption properties for a port.";
+      container pre-shared-key {
+        ui:ui-name "Pre-Shared-Key";
+        description
+          "Port data path encryption pre-shared-key properties.";
+        uses pre-shared-key-configuration;
+      }
+
+      container peer-authentication {
+        ui:ui-name "Peer-Authentication";
+        config false;
+        description
+          "Port data path encryption peer-authentication properties.";
+        leaf re-keying-period {
+          ui:ui-name "Re-keying Period (Seconds)";
+          type uint16;
+          units "seconds";
+          description
+            "The peer authentication session key negotiation interval, in seconds.";
+        }
+
+        leaf status {
+          ui:ui-name "Peer Authentication Status";
+          type enumeration {
+            enum "unknown" {
+              description
+                "Peer Authentication Status is unknown.";
+            }
+            enum "pass" {
+              description
+                "Peer Authentication Status is pass.";
+            }
+            enum "fail" {
+              description
+                "Peer Authentication Status is fail.";
+            }
+          }
+          description
+            "Whether the port is authenticated with its peer.";
+        }
+
+        leaf status-update-time {
+          ui:ui-name "Peer Authentication Status Update Time";
+          type cienawstypes:string-maxl-32;
+          description
+            "Last time when the port's peer authentication status was updated.";
+        }
+      }
+
+      container external-key-etsi-status {
+        ui:ui-name "External key etsi status";
+        config false;
+        description
+          "Waveserver Data Path Encryption (DPE) external key ETSI status";
+        leaf sae-role {
+          ui:ui-name "Sae role";
+          type sae-role;
+          config false;
+          description
+            "Secure Application Entity (SAE) role.";
+        }
+
+        leaf peer-sae-id {
+          ui:ui-name "Peer sae id";
+          type cienawstypes:string-maxl-32;
+          config false;
+          description
+            "The peer Secure Application Entity (SAE) ID.";
+        }
+
+        leaf last-key-update-time {
+          ui:ui-name "Last key update time";
+          type cienawstypes:string-maxl-32;
+          config false;
+          description
+            "The external key ETSI last key update time.";
+        }
+      }
+
+      container overhead-encryption {
+        description
+          "Overhead encryption properties for a port.";
+        leaf admin-state {
+          type cienawstypes:enabled-disabled-enum;
+          description
+            "Port Overhead Encryption administrative state.";
+        }
+      }
+    }
+  }
+
+  augment "/port:waveserver-ports/port:ports/port:channels/port:properties" {
+    description
+      "Data path encryption properties for the
+       Waveserver modules that support data path encryption at channel level.";
+    container encryption {
+      ui:ui-name "Data Path Encryption";
+      description
+        "Data path encryption properties for a channel.";
+      container pre-shared-key {
+        ui:ui-name "Pre-Shared-Key";
+        description
+          "Channel data path encryption pre-shared-key properties.";
+        uses pre-shared-key-configuration;
+      }
+
+      container peer-authentication {
+        ui:ui-name "Peer-Authentication";
+        config false;
+        description
+          "Channel data path encryption peer-authentication properties.";
+        leaf re-keying-period {
+          ui:ui-name "Re-keying Period (Seconds)";
+          type uint16;
+          units "seconds";
+          description
+            "The peer authentication session key negotiation interval, in seconds.";
+        }
+
+        leaf status {
+          ui:ui-name "Peer Authentication Status";
+          type enumeration {
+            enum "unknown" {
+              value 0;
+              description
+                "Peer Authentication Status is unknown.";
+            }
+            enum "pass" {
+              value 1;
+              description
+                "Peer Authentication Status is pass.";
+            }
+            enum "fail" {
+              value 2;
+              description
+                "Peer Authentication Status is fail.";
+            }
+          }
+          description
+            "Whether the channel is authenticated with its peer.";
+        }
+
+        leaf status-update-time {
+          ui:ui-name "Peer Authentication Status Update Time";
+          type cienawstypes:string-maxl-32;
+          description
+            "Last time when the channel's peer authentication status was updated.";
+        }
+      }
+    }
+  }
+
+  augment "/system:waveserver-system" {
+    ddf:ddf-struct-version "systemEncrypt";
+    description
+      "System level datapath encryption configuration and status.";
+    container encryption {
+      description
+        "System level datapath encryption properties.";
+      leaf authentication-material-type {
+        ui:ui-name "Authentication Material Type";
+        type authentication-material-type-enum;
+        config false;
+        description
+          "The authentication material type for this Waveserver,
+           the default type is pre-shared-key.";
+      }
+
+      leaf admin-state {
+        type cienawstypes:enabled-disabled-enum;
+        default "disabled";
+        description
+          "Waveserver Data Path Encryption (DPE) administrative state.";
+      }
+
+      leaf remote-auth-tacacs {
+        type cienawstypes:enabled-disabled-enum;
+        default "enabled";
+        description
+          "Waveserver remote authentication tacacs state.";
+      }
+
+      leaf remote-auth-radius {
+        type cienawstypes:enabled-disabled-enum;
+        default "enabled";
+        description
+          "Waveserver remote authentication radius state.";
+      }
+
+      leaf remote-auth-radsec {
+        type cienawstypes:enabled-disabled-enum;
+        default "enabled";
+        description
+          "Waveserver remote authentication radsec state.";
+      }
+
+      leaf warm-restart-type {
+        ui:ui-name "Warm Restart Type";
+        type enumeration {
+          enum "FIPS" {
+            value 1;
+            description
+              "The warm restart type is FIPS(Federal Information Processing Standard).";
+          }
+          enum "non-FIPS" {
+            value 2;
+            description
+              "The warm restart type is non-FIPS.";
+          }
+        }
+        description
+          "Defines the chassis warm-restart type for this Waveserver.
+           The default type is FIPS.
+           When warm restart type is set to FIPS, traffic squelching will be
+           enforced during FIPS power up self-tests, i.e. traffic affecting.
+           When warm restart type is set to non-FIPS, traffic squelching will not
+           be enforced during FIPS power up self-tests, i.e. non-traffic affecting.";
+      }
+
+      leaf signing-ca-certificate {
+        ui:ui-name "Signing CA Certificate";
+        type cienawstypes:string-maxl-32;
+        config false;
+        description
+          "The signing Certifate Authority(CA) certificate.";
+      }
+
+      leaf entity-certificate {
+        ui:ui-name "Entity Certificate";
+        type cienawstypes:string-maxl-32;
+        description
+          "The entity certificate name, issued by a Certificate Authority(CA).";
+      }
+
+      container last-entity-certificate-check {
+        config false;
+        description
+          "Waveserver Data Path Encryption (DPE) last entity certificate check information.";
+        leaf status {
+          ui:ui-name "Certificate check status";
+          type certificate-check-status-enum;
+          config false;
+          description
+            "Waveserver Data Path Encryption (DPE) last entity certificate check status.";
+        }
+
+        leaf reason {
+          ui:ui-name "Certificate check reason";
+          type certificate-invalid-reason-enum;
+          config false;
+          description
+            "Waveserver Data Path Encryption (DPE) last entity certificate check invalid reason.";
+        }
+      }
+
+      leaf certificate-peer-authentication-mode {
+        ui:ui-name "Certificate Peer Authentication Mode";
+        type enumeration {
+          enum "drop" {
+            value 1;
+            description
+              "Certificate peer authentication mode is drop.";
+          }
+          enum "allow" {
+            value 2;
+            description
+              "Certificate peer authentication mode is allow.";
+          }
+        }
+        description
+          "Certificate peer authentication mode defines the traffic behaviour upon certificate expiry.";
+      }
+
+      leaf backup {
+        type enumeration {
+          enum "disabled" {
+            value 0;
+            description
+              "Encryption backup mode is disabled.";
+          }
+          enum "enabled" {
+            value 1;
+            description
+              "Encryption backup mode is enabled.";
+          }
+        }
+        description
+          "Encryption backup status";
+      }
+
+      leaf backup-passphrase {
+        type cienawstypes:string-maxl-128;
+        description
+          "Passphrase string 0-128.";
+      }
+
+      list key-server {
+        ui:ui-name "Key server";
+        key "index";
+        description
+          "External key server support, e.g. ETSI.";
+        leaf index {
+          ui:ui-name "Key server index";
+          type uint32;
+          description
+            "The index of the list of key servers, only one key server for R2.4.5 support.";
+        }
+
+        leaf admin-state {
+          ui:ui-name "Key server admin state";
+          type cienawstypes:enabled-disabled-enum;
+          default "enabled";
+          description
+            "External key server administrative state.";
+        }
+
+        leaf operational-state {
+          ui:ui-name "Key server operational state";
+          type cienawstypes:up-down-enum;
+          config false;
+          description
+            "External key server operational state.";
+        }
+
+        leaf entity-cert {
+          ui:ui-name "Entity Certificate";
+          type cienawstypes:string-maxl-32;
+          description
+            "Entity certificate, e.g. ETSI Key Management Entity (KME) entity certificate.";
+        }
+
+        leaf server-ca-cert {
+          ui:ui-name "Server CA Certificate";
+          type cienawstypes:string-maxl-32;
+          description
+            "Signing CA certificate, e.g. ETSI Key Management Entity (KME) Signing CA certificate.";
+        }
+
+        leaf ip-hostname {
+          ui:ui-name "IP hostname";
+          type inet:host;
+          description
+            "IP or hostname, e.g. ETSI Key Management Entity (KME) IP or hostname.";
+        }
+
+        leaf sae-id {
+          ui:ui-name "Secure Application Entity id";
+          type cienawstypes:string-maxl-32;
+          description
+            "Secure Application Entity (SAE) ID, which is used by ETSI.";
+        }
+
+        leaf key-update-interval {
+          ui:ui-name "Key update interval";
+          type key-update-interval-type;
+          description
+            "The key update interval in minutes.";
+        }
+
+        leaf key-update-completed-log {
+          ui:ui-name "Key update completed log state";
+          type cienawstypes:enabled-disabled-enum;
+          default "enabled";
+          description
+            "Key update completed log state.";
+        }
+
+        leaf squelch-on-key-update-failure {
+          ui:ui-name "Squelch on key update failure";
+          type cienawstypes:enabled-disabled-enum;
+          default "disabled";
+          description
+            "The traffic squelch state on key update failure.";
+        }
+
+        leaf key-update-failure-squelch-threshold {
+          ui:ui-name "Key update failure squelch threshold";
+          type uint16;
+          units "hours";
+          default "72";
+          description
+            "The key update failure traffic squelch threshold (in hours).";
+        }
+      }
+    }
+  }
+
+  rpc waveserver-encryption-clear-critical-security-parameters {
+    description
+      "Clear all critical-security-parameters (CSP) from the Waveserver.
+       Must be super or higher user privilege level to call this RPC.";
+    input {
+      leaf authentication-material-type {
+        ui:ui-name "Authentication Material Type";
+        type authentication-material-type-enum;
+        description
+          "The authentication material type used after clear all the
+           critical-security-parameters.
+           If not specified, the current authentication material type
+           will be maintained.";
+      }
+    }
+
+    output {
+      leaf return-code {
+        type uint32;
+        description
+          "return code: 0 is success; non-zero is failure";
+      }
+
+      leaf return-string {
+        type cienawstypes:string-maxl-254;
+        description
+          "Return code description";
+      }
+    }
+  }
+
+  rpc waveserver-encryption-restore {
+    description
+      "Waveserver Data Path Encryption backup restore.";
+    input {
+      leaf passphrase {
+        type cienawstypes:string-maxl-128;
+        mandatory true;
+        description
+          "Passphrase string 0-128.";
+      }
+    }
+
+    output {
+      leaf return-code {
+        type uint32;
+        description
+          "Return code: 0 is successful; non-zero is failure";
+      }
+
+      leaf return-string {
+        type cienawstypes:string-maxl-254;
+        description
+          "Return code description";
+      }
+    }
+  }
+
+  rpc waveserver-encryption-reset-remote-comms {
+    description
+      "command to Reset remote waveserver's encyption comms channel";
+    input {
+      leaf slot {
+        type uint16;
+        mandatory true;
+        description
+          "Slot number";
+      }
+
+      leaf port {
+        type uint16;
+        mandatory true;
+        description
+          "port number";
+      }
+    }
+
+    output {
+      leaf return-code {
+        type uint32;
+        description
+          "Return code: 0 is successful; non-zero is failure";
+      }
+
+      leaf return-string {
+        type cienawstypes:string-maxl-254;
+        description
+          "Return code description";
+      }
+    }
+  }
+
+  rpc waveserver-encryption-activate-data-path-pre-shared-key {
+    description
+      "An RPC to activate a pre-shared-key";
+    input {
+      leaf port-id {
+        ui:ui-name "Port ID";
+        type cienawstypes:name-string;
+        mandatory true;
+        description
+          "Unique, access identifier string of the port in '<slot>-<port>' or '<slot>-<port>.<minor>' format.";
+      }
+
+      leaf passphrase {
+        type string {
+          length "1..32";
+        }
+        mandatory true;
+        description
+          "The passphrase for pre-shared-key file";
+      }
+
+      leaf filename {
+        type cienawstypes:string-maxl-254;
+        mandatory true;
+        description
+          "Pre-shared-key filename";
+      }
+    }
+
+    output {
+      leaf return-code {
+        type uint32;
+        description
+          "return code: 0 is success; non-zero is failure";
+      }
+
+      leaf return-string {
+        type string {
+          length "0..254";
+        }
+        description
+          "Return code description";
+      }
+    }
+  }
+
+  rpc waveserver-encryption-key-server-test {
+    description
+      "Waveserver Data Path Encryption (DPE) external key server test.";
+    input {
+      leaf server-index {
+        type uint32;
+        mandatory true;
+        description
+          "Key server index";
+      }
+    }
+
+    output {
+      leaf return-code {
+        type uint32;
+        description
+          "Return code: 0 is successful; non-zero is failure";
+      }
+
+      leaf return-string {
+        type cienawstypes:string-maxl-254;
+        description
+          "Return code description";
+      }
+    }
+  }
+
+  rpc waveserver-encryption-key-server-key-update {
+    description
+      "Waveserver Data Path Encryption (DPE) external key server key update test.";
+    input {
+      leaf port-id {
+        type cienawstypes:port-name;
+        mandatory true;
+        description
+          "port id";
+      }
+    }
+
+    output {
+      leaf return-code {
+        type uint32;
+        description
+          "Return code: 0 is successful; non-zero is failure";
+      }
+
+      leaf return-string {
+        type cienawstypes:string-maxl-254;
+        description
+          "Return code description";
+      }
+    }
+  }
+}

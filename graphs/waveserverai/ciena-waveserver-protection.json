@@ -1,0 +1,19 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-protection:groups",
+      "type": "list",
+      "module": "ciena-waveserver-protection",
+      "description": "List of protection groups.",
+      "key": "group-id"
+    },
+    {
+      "id": "ciena-waveserver-protection:member",
+      "type": "list",
+      "module": "ciena-waveserver-protection",
+      "description": "List of members in the protection group.",
+      "key": "role interface"
+    }
+  ],
+  "edges": []
+}

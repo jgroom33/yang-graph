@@ -1,0 +1,221 @@
+module ciena-pro-group-management {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-pro-group-management";
+  prefix group-management;
+
+  import ciena-common-version {
+    prefix ciena-common-version;
+  }
+
+  import ciena-common-yang {
+    prefix ciena-common-yang;
+  }
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com";
+  description
+    "Ciena's Group Management Object module";
+
+  revision 2022-12-13 {
+    ciena-common-version:string "1.0.1";
+    description
+      "Add group-data-mismatch container under group-member-management";
+  }
+  revision 2022-10-31 {
+    ciena-common-version:string "1.0.0";
+    description
+      "Initial revision";
+  }
+
+  container discovery {
+    config false;
+    description
+      "List of discovered potential members.";
+    list member {
+      key "name";
+      description
+        "List of discovered nodes keyed by member name.";
+      leaf name {
+        type string;
+        description
+          "Name of the group member.";
+      }
+
+      leaf local {
+        type boolean;
+        description
+          "Indicates that this member is the local.";
+      }
+    }
+
+    leaf duplicate-member-name {
+      type boolean;
+      description
+        "Indicates that two (or more) discovered members reported the same name.";
+    }
+  }
+
+  container group-prime-management {
+    description
+      "Group configuration on the primary group member.";
+    leaf prime {
+      type boolean;
+      default "false";
+      description
+        "Indicates that this local member indentifies itself as the group prime.
+         Note that if prime is true, then the other objects in this container can
+         be configured. However, if prime is set to false, attempts to configure
+         other objects will be rejected.";
+    }
+
+    list member {
+      key "name";
+      description
+        "Primary node's list of member nodes keyed by member name.";
+      leaf name {
+        type string;
+        description
+          "Name of the group member.";
+      }
+
+      leaf local {
+        type boolean;
+        config false;
+        description
+          "Indicates that this member is the local.";
+      }
+
+      container diagnostic {
+        config false;
+        description
+          "Primary node's view of diagnostic data.";
+        leaf association-lost {
+          type boolean;
+          description
+            "Indicates that this member is not reachable.";
+        }
+
+        leaf version-mismatch {
+          type boolean;
+          description
+            "Indicates that this member is running a different software
+             version than the local node.";
+        }
+      }
+    }
+
+    anyxml common-data {
+      description
+        "Data configured here shall be automatically populated to all enrolled members.";
+    }
+  }
+
+  container group-member-management {
+    config false;
+    description
+      "Local node's read-only view of the group membership.";
+    list prime {
+      key "name";
+      description
+        "List of nodes designated as primary. More than one indicates a configuration error.";
+      leaf name {
+        type string;
+        description
+          "Member name of a group prime.";
+      }
+
+      list member {
+        key "name";
+        description
+          "List of member nodes keyed by member name.";
+        leaf name {
+          type string;
+          description
+            "Name of the group member.";
+        }
+      }
+
+      anyxml common-data {
+        description
+          "Group data as specified by the group prime. Where no duplicate primes have been identified,
+           this group data should be applied locally.";
+      }
+    }
+
+    leaf duplicate-prime {
+      type boolean;
+      description
+        "Indicates that two (or more) discovered members reported the primeship.";
+    }
+
+    container group-data-mismatch {
+      description
+        "Indicates that the common-data set by group prime is not valid on the member.";
+      leaf prime {
+        type string;
+        description
+          "Name of the group prime which sets the common-data.";
+      }
+
+      leaf defect-state {
+        type boolean;
+      }
+
+      leaf err-string {
+        type string;
+        description
+          "The validation error received from the local services.";
+      }
+    }
+  }
+
+  rpc group-member-release {
+    description
+      "Release member from the group if member cannot reach prime";
+    input {
+      leaf prime {
+        type string;
+        description
+          "Name of the group prime from which the member will be released.";
+      }
+    }
+
+    output {
+      leaf result {
+        type identityref {
+          base ciena-common-yang:error-code;
+        }
+      }
+
+      leaf error-str {
+        type string;
+        mandatory false;
+        description
+          "A string description of the return code.";
+      }
+    }
+  }
+
+  rpc group-add-discovered-members {
+    description
+      "If you are the prime, this will add all the members from
+       discovery to the prime member list. If you are not prime,
+       this will report an error, saying you must be prime.";
+
+    output {
+      leaf result {
+        type identityref {
+          base ciena-common-yang:error-code;
+        }
+      }
+
+      leaf error-str {
+        type string;
+        mandatory false;
+        description
+          "A string description of the return code.";
+      }
+    }
+  }
+}

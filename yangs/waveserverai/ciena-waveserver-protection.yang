@@ -1,0 +1,581 @@
+module ciena-waveserver-protection {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-ws:ciena-waveserver-protection";
+  prefix protection;
+
+  import ciena-waveserver-typedefs {
+    prefix cienawstypes;
+  }
+
+  import ciena-waveserver-ptp {
+    prefix ptp;
+  }
+
+  import ciena-ddf {
+    prefix ddf;
+  }
+
+  import ciena-ui {
+    prefix ui;
+  }
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com/
+     Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+  description
+    "This module defines common protection attributes for the Waveserver
+     Platform. It augments the ciena-waveserver-ptp module. The PTP model
+     represents the signal carried by the modem transceiver at a physical line
+     port. The PTP objects are automatically provisioned during service module
+     installation.";
+
+  revision 2024-07-23 {
+    description
+      "Added 'release' enum value to 'last-switch-reason' leaf.";
+    reference
+      "Waveserver Ai R2.5.00 user's guide.";
+  }
+  revision 2022-10-07 {
+    description
+      "Added the 'waveserver-protection' container.
+       Added augmentations for containers 'state' and 'properties' for OCH PTPs.
+       Added the 'waveserver-protection-user-switch-request' rpc";
+    reference
+      "Waveserver OS R2.4 user's guide.";
+  }
+  revision 2019-01-02 {
+    description
+      "Waveserver Platform Data Model
+       The initial definition of this module.";
+    reference
+      "Waveserver Ai R1.4 user's guide.";
+  }
+
+  identity member-switch-state-identity {
+    description
+      "Base identity for leafs that have a switch state.";
+  }
+
+  identity FORCE_SWITCH {
+    base member-switch-state-identity;
+    description
+      "Traffic is forced to one of the paths.";
+  }
+
+  identity MANUAL_SWITCH {
+    base member-switch-state-identity;
+    description
+      "Traffic is manually switched to one of the paths.";
+  }
+
+  identity LOCKOUT {
+    base member-switch-state-identity;
+    description
+      "Prevents the protection path from going active. This in effect disables the protection group.";
+  }
+
+  identity RELEASE {
+    base member-switch-state-identity;
+    description
+      "Traffic switched due to the release of an active user action.";
+  }
+
+  identity SIGNAL_FAIL {
+    base member-switch-state-identity;
+    description
+      "Traffic switched due to signal failure.";
+  }
+
+  identity WAIT_TO_RESTORE {
+    base member-switch-state-identity;
+    description
+      "Waiting for wait to restore timer to expire before attempting reversion.";
+  }
+
+  identity DO_NOT_REVERT {
+    base member-switch-state-identity;
+    description
+      "Traffic will stay on the protection path.";
+  }
+
+  identity IDLE {
+    base member-switch-state-identity;
+    description
+      "Protection is ready and idle.";
+  }
+
+  identity LINE_FAIL {
+    base member-switch-state-identity;
+    description
+      "Traffic is switched due to a line fault.";
+  }
+
+  typedef protection-role-enum {
+    type enumeration {
+      enum "working" {
+        description
+          "The protection role of this member is working.";
+      }
+      enum "protection" {
+        description
+          "The protection role of this member is protection.";
+      }
+      enum "common" {
+        description
+          "The protection role of this member is common.";
+      }
+    }
+    description
+      "Enumerations for protection role.";
+  }
+
+  typedef protection-class-enum {
+    type enumeration {
+      enum "eOPS" {
+        description
+          "The protection class is external-OPS.";
+      }
+      enum "TT-eOPS" {
+        description
+          "The protection class is transponder-triggered-external-OPS.";
+      }
+    }
+    description
+      "Enumerations for protection class";
+  }
+
+  grouping protection-attributes-group {
+    description
+      "Grouping for common protection attributes.";
+    leaf revertive {
+      ui:ui-name "Revertive";
+      type boolean;
+      description
+        "Specifies whether protection switch reversion is enabled on the line.
+         If reversion is enabled, a switch from the working path to the
+         protection path will attempt to re-establish the working path once
+         it is available and the wait-to-restore period has elapsed.";
+    }
+
+    leaf max-reversion-attempts {
+      type uint8 {
+        range "0..10";
+      }
+      description
+        "Maximum tries for reversion. A value of zero indicates indefinite.";
+    }
+
+    leaf wait-to-restore {
+      type uint16 {
+        range "10..3600";
+      }
+      units "seconds";
+      description
+        "Time to wait before traffic will be restored to the working path, if
+         reversion is enabled.";
+    }
+
+    leaf user-switch-action {
+      ui:ui-name "User Switch Action";
+      type enumeration {
+        enum "none" {
+          description
+            "No user-initiated switching operation is active. The active path
+             will be selected by the system.";
+        }
+        enum "force-working" {
+          description
+            "Force the active path to the working path.";
+        }
+        enum "force-protection" {
+          description
+            "Force the active path to the protection path.";
+        }
+      }
+      description
+        "User-specified protection switching action on the specified line.";
+    }
+
+    leaf active-path {
+      ui:ui-name "Active Path";
+      type enumeration {
+        enum "working" {
+          description
+            "The working/primary protection path is currently active.";
+        }
+        enum "protection" {
+          description
+            "The protection/secondary protection path is currently active.";
+        }
+        enum "none" {
+          description
+            "No protection path is selected, or applicable.";
+        }
+      }
+      config false;
+      description
+        "Specifies which path is currently active on the line.";
+    }
+
+    leaf last-switch-reason {
+      ui:ui-name "Last Switch Reason";
+      type enumeration {
+        enum "unknown" {
+          description
+            "Last switch reason is unknown or not applicable.";
+        }
+        enum "fault-detected" {
+          description
+            "Modem reported a fault condition.";
+        }
+        enum "wait-to-restore-expired" {
+          description
+            "Switch reverted due to WTR expiry.";
+        }
+        enum "forced-switch" {
+          description
+            "User initiated a forced switch action.";
+        }
+        enum "disabled" {
+          description
+            "Line/port was administratively disabled.";
+        }
+        enum "release" {
+          description
+            "Switched due to the release of an active user action";
+        }
+      }
+      config false;
+      description
+        "Indicates the source that triggered the most recent switch action on
+         this line.";
+    }
+
+    leaf switch-status {
+      ui:ui-name "Switch Status";
+      type enumeration {
+        enum "uninitialized" {
+          description
+            "Protection switch status has not been initialized or is
+             unavailable.";
+        }
+        enum "disabled" {
+          description
+            "Protection switching is disabled.";
+        }
+        enum "idle" {
+          description
+            "Protection switch is idle.";
+        }
+        enum "wait-to-restore" {
+          description
+            "Waiting to restore to the working path.";
+        }
+        enum "forced-switch-active" {
+          description
+            "User initiated a forced switch action.";
+        }
+      }
+      config false;
+      description
+        "Indicates the source that triggered the most recent switch action on
+         this line.";
+    }
+  }
+
+  container waveserver-protection {
+    ui:ui-name "Protection";
+    description
+      "Waveserver PTP protection configuration data and operational data.";
+    list groups {
+      ui:ui-name "Protection Groups";
+      key "group-id";
+      description
+        "List of protection groups.";
+      leaf group-id {
+        ui:ui-name "Group ID";
+        type cienawstypes:name-string;
+        mandatory true;
+        description
+          "Unique identifier string of the protection group. Format is 'PG-<slot>-<port>.<minorport>'.";
+      }
+
+      container id {
+        ui:ui-name "Protection Group Identification";
+        description
+          "Protection group identification attributes.";
+        leaf name {
+          ui:ui-name "Protection Group Name";
+          type cienawstypes:name-string;
+          config false;
+          description
+            "Name of the protection group.";
+        }
+
+        leaf label {
+          ui:ui-name "Protection Group Label";
+          type cienawstypes:description-string;
+          description
+            "The user-specified label string for this protection group.";
+        }
+      }
+
+      container state {
+        ui:ui-name "Protection Group State";
+        config false;
+        description
+          "State information of this protection group.";
+        container last-switch {
+          ui:ui-name "Protection Group Last Switch";
+          description
+            "Information about the last switch for this protection group.";
+          leaf reason {
+            ui:ui-name "Last Switch Reason";
+            type identityref {
+              base member-switch-state-identity;
+            }
+            description
+              "Protection reason for last switch.";
+          }
+
+          leaf member {
+            ui:ui-name "Last Switch Member";
+            type instance-identifier;
+            description
+              "The member of the protection group against which the last switch reason happened.";
+          }
+        }
+      }
+
+      container properties {
+        ui:ui-name "Protection Group Properties";
+        description
+          "Protection group properties.";
+        leaf protection-class {
+          ui:ui-name "Protection Class";
+          type protection-class-enum;
+          description
+            "Protection class for this protection group";
+        }
+
+        leaf revertive {
+          ui:ui-name "Revertive";
+          type boolean;
+          description
+            "Specifies whether protection switch reversion is enabled on the line.
+             If reversion is enabled, a switch from the working path to the
+             protection path will attempt to re-establish the working path once
+             it is available and the wait-to-restore period has elapsed.";
+        }
+
+        leaf wait-to-restore-timer {
+          ui:ui-name "Wait To Restore Timer";
+          type uint32 {
+            range "30|60|120|180|240|300|360|420|480|540|600|660|720|780|840|900|1800|2700|3600";
+          }
+          units "seconds";
+          description
+            "Number of seconds to wait before traffic will be restored to the working path,
+             if reversion is enabled.";
+        }
+
+        leaf switch-hold-off {
+          ui:ui-name "Switch Holdoff";
+          type uint32 {
+            range "0|10|20|30|40|50|60|70|80|90|100|200|300|400|500|600|700|800|900|\n1000|2000|3000|4000|5000|6000|7000|8000|9000|10000";
+          }
+          units "ms";
+          description
+            "Number of milliseconds to wait before traffic will be swiched after fault detection.";
+        }
+
+        leaf recovery-guard-time {
+          ui:ui-name "Recovery Guard Time";
+          type uint32 {
+            range "0|10|20|30|40|50|60|70|80|90|100|200|300|400|500|600|700|800|900|\n1000|2000|3000|4000|5000|6000|7000|8000|9000|10000";
+          }
+          units "ms";
+          description
+            "Number of milliseconds to hold-off after switching before another switch request will be processed.";
+        }
+      }
+
+      list member {
+        ui:ui-name "Member List";
+        key "role interface";
+        description
+          "List of members in the protection group.";
+        leaf role {
+          ui:ui-name "Role";
+          type protection-role-enum;
+          mandatory true;
+          description
+            "The role for this member - working, common, or protection.";
+        }
+
+        leaf interface {
+          ui:ui-name "Interface";
+          type instance-identifier;
+          mandatory true;
+          description
+            "Points to the working, common, or protection interface.
+             This is a unique access identifier string of the member PTP (e.g., '1-1.1').";
+        }
+
+        container properties {
+          ui:ui-name "Member Properties";
+          description
+            "Member properties.";
+          leaf switch-state {
+            ui:ui-name "Switch State";
+            type identityref {
+              base member-switch-state-identity;
+            }
+            config false;
+            description
+              "The switch state for this member.";
+          }
+
+          leaf active {
+            ui:ui-name "Active";
+            type boolean;
+            config false;
+            description
+              "Specifies whether this member is carrying traffic for the protection group.";
+          }
+        }
+      }
+    }
+  }
+
+  augment "/ptp:waveserver-ptps/ptp:ptps/ptp:properties" {
+    ddf:ddf-struct-version "WlAiOps";
+    when "ptp:type = 'WLAi-iOPS'" {
+      description
+        "PTP properties specific to WaveLogic Ai modem with integrated OPS support.";
+    }
+    description
+      "PTP properties specific to WaveLogic Ai modem with integrated OPS support.";
+    container protection {
+      ui:ui-name "Protection";
+      description
+        "Optical Protection Switching (OPS) properties for line PTPs.";
+      uses protection-attributes-group;
+    }
+  }
+
+  augment "/ptp:waveserver-ptps/ptp:ptps/ptp:properties" {
+    ddf:ddf-struct-version "OPS-OCH";
+    when "ptp:type = 'OCH'" {
+      description
+        "PTP protection leafs specific to Waveserver 5 OPS Module Optical Channel PTPs.";
+    }
+    description
+      "PTP protection leafs specific to Waveserver 5 OPS Module Optical Channel PTPs.";
+    leaf optical-los-threshold {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units "dB";
+      description
+        "Optical LOS threshold";
+    }
+
+    leaf optical-restore-threshold {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units "dB";
+      description
+        "Optical restore threshold";
+    }
+
+    container peer {
+      ui:ui-name "Peer";
+      description
+        "Optical Protection Switching (OPS) far end peer for OCH line PTPs.";
+      leaf far-end-name {
+        ui:ui-name "Peer Name";
+        type cienawstypes:string-maxl-32;
+        description
+          "Name of the far-end peer.";
+      }
+    }
+  }
+
+  augment "/ptp:waveserver-ptps/ptp:ptps/ptp:state" {
+    ddf:ddf-struct-version "OPS-OCH";
+    when "../ptp:properties/ptp:type = 'OCH'" {
+      description
+        "PTP protection leafs specific to Waveserver 5 OPS Module Optical Channel PTPs.";
+    }
+    description
+      "PTP protection leafs specific to Waveserver 5 OPS Module Optical Channel PTPs.";
+    leaf rx-insertion-loss {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units "dBm";
+      config false;
+      description
+        "Rx insertion loss";
+    }
+
+    leaf tx-insertion-loss {
+      type decimal64 {
+        fraction-digits 2;
+      }
+      units "dBm";
+      config false;
+      description
+        "Tx insertion loss";
+    }
+  }
+
+  rpc waveserver-protection-switch-request {
+    description
+      "Call to invoke a user (manual) switch request.";
+    input {
+      leaf group-id {
+        ui:ui-name "Group Id";
+        type cienawstypes:name-string;
+        description
+          "The protection group for which the switch request is being applied.";
+      }
+
+      leaf member {
+        ui:ui-name "Member";
+        type instance-identifier;
+        description
+          "The member for which the switch request is being applied.
+           This is the name of the OCH PTP which is the target of the switch request
+           for the OPS protection case.";
+      }
+
+      leaf role {
+        ui:ui-name "Role";
+        type protection-role-enum;
+        description
+          "The role for this member - working, common, or protection.";
+      }
+
+      leaf switch-request {
+        ui:ui-name "Switch Request";
+        type identityref {
+          base member-switch-state-identity;
+        }
+        description
+          "The type of switch request being applied.";
+      }
+    }
+
+    output {
+      uses cienawstypes:rpc-output;
+    }
+  }
+}

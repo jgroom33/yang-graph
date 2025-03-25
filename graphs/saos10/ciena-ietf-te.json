@@ -1,0 +1,92 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-ietf-te:named_admin_group",
+      "type": "list",
+      "module": "ciena-ietf-te",
+      "description": "List of named TE admin-groups.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-ietf-te:performance_advertisement_profile",
+      "type": "list",
+      "module": "ciena-ietf-te",
+      "description": "Performance advertisement profile.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-ietf-te:interface",
+      "type": "list",
+      "module": "ciena-ietf-te",
+      "description": "TE interfaces.",
+      "key": "interface"
+    },
+    {
+      "id": "ciena-ietf-te:named_admin_groups",
+      "type": "list",
+      "module": "ciena-ietf-te",
+      "description": "A list of named admin-group entries.",
+      "key": "named-admin-group"
+    },
+    {
+      "id": "ciena-ietf-te:srlg_values",
+      "type": "list",
+      "module": "ciena-ietf-te",
+      "description": "List of SRLG values that this link is part of.",
+      "key": "value"
+    },
+    {
+      "id": "ciena-ietf-te:intent_template",
+      "type": "list",
+      "module": "ciena-ietf-te",
+      "description": "List of intent templates.",
+      "key": "name"
+    },
+    {
+      "id": "ciena-ietf-te:color_template",
+      "type": "list",
+      "module": "ciena-ietf-te",
+      "description": "List of color templates.",
+      "key": "color"
+    },
+    {
+      "id": "ciena-ietf-te:candidate_path",
+      "type": "list",
+      "module": "ciena-ietf-te",
+      "description": "SR policy Candidate path(s) list entry.",
+      "key": "preference"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-ietf-te:interface",
+      "target": "openconfig-interfaces:interface",
+      "relationship": "leafref:interface"
+    },
+    {
+      "source": "ciena-ietf-te:named_admin_groups",
+      "target": "ciena-ietf-te:named_admin_group",
+      "relationship": "leafref:named-admin-group"
+    },
+    {
+      "source": "ciena-ietf-te:interface",
+      "target": "ciena-ietf-te:performance_advertisement_profile",
+      "relationship": "leafref:performance-advertisement-profile"
+    },
+    {
+      "source": "ciena-ietf-te:intent_template",
+      "target": "ciena-ietf-te:named_admin_group",
+      "relationship": "leafref:exclude-group"
+    },
+    {
+      "source": "ciena-ietf-te:intent_template",
+      "target": "ciena-ietf-te:named_admin_group",
+      "relationship": "leafref:include-all-group"
+    },
+    {
+      "source": "ciena-ietf-te:intent_template",
+      "target": "ciena-ietf-te:named_admin_group",
+      "relationship": "leafref:include-any-group"
+    }
+  ]
+}

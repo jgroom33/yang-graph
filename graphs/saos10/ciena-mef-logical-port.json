@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-mef-logical-port:logical_port",
+      "type": "list",
+      "module": "ciena-mef-logical-port",
+      "description": "List of logical-ports. A Logical-Port can be mapped to an ETTP for a physical faceplate port, virtual-port etc. or it may map to multiple ETTPs in support of Agg Ports.",
+      "key": "name"
+    }
+  ],
+  "edges": [
+    {
+      "source": "ciena-mef-logical-port:logical_port",
+      "target": "openconfig-interfaces:interface",
+      "relationship": "leafref:binding"
+    },
+    {
+      "source": "ciena-mef-logical-port:logical_port",
+      "target": "ciena-mef-meter-profile:meter_profile",
+      "relationship": "leafref:meter-profile"
+    },
+    {
+      "source": "ciena-mef-logical-port:logical_port",
+      "target": "ciena-mef-frame-to-cos-map:frame_to_cos_map",
+      "relationship": "leafref:frame-to-cos-map"
+    },
+    {
+      "source": "ciena-mef-logical-port:logical_port",
+      "target": "ciena-mef-cos-to-frame-map:cos_to_frame_map",
+      "relationship": "leafref:cos-to-frame-map"
+    },
+    {
+      "source": "ciena-mef-logical-port:logical_port",
+      "target": "ciena-mef-flood-containment-profile:flood_containment_profile",
+      "relationship": "leafref:flood-containment-profile"
+    },
+    {
+      "source": "ciena-mef-logical-port:logical_port",
+      "target": "ciena-mef-pfg-profile:pfg_profile",
+      "relationship": "leafref:pfg-profile"
+    }
+  ]
+}

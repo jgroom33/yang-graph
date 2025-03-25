@@ -1,0 +1,12 @@
+{
+  "nodes": [
+    {
+      "id": "ciena-waveserver-module:modules",
+      "type": "list",
+      "module": "ciena-waveserver-module",
+      "description": "Module list.",
+      "key": "module-id"
+    }
+  ],
+  "edges": []
+}

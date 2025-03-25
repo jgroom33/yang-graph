@@ -1,0 +1,84 @@
+module ciena-waveserver-application-auto-fiber-discovery {
+  namespace "urn:ciena:params:xml:ns:yang:ciena-ws:ciena-waveserver-application-auto-fiber-discovery";
+  prefix app-auto-fiber-discovery;
+
+  import ciena-waveserver-typedefs {
+    prefix cienawstypes;
+  }
+
+  import ciena-ui {
+    prefix ui;
+  }
+
+  organization
+    "Ciena Corporation";
+  contact
+    "Web URL: http://www.ciena.com/
+     Postal:  7035 Ridge Road
+             Hanover, Maryland 21076
+             U.S.A.
+     Phone:   +1 800-921-1144
+     Fax:     +1 410-694-5750";
+  description
+    "This YANG module defines Ciena's Waveserver Auto Fiber Discovery
+     application support.";
+
+  revision 2024-02-01 {
+    description
+      "Waveserver Platform Data Model
+       The initial definition of the Auto Fiber Discovery Application
+       external data model.";
+    reference
+      "Waveserver Ai R2.5.0 user's guide.";
+  }
+
+  typedef discovery-state-enum {
+    type enumeration {
+      enum "idle" {
+        value 1;
+        description
+          "Discovery state Idle.";
+      }
+      enum "inprogress" {
+        value 2;
+        description
+          "Discovery state In Progress.";
+      }
+    }
+    description
+      "Discovery State.";
+  }
+
+  container auto-fiber-discovery {
+    ui:ui-name "Auto Fiber Discovery";
+    description
+      "Auto Fiber Discovery configuration data.";
+    container state {
+      ui:ui-name "Auto Fiber Discovery State";
+      description
+        "Configuration data for Auto Fiber Discovery";
+      leaf admin-state {
+        ui:ui-name "Auto Fiber Discovery Admin State";
+        type cienawstypes:enabled-disabled-enum;
+        description
+          "Auto Fiber Discovery Admin State";
+      }
+
+      leaf operational-state {
+        ui:ui-name "Auto Fiber Discovery Operational State";
+        type cienawstypes:enabled-disabled-enum;
+        config false;
+        description
+          "Auto Fiber Discovery Operational State";
+      }
+
+      leaf discovery-state {
+        ui:ui-name "Auto Fiber Discovery Discovery State";
+        type discovery-state-enum;
+        config false;
+        description
+          "Auto Fiber Discovery Discovery State";
+      }
+    }
+  }
+}
